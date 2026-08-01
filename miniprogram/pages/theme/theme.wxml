@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">APPEARANCE</view>
   <text class="page-title">外观主题</text>
-  <text class="page-description">选择一种更像你的颜色。主题只改变界面外观，不影响财富数据。</text>
 
   <view class="preview-card" style="background: {{previewColor}};">
     <text class="preview-label">主题预览</text>

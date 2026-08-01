@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">DATA ARCHIVE</view>
   <text class="page-title">数据管理</text>
-  <text class="page-description">你的财富档案属于你。定期导出，在更换设备或清理数据后可以重新恢复。</text>
 
   <view class="stats-card">
     <view class="stats-heading">

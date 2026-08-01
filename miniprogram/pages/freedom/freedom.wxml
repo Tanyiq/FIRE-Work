@@ -3,7 +3,6 @@
   <block wx:if="{{hasConfiguration}}">
     <view class="eyebrow">MY FREEDOM ARCHIVE</view>
     <text class="page-title">我的自由档案</text>
-    <text class="page-description">用长期记录，看见自己与梦想生活之间的距离。</text>
 
     <view class="archive-hero">
       <text class="archive-label">距离梦想生活</text>
@@ -106,7 +105,6 @@
   <block wx:else>
     <view class="eyebrow">CREATE YOUR ARCHIVE</view>
     <text class="page-title">{{isEditingGoal ? '调整梦想生活' : '创建你的财富档案'}}</text>
-    <text class="page-description">{{isEditingGoal ? '生活会变化，目标也可以随时重新选择。' : '四个步骤，建立属于你的自由与人生记录。'}}</text>
 
     <view wx:if="{{!isEditingGoal}}" class="first-guide">
       <view class="guide-step guide-step--active">

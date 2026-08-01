@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">WEALTH GUIDANCE</view>
   <text class="page-title">财富建议中心</text>
-  <text class="page-description">从你已经记录的事实中理解当前状态，而不是预测市场或给出买卖答案。</text>
 
   <view class="state-card">
     <text class="state-label">你的财富状态</text>

@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">LIFE MUSEUM</view>
   <text class="page-title">人生博物馆</text>
-  <text class="page-description">收藏那些真正创造了人生价值的消费与经历。</text>
 
   <view wx:if="{{isGuidedMuseumStep}}" class="guide-focus-card">
     <view class="guide-focus-card__top">

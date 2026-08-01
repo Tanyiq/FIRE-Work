@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">WEALTH</view>
   <text class="page-title">财富管家</text>
-  <text class="page-description">记录资产结构，为自由计划提供清晰的基础。</text>
 
   <view wx:if="{{isGuidedAssetStep}}" class="guide-focus-card">
     <view class="guide-focus-card__top">

@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">PROFILE</view>
   <text class="page-title">我的</text>
-  <text class="page-description">管理生活档案与本地数据。</text>
 
   <view wx:if="{{archiveStats}}" class="archive-card">
     <text class="archive-eyebrow">我的财富档案</text>

@@ -7,7 +7,6 @@
     </picker>
   </view>
   <text class="page-title">{{report.title}}</text>
-  <text class="page-description">用一年而不是一天的尺度，看见财富、选择和人生共同发生的变化。</text>
 
   <view class="cover-card">
     <text class="cover-year">{{report.year}}</text>

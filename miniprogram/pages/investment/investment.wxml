@@ -2,11 +2,11 @@
 <view class="page-shell">
   <view class="eyebrow">INVESTMENT REVIEW</view>
   <text class="page-title">投资复盘馆</text>
-  <text class="page-description">记录当时为什么做出选择，以及结果发生后真正学到了什么。</text>
 
-  <view class="principle-card">
-    <text class="principle-title">记录决策，不预测结果</text>
-    <text class="principle-text">这里的金额变化只描述已经发生的事实，不提供行情、推荐或未来收益判断。</text>
+  <view wx:if="{{showNoviceTip}}" class="novice-tip">
+    <text class="novice-tip__label">初次使用提示</text>
+    <text class="novice-tip__text">这里记录已经发生的投资决策与结果，不提供行情、标的推荐或收益预测。</text>
+    <text class="novice-tip__action" bindtap="onDismissNoviceTip">知道了</text>
   </view>
 
   <view wx:if="{{selectedRecord}}" class="detail-section">

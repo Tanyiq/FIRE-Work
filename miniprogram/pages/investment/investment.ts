@@ -1,5 +1,6 @@
 import { InvestmentRecordView } from '../../models/investment'
 import { investmentService } from '../../services/investmentService'
+import { noviceTipService } from '../../services/noviceTipService'
 import { themeService } from '../../services/themeService'
 
 const createFormData = () => ({
@@ -26,6 +27,7 @@ Page({
     typeOptions: investmentService.getTypeOptions(),
     statusOptions: investmentService.getStatusOptions(),
     currentMonth: investmentService.getCurrentMonth(),
+    showNoviceTip: noviceTipService.shouldShow('investment_review'),
     themePageStyle: themeService.getPageStyle(),
     ...createFormData(),
   },
@@ -39,6 +41,11 @@ Page({
       records: investmentService.getRecordViews(),
       themePageStyle: themeService.getPageStyle(),
     })
+  },
+
+  onDismissNoviceTip() {
+    noviceTipService.dismiss('investment_review')
+    this.setData({ showNoviceTip: false })
   },
 
   onToggleForm() {

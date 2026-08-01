@@ -2,7 +2,6 @@
 <view class="page-shell">
   <view class="eyebrow">LIVING COST</view>
   <text class="page-title">生活成本档案</text>
-  <text class="page-description">自由不是一个固定数字，而是不同生活方式和风险选择下的结果。</text>
 
   <view wx:if="{{isGuidedLivingCostStep}}" class="guide-focus-card">
     <view class="guide-focus-card__top">

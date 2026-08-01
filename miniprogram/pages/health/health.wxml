@@ -2,7 +2,12 @@
 <view class="page-shell">
   <view class="eyebrow">WEALTH HEALTH</view>
   <text class="page-title">财富体检报告</text>
-  <text class="page-description">关注安全储备、资产结构与长期变化，不为财富打分。</text>
+
+  <view wx:if="{{showNoviceTip}}" class="novice-tip">
+    <text class="novice-tip__label">初次使用提示</text>
+    <text class="novice-tip__text">这里关注安全储备、资产结构与长期变化，不会为你的财富打分。</text>
+    <text class="novice-tip__action" bindtap="onDismissNoviceTip">知道了</text>
+  </view>
 
   <view class="health-hero">
     <text class="health-hero__label">你的财富状态</text>

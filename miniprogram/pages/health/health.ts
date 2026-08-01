@@ -1,9 +1,11 @@
 import { healthService } from '../../services/healthService'
+import { noviceTipService } from '../../services/noviceTipService'
 import { themeService } from '../../services/themeService'
 
 Page({
   data: {
     report: healthService.getHealthReport(),
+    showNoviceTip: noviceTipService.shouldShow('wealth_health'),
     themePageStyle: themeService.getPageStyle(),
   },
 
@@ -24,5 +26,10 @@ Page({
 
   onBackToWealth() {
     wx.navigateBack()
+  },
+
+  onDismissNoviceTip() {
+    noviceTipService.dismiss('wealth_health')
+    this.setData({ showNoviceTip: false })
   },
 })
