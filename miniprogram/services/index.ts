@@ -1,4 +1,5 @@
 export { adviceService } from './adviceService'
+export { annualReportService } from './annualReportService'
 export { assetService } from './assetService'
 export { backupService } from './backupService'
 export { fireService } from './fireService'

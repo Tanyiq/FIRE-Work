@@ -9,7 +9,8 @@
     "pages/living-cost/living-cost",
     "pages/data-management/data-management",
     "pages/investment/investment",
-    "pages/advice/advice"
+    "pages/advice/advice",
+    "pages/annual-report/annual-report"
   ],
   "window": {
     "navigationBarTextStyle": "black",

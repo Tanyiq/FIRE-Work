@@ -1,0 +1,95 @@
+<view class="page-shell">
+  <view class="top-row">
+    <view class="eyebrow">YEAR IN REVIEW</view>
+    <picker mode="selector" range="{{yearOptions}}" value="{{selectedYearIndex}}" bindchange="onYearChange">
+      <view class="year-picker">{{report.year}} 年 ›</view>
+    </picker>
+  </view>
+  <text class="page-title">{{report.title}}</text>
+  <text class="page-description">用一年而不是一天的尺度，看见财富、选择和人生共同发生的变化。</text>
+
+  <view class="cover-card">
+    <text class="cover-year">{{report.year}}</text>
+    <text class="cover-title">我的财富年度回顾</text>
+    <text class="cover-subtitle">RETIREMENT PLAN · YEAR IN REVIEW</text>
+  </view>
+
+  <view class="report-card">
+    <text class="section-index">01</text>
+    <text class="section-title">财富变化</text>
+    <view wx:if="{{report.hasWealthData}}" class="wealth-flow">
+      <view>
+        <text class="metric-label">年初记录</text>
+        <text class="metric-value">{{report.startAssetText}}</text>
+      </view>
+      <text class="flow-arrow">→</text>
+      <view class="align-right">
+        <text class="metric-label">年末 / 当前记录</text>
+        <text class="metric-value">{{report.endAssetText}}</text>
+      </view>
+    </view>
+    <view wx:if="{{report.hasWealthChange}}" class="growth-highlight {{report.assetGrowth >= 0 ? 'growth-highlight--positive' : 'growth-highlight--negative'}}">
+      <text>年度增长</text><text>{{report.assetGrowthText}}</text>
+    </view>
+    <view wx:elif="{{report.hasWealthData}}" class="section-empty">本年度只有一份财富快照，已建立年度基线。</view>
+    <view wx:else class="section-empty">
+      <text>本年度还没有财富快照。</text>
+      <text class="empty-action" bindtap="onGoToWealth">去更新资产 →</text>
+    </view>
+  </view>
+
+  <view class="report-card">
+    <text class="section-index">02</text>
+    <text class="section-title">自由成长</text>
+    <view wx:if="{{report.hasWealthData}}" class="freedom-flow">
+      <text class="freedom-level">{{report.startFreedomText}}</text>
+      <text class="freedom-arrow">↓</text>
+      <text class="freedom-level freedom-level--current">{{report.endFreedomText}}</text>
+    </view>
+    <text wx:if="{{report.hasWealthData}}" class="freedom-note">连续等级按 Lv1–Lv4 固定资产阶梯估算，仅用于展示年度成长。</text>
+    <view wx:else class="section-empty">有财富快照后，才能回看这一年的自由成长。</view>
+  </view>
+
+  <view class="report-card">
+    <text class="section-index">03</text>
+    <text class="section-title">财富习惯</text>
+    <view class="habit-grid">
+      <view class="habit-item"><text class="habit-number">{{report.assetUpdateCount}}</text><text class="habit-label">次资产更新</text></view>
+      <view class="habit-item"><text class="habit-number">{{report.investmentReview.reviewedCount}}</text><text class="habit-label">次投资复盘</text></view>
+      <view class="habit-item"><text class="habit-number">{{report.museumCollectionCount}}</text><text class="habit-label">件人生收藏</text></view>
+    </view>
+  </view>
+
+  <view class="report-card">
+    <text class="section-index">04</text>
+    <text class="section-title">最大的人生消费</text>
+    <view wx:if="{{report.largestLifeSpending}}" class="life-highlight">
+      <text class="life-icon">{{report.largestLifeSpending.icon}}</text>
+      <view class="life-main">
+        <text class="life-name">{{report.largestLifeSpending.name}}</text>
+        <text class="life-meta">花费 {{report.largestLifeSpending.amountText}}</text>
+        <text class="life-meta">陪伴 {{report.largestLifeSpending.companionDays}} 天</text>
+      </view>
+    </view>
+    <view wx:else class="section-empty">
+      <text>本年度还没有可回顾的人生消费。</text>
+      <text class="empty-action" bindtap="onGoToMuseum">去人生博物馆记录 →</text>
+    </view>
+  </view>
+
+  <view class="investment-card">
+    <text class="section-index section-index--light">05</text>
+    <text class="section-title">投资成长</text>
+    <text class="investment-count">今年记录 {{report.investmentReview.recordCount}} 次投资，完成 {{report.investmentReview.reviewedCount}} 次复盘</text>
+    <view wx:if="{{report.investmentReview.biggestLesson}}" class="lesson-block">
+      <text class="lesson-label">年度最大教训 · {{report.investmentReview.lessonRecordName}}</text>
+      <text class="lesson-text">“{{report.investmentReview.biggestLesson}}”</text>
+    </view>
+    <view wx:else class="investment-empty">
+      <text>还没有可摘录的年度投资复盘。</text>
+      <text class="investment-action" bindtap="onGoToInvestment">去记录投资复盘 →</text>
+    </view>
+  </view>
+
+  <text class="disclaimer">年度回顾只整理你已经记录的事实，不构成投资建议或收益评价。</text>
+</view>

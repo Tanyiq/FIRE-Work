@@ -2,6 +2,48 @@
   margin-top: 44rpx;
 }
 
+.annual-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 34rpx;
+  padding: 30rpx 32rpx;
+  border-radius: 24rpx;
+  color: #ffffff;
+  background: linear-gradient(145deg, #654f2b, #9a7740);
+}
+
+.annual-entry__eyebrow,
+.annual-entry__title,
+.annual-entry__text {
+  display: block;
+}
+
+.annual-entry__eyebrow {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 18rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.annual-entry__title {
+  margin-top: 8rpx;
+  font-size: 29rpx;
+  font-weight: 650;
+}
+
+.annual-entry__text {
+  margin-top: 7rpx;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 21rpx;
+}
+
+.annual-entry__arrow {
+  margin-left: 18rpx;
+  color: #f0d39b;
+  font-size: 46rpx;
+}
+
 .report-status {
   display: flex;
   justify-content: space-between;

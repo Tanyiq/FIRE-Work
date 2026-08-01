@@ -62,4 +62,8 @@ Page({
   onGoToWealth() {
     wx.switchTab({ url: '/pages/wealth/wealth' })
   },
+
+  onGoToAnnualReport() {
+    wx.navigateTo({ url: '/pages/annual-report/annual-report' })
+  },
 })

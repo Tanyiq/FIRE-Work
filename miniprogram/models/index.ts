@@ -1,4 +1,5 @@
 export * from './advice'
+export * from './annualReport'
 export * from './asset'
 export * from './backup'
 export * from './fire'
