@@ -3,20 +3,25 @@ import { reportService } from '../../services/reportService'
 import { noviceTipService } from '../../services/noviceTipService'
 import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
-import { getNextPageMotionClass } from '../../utils/pageMotion'
+
+const initialSource: WealthChangeSource = 'salary_saving'
+const initialReport = reportService.getCurrentReportView(initialSource)
+const initialReports = reportService.getReportList()
+const initialSnapshotCount = snapshotService.getSnapshotList().length
 
 Page({
   data: {
     sourceOptions: reportService.getChangeSourceOptions(),
-    selectedSource: 'salary_saving' as WealthChangeSource,
-    report: null as WealthReportView | null,
+    selectedSource: initialSource as WealthChangeSource,
+    report: initialReport as WealthReportView | null,
     generatedMessage: '',
-    snapshotCount: snapshotService.getSnapshotList().length,
-    savedReportCount: reportService.getReportList().length,
-    hasSavedCurrentReport: false,
+    snapshotCount: initialSnapshotCount,
+    savedReportCount: initialReports.length,
+    hasSavedCurrentReport: initialReport
+      ? initialReports.some((item) => item.date === initialReport.currentDate)
+      : false,
     showBaselineTip: noviceTipService.shouldShow('snapshot_baseline'),
     themePageStyle: themeService.getPageStyle(),
-    pageMotionClass: '',
   },
 
   onShow() {
@@ -36,7 +41,6 @@ Page({
         : false,
       generatedMessage: '',
       themePageStyle: themeService.getPageStyle(),
-      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
     })
   },
 

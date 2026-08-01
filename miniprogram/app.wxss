@@ -13,30 +13,6 @@ page {
   padding: 48rpx 36rpx 64rpx;
   padding: var(--space-xl) 36rpx 64rpx;
   box-sizing: border-box;
-  animation: page-motion-base 220ms ease-out both;
-}
-
-.page-shell.page-motion--a {
-  animation-name: page-motion-a;
-}
-
-.page-shell.page-motion--b {
-  animation-name: page-motion-b;
-}
-
-@keyframes page-motion-base {
-  from { opacity: 0.72; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes page-motion-a {
-  from { opacity: 0.72; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes page-motion-b {
-  from { opacity: 0.72; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
@@ -79,7 +55,7 @@ button {
 
 button:active {
   opacity: 0.74;
-  transform: translateY(2rpx) scale(0.975);
+  transform: scale(0.975);
 }
 
 .tap-card--active {

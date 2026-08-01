@@ -32,7 +32,7 @@ Page({
     comfortableMonthlyCostText: formatAmount(0),
     fireScenarios: [] as FireScenarioView[],
     validationMessage: '',
-    isGuidedLivingCostStep: false,
+    isGuidedLivingCostStep: onboardingFlowService.getStep() === 'living_cost',
     themePageStyle: themeService.getPageStyle(),
   },
 
@@ -131,20 +131,18 @@ Page({
       return
     }
 
-    wx.showToast({ title: '已保存', icon: 'success' })
     if (this.data.isGuidedLivingCostStep) {
-      setTimeout(() => {
-        if (museumService.getCollectionList().length === 0) {
-          onboardingFlowService.setStep('museum')
-          wx.switchTab({ url: '/pages/museum/museum' })
-          return
-        }
-        onboardingFlowService.clear()
-        wx.switchTab({ url: '/pages/freedom/freedom' })
-      }, 350)
+      if (museumService.getCollectionList().length === 0) {
+        onboardingFlowService.setStep('museum')
+        wx.switchTab({ url: '/pages/museum/museum' })
+        return
+      }
+      onboardingFlowService.clear()
+      wx.switchTab({ url: '/pages/freedom/freedom' })
       return
     }
-    setTimeout(() => wx.navigateBack(), 500)
+    wx.showToast({ title: '已保存', icon: 'success' })
+    wx.navigateBack()
   },
 
   onExitGuide() {

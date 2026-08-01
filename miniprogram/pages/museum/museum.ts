@@ -2,13 +2,15 @@ import { MuseumCollectionView } from '../../models/museum'
 import { museumService } from '../../services/museumService'
 import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { themeService } from '../../services/themeService'
-import { getNextPageMotionClass } from '../../utils/pageMotion'
+
+const initialCollections = museumService.getCollectionViews()
+const initialMuseumGuide = onboardingFlowService.getStep() === 'museum'
 
 Page({
   data: {
-    collections: museumService.getCollectionViews(),
+    collections: initialCollections,
     selectedCollection: null as MuseumCollectionView | null,
-    showAddForm: false,
+    showAddForm: initialMuseumGuide && initialCollections.length === 0,
     typeOptions: museumService.getTypeOptions(),
     statusOptions: museumService.getStatusOptions(),
     selectedTypeIndex: 0,
@@ -24,15 +26,11 @@ Page({
     photoPathInput: '',
     isChoosingPhoto: false,
     validationMessage: '',
-    isGuidedMuseumStep: false,
+    isGuidedMuseumStep: initialMuseumGuide,
     themePageStyle: themeService.getPageStyle(),
-    pageMotionClass: '',
   },
 
   onShow() {
-    this.setData({
-      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
-    })
     this.refreshCollections()
   },
 
@@ -201,8 +199,10 @@ Page({
     this.refreshCollections()
     if (this.data.isGuidedMuseumStep) {
       onboardingFlowService.clear()
-      wx.showToast({ title: '财富档案已建立', icon: 'success' })
-      setTimeout(() => wx.switchTab({ url: '/pages/freedom/freedom' }), 350)
+      wx.switchTab({
+        url: '/pages/freedom/freedom',
+        success: () => wx.showToast({ title: '财富档案已建立', icon: 'success' }),
+      })
     }
   },
 

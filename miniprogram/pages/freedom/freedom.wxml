@@ -1,5 +1,5 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
-<view class="page-shell {{pageMotionClass}}">
+<view class="page-shell">
   <block wx:if="{{hasConfiguration}}">
     <view class="eyebrow">MY FREEDOM ARCHIVE</view>
     <text class="page-title">我的自由档案</text>

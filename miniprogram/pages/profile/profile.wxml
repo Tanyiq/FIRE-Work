@@ -1,5 +1,5 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
-<view class="page-shell {{pageMotionClass}}">
+<view class="page-shell">
   <view class="eyebrow">PROFILE</view>
   <text class="page-title">我的</text>
 

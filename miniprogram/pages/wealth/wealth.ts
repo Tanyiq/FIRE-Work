@@ -6,7 +6,6 @@ import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { drawAssetTrendChart } from '../../utils/chart'
 import { formatAmount, formatSignedAmount } from '../../utils/format'
-import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 const getCategoryViews = () =>
   assetService.getCategorySummaries().map((category) => ({
@@ -18,38 +17,42 @@ const getCategoryViews = () =>
     })),
   }))
 
+const initialTotalAsset = assetService.calculateTotalAsset()
+const initialAssetGuide = onboardingFlowService.getStep() === 'asset'
+const initialTrendPoints = snapshotService.getTrendPoints('month')
+const initialTrendStart = initialTrendPoints[0]
+const initialTrendEnd = initialTrendPoints[initialTrendPoints.length - 1]
+const initialTrendChange = initialTrendStart && initialTrendEnd
+  ? initialTrendEnd.value - initialTrendStart.value
+  : 0
+
 Page({
   data: {
-    totalAsset: 0,
-    totalAssetText: formatAmount(0),
+    totalAsset: initialTotalAsset,
+    totalAssetText: formatAmount(initialTotalAsset),
     categories: getCategoryViews(),
     assetTypeOptions: assetService.getAssetTypeOptions(),
     selectedTypeIndex: 0,
     selectedTypeLabel: '活钱',
-    showAssetForm: false,
+    showAssetForm: initialAssetGuide && initialTotalAsset <= 0,
     assetNameInput: '',
     assetAmountInput: '',
     editingAssetId: '',
     validationMessage: '',
-    isGuidedAssetStep: false,
-    guidedAssetCompleted: false,
+    isGuidedAssetStep: initialAssetGuide,
+    guidedAssetCompleted: initialAssetGuide && initialTotalAsset > 0,
     trendRange: 'month' as 'month' | 'year',
-    trendPoints: snapshotService.getTrendPoints('month'),
-    trendStartAsset: 0,
-    trendEndAsset: 0,
-    trendChange: 0,
-    trendStartAssetText: formatAmount(0),
-    trendEndAssetText: formatAmount(0),
-    trendChangeText: formatSignedAmount(0),
+    trendPoints: initialTrendPoints,
+    trendStartAsset: initialTrendStart ? initialTrendStart.value : 0,
+    trendEndAsset: initialTrendEnd ? initialTrendEnd.value : 0,
+    trendChange: initialTrendChange,
+    trendStartAssetText: formatAmount(initialTrendStart ? initialTrendStart.value : 0),
+    trendEndAssetText: formatAmount(initialTrendEnd ? initialTrendEnd.value : 0),
+    trendChangeText: formatSignedAmount(initialTrendChange),
     themePageStyle: themeService.getPageStyle(),
-    pageMotionClass: '',
   },
 
   onShow() {
-    this.setData({
-      themePageStyle: themeService.getPageStyle(),
-      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
-    })
     this.refreshAssets()
     if (!this.data.isGuidedAssetStep) this.refreshTrend()
   },
@@ -68,6 +71,7 @@ Page({
       isGuidedAssetStep,
       guidedAssetCompleted: isGuidedAssetStep && totalAsset > 0,
       showAssetForm: isGuidedAssetStep && totalAsset <= 0 ? true : this.data.showAssetForm,
+      themePageStyle: themeService.getPageStyle(),
     })
   },
 
@@ -180,8 +184,7 @@ Page({
     })
     this.refreshAssets()
     if (this.data.isGuidedAssetStep) {
-      wx.showToast({ title: '资产基线已建立', icon: 'success' })
-      setTimeout(() => this.advanceOnboarding(), 350)
+      this.advanceOnboarding()
       return
     }
     this.refreshTrend()

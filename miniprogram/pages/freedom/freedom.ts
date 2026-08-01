@@ -10,31 +10,49 @@ import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { formatAmount, formatProgress } from '../../utils/format'
 import { CancelGrowthAnimation, playGrowthAnimation } from '../../utils/growthAnimation'
-import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 let cancelHeroAnimation: CancelGrowthAnimation | null = null
+let hasPlayedHeroAnimation = false
+
+const initialDashboard = freedomService.getDashboard()
+const initialRecentChange = snapshotService.getRecentYearChange()
+const initialLivingCost = livingCostService.getProfile()
+const initialMuseumCollectionCount = museumService.getCollectionList().length
+const initialHasAssets = Boolean(initialDashboard && initialDashboard.currentAsset > 0)
+const initialOnboardingCompletedCount = [
+  initialDashboard !== null,
+  initialHasAssets,
+  initialLivingCost !== null,
+  initialMuseumCollectionCount > 0,
+].filter(Boolean).length
 
 Page({
   data: {
-    hasConfiguration: false,
+    hasConfiguration: initialDashboard !== null,
     goalOptions: freedomService.getGoalOptions(),
     selectedLevel: '' as SelectableFreedomLevel | '',
     validationMessage: '',
-    dashboard: null as FreedomDashboard | null,
-    recentChange: snapshotService.getRecentYearChange(),
-    hasRecentActivity: false,
-    hasAssets: false,
-    balancedFireScenario: null as FireScenarioView | null,
-    hasLivingCost: false,
-    museumCollectionCount: 0,
-    onboardingCompletedCount: 0,
-    showOnboarding: true,
+    dashboard: initialDashboard as FreedomDashboard | null,
+    recentChange: initialRecentChange,
+    hasRecentActivity: Boolean(
+      initialRecentChange &&
+        (initialRecentChange.assetChange !== 0 ||
+          initialRecentChange.progressFrom !== initialRecentChange.progressTo ||
+          initialRecentChange.museumAddedCount > 0),
+    ),
+    hasAssets: initialHasAssets,
+    balancedFireScenario: initialLivingCost
+      ? fireService.getScenarioView(initialLivingCost.essentialMonthlyCost, 'balanced')
+      : null as FireScenarioView | null,
+    hasLivingCost: initialLivingCost !== null,
+    museumCollectionCount: initialMuseumCollectionCount,
+    onboardingCompletedCount: initialOnboardingCompletedCount,
+    showOnboarding: initialOnboardingCompletedCount < 4,
     isEditingGoal: false,
     animatedCurrentAssetText: formatAmount(0),
     animatedRemainingProgressText: formatProgress(1),
     animatedProgressPercent: 0,
     themePageStyle: themeService.getPageStyle(),
-    pageMotionClass: '',
   },
 
   onShow() {
@@ -62,6 +80,7 @@ Page({
     const hasAssets = Boolean(dashboard && dashboard.currentAsset > 0)
     const onboardingCompletedCount = [dashboard !== null, hasAssets, livingCost !== null, museumCollectionCount > 0]
       .filter(Boolean).length
+    const shouldAnimateHero = Boolean(dashboard && !hasPlayedHeroAnimation)
     this.stopHeroAnimation()
     this.setData({
       hasConfiguration: dashboard !== null,
@@ -81,13 +100,17 @@ Page({
             recentChange.progressFrom !== recentChange.progressTo ||
             recentChange.museumAddedCount > 0),
       ),
-      animatedCurrentAssetText: formatAmount(0),
-      animatedRemainingProgressText: formatProgress(1),
-      animatedProgressPercent: 0,
+      animatedCurrentAssetText: formatAmount(
+        shouldAnimateHero || !dashboard ? 0 : dashboard.currentAsset,
+      ),
+      animatedRemainingProgressText: formatProgress(
+        shouldAnimateHero || !dashboard ? 1 : dashboard.remainingProgress,
+      ),
+      animatedProgressPercent: shouldAnimateHero || !dashboard ? 0 : dashboard.progressPercent,
       themePageStyle: themeService.getPageStyle(),
-      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
     }, () => {
-      if (!dashboard) return
+      if (!dashboard || !shouldAnimateHero) return
+      hasPlayedHeroAnimation = true
       cancelHeroAnimation = playGrowthAnimation({
         currentAsset: dashboard.currentAsset,
         progressPercent: dashboard.progressPercent,

@@ -3,15 +3,13 @@ import { LivingCostSummary } from '../../models/livingCost'
 import { backupService } from '../../services/backupService'
 import { livingCostService } from '../../services/livingCostService'
 import { themeService } from '../../services/themeService'
-import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 Page({
   data: {
-    livingCost: null as LivingCostSummary | null,
-    archiveStats: null as WealthArchiveStats | null,
+    livingCost: livingCostService.getSummary() as LivingCostSummary | null,
+    archiveStats: backupService.getArchiveStats() as WealthArchiveStats,
     themePageStyle: themeService.getPageStyle(),
     themeColor: themeService.getProfile().primaryColor,
-    pageMotionClass: '',
   },
 
   onShow() {
@@ -20,7 +18,6 @@ Page({
       archiveStats: backupService.getArchiveStats(),
       themePageStyle: themeService.getPageStyle(),
       themeColor: themeService.getProfile().primaryColor,
-      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
     })
   },
 

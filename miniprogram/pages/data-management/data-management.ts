@@ -159,8 +159,10 @@ Page({
       return
     }
     this.setData({ showClearModal: false, isClearing: false })
-    wx.showToast({ title: '数据已清空', icon: 'success' })
-    setTimeout(() => wx.reLaunch({ url: '/pages/freedom/freedom' }), 500)
+    wx.reLaunch({
+      url: '/pages/freedom/freedom',
+      success: () => wx.showToast({ title: '数据已清空', icon: 'success' }),
+    })
   },
 
   onPreventTouchMove() {},

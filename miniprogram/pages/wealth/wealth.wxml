@@ -1,5 +1,5 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
-<view class="page-shell {{pageMotionClass}}">
+<view class="page-shell">
   <view class="eyebrow">WEALTH</view>
   <text class="page-title">财富管家</text>
 
