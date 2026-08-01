@@ -90,6 +90,10 @@ Page({
     wx.navigateTo({ url: '/pages/health/health' })
   },
 
+  onGoToAdvice() {
+    wx.navigateTo({ url: '/pages/advice/advice' })
+  },
+
   onGoToInvestment() {
     wx.navigateTo({ url: '/pages/investment/investment' })
   },

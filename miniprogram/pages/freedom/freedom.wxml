@@ -3,6 +3,15 @@
   <text class="page-title">自由地图</text>
   <text class="page-description">看见财富积累与理想生活之间的距离。</text>
 
+  <view class="advice-entry" bindtap="onGoToAdvice">
+    <view>
+      <text class="advice-entry__eyebrow">WEALTH GUIDANCE</text>
+      <text class="advice-entry__title">查看财富建议中心</text>
+      <text class="advice-entry__text">从生活成本、资产结构和长期记录理解当前状态</text>
+    </view>
+    <text class="advice-entry__arrow">›</text>
+  </view>
+
   <view wx:if="{{!hasConfiguration}}" class="setup-section">
     <view class="section-heading">
       <text class="step-label">第一步</text>

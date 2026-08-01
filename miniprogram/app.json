@@ -8,7 +8,8 @@
     "pages/profile/profile",
     "pages/living-cost/living-cost",
     "pages/data-management/data-management",
-    "pages/investment/investment"
+    "pages/investment/investment",
+    "pages/advice/advice"
   ],
   "window": {
     "navigationBarTextStyle": "black",

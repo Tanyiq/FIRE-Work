@@ -129,7 +129,7 @@ export const healthService = {
       essentialMonthlyCost === null
         ? null
         : Math.round((safeAsset / essentialMonthlyCost) * 10) / 10
-    const concentrationItems = structure.filter((item) => item.ratio >= 0.5)
+    const concentrationItems = structure.filter((item) => item.ratio > 0.5)
     const concentrationRisks = concentrationItems.map(
       (item) => `${item.label}占总资产 ${item.ratioText}，财富较集中于单一类型资产。`,
     )

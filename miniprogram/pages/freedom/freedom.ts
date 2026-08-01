@@ -84,4 +84,8 @@ Page({
   onGoToLivingCost() {
     wx.navigateTo({ url: '/pages/living-cost/living-cost' })
   },
+
+  onGoToAdvice() {
+    wx.navigateTo({ url: '/pages/advice/advice' })
+  },
 })

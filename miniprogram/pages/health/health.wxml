@@ -79,7 +79,7 @@
     <view class="health-card">
       <text class="section-index">03</text>
       <text class="section-title">集中风险</text>
-      <view wx:if="{{report.concentrationRisks.length === 0}}" class="healthy-note">当前没有单一资产类型达到总资产的 50%。</view>
+      <view wx:if="{{report.concentrationRisks.length === 0}}" class="healthy-note">当前没有单一资产类型超过总资产的 50%。</view>
       <view wx:for="{{report.concentrationRisks}}" wx:key="*this" class="risk-note">
         <text class="risk-icon">!</text>
         <text>{{item}}</text>

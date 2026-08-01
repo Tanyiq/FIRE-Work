@@ -78,6 +78,19 @@
   background: #fffdf8;
 }
 
+.advice-center-entry {
+  color: #ffffff;
+  background: #304c3e;
+}
+
+.advice-center-entry .health-entry__text {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.advice-center-entry .health-entry__arrow {
+  color: #e3bd6c;
+}
+
 .trend-card {
   margin-top: 28rpx;
   padding: 32rpx;
