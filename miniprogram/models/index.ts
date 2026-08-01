@@ -1,4 +1,5 @@
 export * from './asset'
+export * from './fire'
 export * from './freedom'
 export * from './health'
 export * from './livingCost'

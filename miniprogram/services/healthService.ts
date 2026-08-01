@@ -24,8 +24,8 @@ const GROWTH_ASSET_TYPES: ReadonlyArray<AssetType> = [
 
 const roundRatio = (value: number): number => Math.round(value * 10000) / 10000
 
-const getMonthlyEssentialExpense = (): number | null => {
-  return livingCostService.getProfile()?.monthlyTotal || null
+const getEssentialMonthlyCost = (): number | null => {
+  return livingCostService.getProfile()?.essentialMonthlyCost || null
 }
 
 const getTrend = (): WealthHealthTrend => {
@@ -96,12 +96,12 @@ const getProfileType = (
 }
 
 export const healthService = {
-  getMonthlyEssentialExpense,
+  getEssentialMonthlyCost,
 
   getHealthReport(): WealthHealthReport {
     const totalAsset = assetService.calculateTotalAsset()
     const categories = assetService.getCategorySummaries()
-    const monthlyEssentialExpense = getMonthlyEssentialExpense()
+    const essentialMonthlyCost = getEssentialMonthlyCost()
     const structure: WealthHealthStructureItem[] = categories.map((category) => {
       const ratio = totalAsset > 0 ? roundRatio(category.totalAmount / totalAsset) : 0
       return {
@@ -118,8 +118,6 @@ export const healthService = {
       categories
         .filter((category) => types.includes(category.value))
         .reduce((sum, category) => sum + category.totalAmount, 0)
-    const cashAsset =
-      categories.find((category) => category.value === 'cash')?.totalAmount || 0
     const safeAsset = getAmountByTypes(SAFE_ASSET_TYPES)
     const growthAsset = getAmountByTypes(GROWTH_ASSET_TYPES)
     const otherAsset =
@@ -128,9 +126,9 @@ export const healthService = {
     const growthAssetRatio = totalAsset > 0 ? roundRatio(growthAsset / totalAsset) : 0
     const otherAssetRatio = totalAsset > 0 ? roundRatio(otherAsset / totalAsset) : 0
     const safetyMonths =
-      monthlyEssentialExpense === null
+      essentialMonthlyCost === null
         ? null
-        : Math.round((cashAsset / monthlyEssentialExpense) * 10) / 10
+        : Math.round((safeAsset / essentialMonthlyCost) * 10) / 10
     const concentrationItems = structure.filter((item) => item.ratio >= 0.5)
     const concentrationRisks = concentrationItems.map(
       (item) => `${item.label}占总资产 ${item.ratioText}，财富较集中于单一类型资产。`,
@@ -149,7 +147,7 @@ export const healthService = {
       } else if (safetyMonths >= 3) {
         advantages.push('已具备基础安全储备。')
       } else {
-        reminders.push('现金安全储备不足 3 个月，需要关注短期收入中断风险。')
+        reminders.push('安全资产储备不足 3 个月，需要关注短期收入中断风险。')
       }
 
       if (growthAssetRatio < 0.2) {
@@ -185,11 +183,11 @@ export const healthService = {
       ),
       totalAsset,
       totalAssetText: formatAmount(totalAsset),
-      cashAsset,
-      cashAssetText: formatAmount(cashAsset),
-      monthlyEssentialExpense,
-      monthlyEssentialExpenseText:
-        monthlyEssentialExpense === null ? null : formatAmount(monthlyEssentialExpense),
+      safeAsset,
+      safeAssetText: formatAmount(safeAsset),
+      essentialMonthlyCost,
+      essentialMonthlyCostText:
+        essentialMonthlyCost === null ? null : formatAmount(essentialMonthlyCost),
       safetyMonths,
       safetyMonthsText: safetyMonths === null ? null : `${safetyMonths} 个月`,
       safeAssetRatio,

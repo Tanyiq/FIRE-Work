@@ -27,12 +27,12 @@
 
       <view wx:if="{{report.safetyMonthsText}}" class="safety-detail">
         <view>
-          <text class="detail-label">现金资产</text>
-          <text class="detail-value">{{report.cashAssetText}}</text>
+          <text class="detail-label">安全资产</text>
+          <text class="detail-value">{{report.safeAssetText}}</text>
         </view>
         <view class="detail-right">
-          <text class="detail-label">月基础支出</text>
-          <text class="detail-value">{{report.monthlyEssentialExpenseText}}</text>
+          <text class="detail-label">基础生活</text>
+          <text class="detail-value">{{report.essentialMonthlyCostText}} / 月</text>
         </view>
       </view>
       <view wx:else class="missing-state">
@@ -41,7 +41,7 @@
       </view>
 
       <text class="text-action" bindtap="onGoToLivingCost">
-        {{report.monthlyEssentialExpense ? '修改生活成本档案' : '完善生活成本档案'}} →
+        {{report.essentialMonthlyCost ? '修改生活成本档案' : '完善生活成本档案'}} →
       </text>
     </view>
 

@@ -9,7 +9,7 @@
       <text class="setting-description">用于财富健康、安全储备和 FIRE 目标参考</text>
     </view>
     <view class="setting-value">
-      <text wx:if="{{livingCost}}" class="setting-amount">{{livingCost.monthlyTotalText}} / 月</text>
+      <text wx:if="{{livingCost}}" class="setting-amount">{{livingCost.essentialMonthlyCostText}} / 月</text>
       <text wx:else class="setting-empty">未完善</text>
       <text class="setting-arrow">›</text>
     </view>

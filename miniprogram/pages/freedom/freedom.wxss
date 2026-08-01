@@ -79,6 +79,49 @@
   background: #ecefe8;
 }
 
+.fire-reference-card {
+  margin-top: 22rpx;
+  padding: 30rpx;
+  border: 1rpx solid #e5dfd2;
+  border-radius: 22rpx;
+  background: #fffdf8;
+}
+
+.fire-reference-label,
+.fire-reference-title,
+.fire-reference-text,
+.fire-reference-action {
+  display: block;
+}
+
+.fire-reference-label {
+  color: #987630;
+  font-size: 21rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.fire-reference-title {
+  margin-top: 10rpx;
+  font-size: 29rpx;
+  font-weight: 650;
+}
+
+.fire-reference-text {
+  margin-top: 9rpx;
+  color: #7b817d;
+  font-size: 22rpx;
+  line-height: 1.55;
+}
+
+.fire-reference-action {
+  margin-top: 15rpx;
+  color: #2f6b4f;
+  font-size: 23rpx;
+  font-weight: 600;
+  text-align: right;
+}
+
 .asset-source-note__title,
 .home-empty-card__title {
   display: block;

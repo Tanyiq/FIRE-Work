@@ -1,8 +1,12 @@
 <view class="page-shell">
   <view class="eyebrow">LIVING COST</view>
   <text class="page-title">生活成本档案</text>
-  <text class="page-description">只记录维持基础生活所需的月支出，用于评估收入中断时的安全储备。</text>
+  <text class="page-description">自由不是一个固定数字，而是不同生活方式和风险选择下的结果。</text>
 
+  <view class="section-heading">
+    <text class="section-title">基础生活成本</text>
+    <text class="section-note">维持日常生活所需的每月支出</text>
+  </view>
   <view class="form-card">
     <view class="cost-row">
       <view>
@@ -46,18 +50,46 @@
     </view>
   </view>
 
-  <view class="summary-card">
-    <text class="summary-label">每月基础生活成本</text>
-    <text class="summary-total">{{monthlyTotalText}}</text>
-    <view class="summary-divider"></view>
-    <view class="reference-row">
-      <view>
-        <text class="reference-label">FIRE 参考资产</text>
-        <text class="reference-note">年基础支出 × 25</text>
-      </view>
-      <text class="reference-value">{{fireReferenceAssetText}}</text>
+  <view class="section-heading">
+    <text class="section-title">舒适生活成本</text>
+    <text class="section-note">包含娱乐、旅行、兴趣和更好的消费</text>
+  </view>
+  <view class="comfortable-card">
+    <view>
+      <text class="cost-label">舒适生活总额</text>
+      <text class="cost-hint">留空时默认等于基础生活成本</text>
     </view>
-    <text class="reference-disclaimer">该金额仅供规划参考，不会修改你已经选择的自由目标。</text>
+    <view class="input-wrap comfortable-input">
+      <input class="cost-input" type="digit" value="{{form.comfortableMonthlyCost}}" placeholder="0" data-field="comfortableMonthlyCost" bindinput="onAmountInput" />
+      <text class="unit">元/月</text>
+    </view>
+  </view>
+
+  <view class="cost-summary">
+    <view>
+      <text class="summary-label">基础生活</text>
+      <text class="summary-value">{{essentialMonthlyCostText}} / 月</text>
+    </view>
+    <view class="summary-right">
+      <text class="summary-label">舒适生活</text>
+      <text class="summary-value">{{comfortableMonthlyCostText}} / 月</text>
+    </view>
+  </view>
+
+  <view wx:if="{{fireScenarios.length > 0}}" class="analysis-card">
+    <text class="analysis-title">自由成本分析</text>
+    <text class="analysis-note">以下方案均按基础生活成本计算，只代表不同实现方式。</text>
+    <view wx:for="{{fireScenarios}}" wx:key="id" class="scenario-row">
+      <view class="scenario-main">
+        <view class="scenario-heading">
+          <text class="scenario-name">{{item.name}}</text>
+          <text class="scenario-rate">参考 {{item.expectedRateText}}</text>
+        </view>
+        <text class="scenario-description">{{item.description}}</text>
+      </view>
+      <text class="scenario-asset">{{item.requiredAssetText}}</text>
+    </view>
+    <text class="reference-disclaimer">方案仅用于长期规划参考，不构成收益承诺或投资建议，也不会修改你的 Lv1–Lv4 目标。</text>
   </view>
 
   <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>

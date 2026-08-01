@@ -24,10 +24,10 @@ export interface WealthHealthReport {
   profileType: string
   totalAsset: number
   totalAssetText: string
-  cashAsset: number
-  cashAssetText: string
-  monthlyEssentialExpense: number | null
-  monthlyEssentialExpenseText: string | null
+  safeAsset: number
+  safeAssetText: string
+  essentialMonthlyCost: number | null
+  essentialMonthlyCostText: string | null
   safetyMonths: number | null
   safetyMonthsText: string | null
   safeAssetRatio: number

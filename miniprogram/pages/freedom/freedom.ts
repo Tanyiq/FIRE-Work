@@ -1,5 +1,8 @@
+import { FireScenarioView } from '../../models/fire'
 import { FreedomDashboard, SelectableFreedomLevel } from '../../models/freedom'
+import { fireService } from '../../services/fireService'
 import { freedomService } from '../../services/freedomService'
+import { livingCostService } from '../../services/livingCostService'
 import { snapshotService } from '../../services/snapshotService'
 
 Page({
@@ -12,16 +15,21 @@ Page({
     recentChange: snapshotService.getRecentYearChange(),
     hasRecentActivity: false,
     hasAssets: false,
+    balancedFireScenario: null as FireScenarioView | null,
   },
 
   onShow() {
     const dashboard = freedomService.getDashboard()
     const recentChange = snapshotService.getRecentYearChange()
+    const livingCost = livingCostService.getProfile()
     this.setData({
       hasConfiguration: dashboard !== null,
       dashboard,
       recentChange,
       hasAssets: Boolean(dashboard && dashboard.currentAsset > 0),
+      balancedFireScenario: livingCost
+        ? fireService.getScenarioView(livingCost.essentialMonthlyCost, 'balanced')
+        : null,
       hasRecentActivity: Boolean(
         recentChange &&
           (recentChange.assetChange !== 0 ||
@@ -71,5 +79,9 @@ Page({
 
   onGoToWealth() {
     wx.switchTab({ url: '/pages/wealth/wealth' })
+  },
+
+  onGoToLivingCost() {
+    wx.navigateTo({ url: '/pages/living-cost/living-cost' })
   },
 })

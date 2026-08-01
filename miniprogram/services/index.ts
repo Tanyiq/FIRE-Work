@@ -1,4 +1,5 @@
 export { assetService } from './assetService'
+export { fireService } from './fireService'
 export { freedomService } from './freedomService'
 export { healthService } from './healthService'
 export { livingCostService } from './livingCostService'

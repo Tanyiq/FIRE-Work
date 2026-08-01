@@ -70,6 +70,20 @@
       </view>
     </view>
 
+    <view class="fire-reference-card" bindtap="onGoToLivingCost">
+      <view wx:if="{{balancedFireScenario}}">
+        <text class="fire-reference-label">按照你的基础生活成本</text>
+        <text class="fire-reference-title">平衡自由预计需要 {{balancedFireScenario.requiredAssetText}}</text>
+        <text class="fire-reference-text">按 {{balancedFireScenario.expectedRateText}} 参考收益率估算，仅供规划参考，不替代当前等级目标。</text>
+      </view>
+      <view wx:else>
+        <text class="fire-reference-label">生活成本参考</text>
+        <text class="fire-reference-title">完善生活成本，查看你的平衡自由方案</text>
+        <text class="fire-reference-text">生活方式与实现方式是自由计划的两个维度。</text>
+      </view>
+      <text class="fire-reference-action">查看分析 →</text>
+    </view>
+
     <view wx:if="{{!hasAssets}}" class="home-empty-card">
       <text class="home-empty-card__title">自由地图已经准备好</text>
       <text class="home-empty-card__text">添加第一项资产后，这里会开始记录你的自由进度。</text>
