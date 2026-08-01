@@ -186,8 +186,7 @@
   text-align: right;
 }
 
-.metric-label,
-.section-hint {
+.metric-label {
   display: block;
   color: #77817b;
   font-size: 24rpx;
@@ -247,10 +246,6 @@
   margin-top: 28rpx;
   color: var(--color-brand);
   font-size: 27rpx;
-}
-
-.section-hint {
-  margin-top: 24rpx;
 }
 
 .source-options {

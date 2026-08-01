@@ -54,7 +54,10 @@
           结束日期：{{selectedCollection.retiredDate}}
         </text>
       </view>
-      <button class="delete-button" bindtap="onDeleteCollection">删除这件收藏</button>
+      <view class="detail-actions">
+        <button class="edit-button" bindtap="onEditCollection">编辑收藏</button>
+        <button class="delete-button" bindtap="onDeleteCollection">删除收藏</button>
+      </view>
     </view>
   </view>
 
@@ -80,7 +83,7 @@
     </view>
 
     <view id="collectionForm" wx:if="{{showAddForm}}" class="collection-form">
-      <text class="form-title">添加人生收藏</text>
+      <text class="form-title">{{editingCollectionId ? '编辑人生收藏' : '添加人生收藏'}}</text>
 
       <text class="field-label">收藏类型</text>
       <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
@@ -104,7 +107,7 @@
         </view>
       </picker>
 
-      <text class="field-label">当前状态</text>
+      <text class="field-label">{{statusFieldLabel}}</text>
       <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{selectedStatusIndex}}" bindchange="onStatusChange">
         <view class="picker-field">
           <text>{{selectedStatusLabel}}</text>
@@ -113,7 +116,7 @@
       </picker>
 
       <view wx:if="{{selectedStatusIndex === 1}}">
-        <text class="field-label">结束 / 牺牲日期</text>
+        <text class="field-label">{{retiredDateLabel}}</text>
         <picker mode="date" value="{{retiredDate}}" start="{{startDate}}" end="{{today}}" bindchange="onRetiredDateChange">
           <view class="picker-field">
             <text>{{retiredDate}}</text>
@@ -133,11 +136,11 @@
       <button wx:else class="photo-button" loading="{{isChoosingPhoto}}" disabled="{{isChoosingPhoto}}" bindtap="onChoosePhoto">从相册或相机添加照片</button>
 
       <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-      <button class="save-button" bindtap="onAddCollection">{{isGuidedMuseumStep ? '保存并完成档案' : '保存收藏'}}</button>
+      <button class="save-button" bindtap="onSaveCollection">{{editingCollectionId ? '保存修改' : (isGuidedMuseumStep ? '保存并完成档案' : '保存收藏')}}</button>
     </view>
 
     <button wx:if="{{!isGuidedMuseumStep}}" class="add-button page-bottom-action" bindtap="onToggleAddForm">
-      {{showAddForm ? '收起录入' : '+ 添加人生收藏'}}
+      {{showAddForm ? (editingCollectionId ? '取消编辑' : '收起录入') : '+ 添加人生收藏'}}
     </button>
 
   </view>

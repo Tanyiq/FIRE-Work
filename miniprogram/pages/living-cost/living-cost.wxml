@@ -9,18 +9,15 @@
       <text class="guide-focus-card__exit" hover-class="tap-text--active" bindtap="onExitGuide">暂时退出引导</text>
     </view>
     <text class="guide-focus-card__title">填写每月生活成本</text>
-    <text class="guide-focus-card__text">先完成基础生活成本。保存后会自动进入人生收藏，分析内容稍后再看也不迟。</text>
   </view>
 
   <view class="section-heading">
     <text class="section-title">基础生活成本</text>
-    <text class="section-note">维持日常生活所需的每月支出</text>
   </view>
   <view class="form-card">
     <view class="cost-row">
       <view>
         <text class="cost-label">房租</text>
-        <text class="cost-hint">房租或基础住房成本</text>
       </view>
       <view class="input-wrap">
         <input class="cost-input" type="digit" value="{{form.rent}}" placeholder="0" data-field="rent" bindinput="onAmountInput" />
@@ -30,7 +27,6 @@
     <view class="cost-row">
       <view>
         <text class="cost-label">饮食</text>
-        <text class="cost-hint">日常基本餐饮支出</text>
       </view>
       <view class="input-wrap">
         <input class="cost-input" type="digit" value="{{form.food}}" placeholder="0" data-field="food" bindinput="onAmountInput" />
@@ -40,7 +36,6 @@
     <view class="cost-row">
       <view>
         <text class="cost-label">交通</text>
-        <text class="cost-hint">通勤和基础出行</text>
       </view>
       <view class="input-wrap">
         <input class="cost-input" type="digit" value="{{form.transport}}" placeholder="0" data-field="transport" bindinput="onAmountInput" />
@@ -61,7 +56,6 @@
 
   <view class="section-heading">
     <text class="section-title">舒适生活成本</text>
-    <text class="section-note">包含娱乐、旅行、兴趣和更好的消费</text>
   </view>
   <view class="comfortable-card">
     <view>

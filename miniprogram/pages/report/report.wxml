@@ -87,7 +87,6 @@
     <view class="report-card">
       <text class="section-index">03</text>
       <text class="section-title">财富变化来源</text>
-      <text class="section-hint">本次变化主要来自：</text>
       <view class="source-options">
         <text
           wx:for="{{sourceOptions}}"

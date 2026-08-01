@@ -20,10 +20,15 @@ const TYPE_OPTIONS: ReadonlyArray<MuseumTypeOption> = [
   { value: 'income_event', label: '收益事件' },
 ]
 
-const STATUS_OPTIONS: ReadonlyArray<MuseumStatusOption> = [
-  { value: 'active', label: '进行中' },
-  { value: 'retired', label: '已结束 / 已牺牲' },
-]
+const STATUS_LABELS: Record<
+  MuseumCollectionType,
+  Record<MuseumCollectionStatus, string>
+> = {
+  physical: { active: '使用中', retired: '已退役' },
+  experience: { active: '体验中', retired: '已结束' },
+  life_event: { active: '持续影响', retired: '已结束' },
+  income_event: { active: '持续收益', retired: '已结束' },
+}
 
 const padNumber = (value: number): string => String(value).padStart(2, '0')
 
@@ -121,10 +126,15 @@ const getTypeLabel = (type: MuseumCollectionType): string => {
   return option ? option.label : '收藏'
 }
 
-const getStatusLabel = (status: MuseumCollectionStatus): string => {
-  const option = STATUS_OPTIONS.find((item) => item.value === status)
-  return option ? option.label : status
-}
+const createStatusOptions = (type: MuseumCollectionType): MuseumStatusOption[] => [
+  { value: 'active', label: STATUS_LABELS[type].active },
+  { value: 'retired', label: STATUS_LABELS[type].retired },
+]
+
+const getStatusLabel = (
+  type: MuseumCollectionType,
+  status: MuseumCollectionStatus,
+): string => STATUS_LABELS[type][status]
 
 const calculateUsageDays = (
   collection: MuseumCollection,
@@ -164,7 +174,7 @@ const toCollectionView = (collection: MuseumCollection): MuseumCollectionView =>
   return {
     ...collection,
     typeLabel: getTypeLabel(collection.type),
-    statusLabel: getStatusLabel(collection.status),
+    statusLabel: getStatusLabel(collection.type, collection.status),
     usageDays: calculateUsageDays(collection),
     dailyCost,
     amountText: formatAmount(collection.amount),
@@ -179,8 +189,8 @@ export const museumService = {
     return TYPE_OPTIONS.map((option) => ({ ...option }))
   },
 
-  getStatusOptions(): MuseumStatusOption[] {
-    return STATUS_OPTIONS.map((option) => ({ ...option }))
+  getStatusOptions(type: MuseumCollectionType = 'physical'): MuseumStatusOption[] {
+    return createStatusOptions(type)
   },
 
   getCollectionList(): MuseumCollection[] {
@@ -273,7 +283,11 @@ export const museumService = {
       updatedAt: Date.now(),
     }
     collections[index] = updatedCollection
-    return saveCollectionList(collections) ? updatedCollection : null
+    if (!saveCollectionList(collections)) return null
+    if (current.photoPath && current.photoPath !== updatedCollection.photoPath) {
+      wx.removeSavedFile({ filePath: current.photoPath })
+    }
+    return updatedCollection
   },
 
   calculateUsageDays,

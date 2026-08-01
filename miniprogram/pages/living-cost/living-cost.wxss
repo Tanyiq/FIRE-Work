@@ -3,7 +3,6 @@
 }
 
 .section-title,
-.section-note,
 .cost-label,
 .cost-hint,
 .summary-label,
@@ -19,12 +18,6 @@
 .section-title {
   font-size: 31rpx;
   font-weight: 650;
-}
-
-.section-note {
-  margin-top: 7rpx;
-  color: #7d8580;
-  font-size: 23rpx;
 }
 
 .form-card,

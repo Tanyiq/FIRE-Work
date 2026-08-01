@@ -13,6 +13,7 @@
 
 .add-button::after,
 .save-button::after,
+.edit-button::after,
 .delete-button::after {
   border: 0;
 }
@@ -188,12 +189,18 @@
 
 .type-badge,
 .status-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-height: 48rpx;
   padding: 8rpx 16rpx;
   border-radius: 999rpx;
   color: var(--color-brand);
   background: var(--color-brand-soft);
   font-size: 23rpx;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .collection-name,
@@ -307,10 +314,26 @@
   font-size: 25rpx;
 }
 
-.delete-button {
+.detail-actions {
+  display: flex;
+  gap: 18rpx;
   margin-top: 34rpx;
+}
+
+.edit-button,
+.delete-button {
+  flex: 1;
+  margin: 0;
   border-radius: 999rpx;
+  font-size: 28rpx;
+}
+
+.edit-button {
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
+}
+
+.delete-button {
   color: #a64138;
   background: #f8e9e7;
-  font-size: 28rpx;
 }

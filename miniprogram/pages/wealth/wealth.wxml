@@ -9,7 +9,7 @@
       <text class="guide-focus-card__exit" hover-class="tap-text--active" bindtap="onExitGuide">暂时退出引导</text>
     </view>
     <text class="guide-focus-card__title">{{guidedAssetCompleted ? '资产基线已建立' : '记录第一项资产'}}</text>
-    <text class="guide-focus-card__text">{{guidedAssetCompleted ? '下一步填写生活成本，用于评估安全储备。' : '先记录一项真实资产。保存后会自动进入下一步，不会跳去其他功能。'}}</text>
+    <text class="guide-focus-card__text">{{guidedAssetCompleted ? '下一步填写生活成本。' : '先记录一项真实资产，保存后继续填写生活成本。'}}</text>
     <button wx:if="{{guidedAssetCompleted}}" class="guide-focus-card__button" bindtap="onContinueGuide">继续填写生活成本</button>
   </view>
 
