@@ -37,15 +37,12 @@
     <view class="total-card__amount-row">
       <text class="total-card__amount">{{totalAssetText}}</text>
     </view>
-    <text wx:if="{{totalAsset > 0}}" class="total-card__hint">自由地图将使用这里的资产总额计算进度。</text>
-    <text wx:else class="total-card__hint">从第一项资产开始，建立你的财富成长基线。</text>
   </view>
 
   <view wx:if="{{!isGuidedAssetStep}}" class="health-entry advice-center-entry" bindtap="onGoToAdvice">
     <view>
       <text class="health-entry__eyebrow">WEALTH GUIDANCE</text>
       <text class="health-entry__title">财富建议中心</text>
-      <text class="health-entry__text">当前状态、优势与值得关注的长期信号</text>
     </view>
     <text class="health-entry__arrow">›</text>
   </view>
@@ -54,7 +51,6 @@
     <view>
       <text class="health-entry__eyebrow">WEALTH HEALTH</text>
       <text class="health-entry__title">查看财富体检报告</text>
-      <text class="health-entry__text">安全储备、资产结构、集中风险与长期变化</text>
     </view>
     <text class="health-entry__arrow">›</text>
   </view>
@@ -63,7 +59,6 @@
     <view>
       <text class="health-entry__eyebrow">INVESTMENT REVIEW</text>
       <text class="health-entry__title">进入投资复盘馆</text>
-      <text class="health-entry__text">记录当时的判断、结果与真正学到的事</text>
     </view>
     <text class="health-entry__arrow">›</text>
   </view>
@@ -72,7 +67,6 @@
     <view class="trend-heading">
       <view>
         <text class="trend-title">资产成长曲线</text>
-        <text class="trend-subtitle">只记录阶段性的财富变化</text>
       </view>
       <view class="range-switch">
         <text class="range-option {{trendRange === 'month' ? 'range-option--active' : ''}}" data-range="month" bindtap="onTrendRangeChange">月</text>

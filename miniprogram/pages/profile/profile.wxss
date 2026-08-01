@@ -89,7 +89,6 @@
 }
 
 .setting-title,
-.setting-description,
 .setting-amount,
 .setting-empty,
 .privacy-title,
@@ -100,13 +99,6 @@
 .setting-title {
   font-size: 31rpx;
   font-weight: 650;
-}
-
-.setting-description {
-  margin-top: 10rpx;
-  color: #78817c;
-  font-size: 23rpx;
-  line-height: 1.5;
 }
 
 .setting-value {

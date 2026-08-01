@@ -23,7 +23,6 @@
 .metric-value,
 .advice-message,
 .action-title,
-.action-text,
 .disclaimer {
   display: block;
 }
@@ -190,15 +189,8 @@
   font-weight: 650;
 }
 
-.action-text {
-  margin-top: 9rpx;
-  color: #7c837f;
-  font-size: 22rpx;
-  line-height: 1.55;
-}
-
 .action-links {
-  margin-top: 24rpx;
+  margin-top: 18rpx;
   color: var(--color-brand);
   font-size: 24rpx;
   font-weight: 600;

@@ -71,7 +71,6 @@
 
   <view class="action-card">
     <text class="action-title">让建议保持准确</text>
-    <text class="action-text">定期更新资产、生活成本，并为真实的投资经历留下复盘。</text>
     <view class="action-links">
       <text bindtap="onGoToWealth">更新资产</text>
       <text bindtap="onGoToLivingCost">生活成本</text>

@@ -25,13 +25,6 @@
   line-height: 1.1;
 }
 
-.total-card__hint {
-  display: block;
-  margin-top: 24rpx;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 24rpx;
-}
-
 .health-entry {
   display: flex;
   align-items: center;
@@ -44,8 +37,7 @@
 }
 
 .health-entry__eyebrow,
-.health-entry__title,
-.health-entry__text {
+.health-entry__title {
   display: block;
 }
 
@@ -62,12 +54,6 @@
   font-weight: 650;
 }
 
-.health-entry__text {
-  margin-top: 7rpx;
-  color: #7a817d;
-  font-size: 22rpx;
-}
-
 .health-entry__arrow {
   color: var(--color-brand);
   font-size: 46rpx;
@@ -81,10 +67,6 @@
 .advice-center-entry {
   color: #ffffff;
   background: var(--color-brand-dark);
-}
-
-.advice-center-entry .health-entry__text {
-  color: rgba(255, 255, 255, 0.62);
 }
 
 .advice-center-entry .health-entry__arrow {
@@ -110,13 +92,6 @@
   display: block;
   font-size: 31rpx;
   font-weight: 650;
-}
-
-.trend-subtitle {
-  display: block;
-  margin-top: 7rpx;
-  color: #7a817d;
-  font-size: 23rpx;
 }
 
 .range-switch {

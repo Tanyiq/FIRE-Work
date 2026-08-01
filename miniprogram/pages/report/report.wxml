@@ -8,7 +8,6 @@
     <view>
       <text class="annual-entry__eyebrow">YEAR IN REVIEW</text>
       <text class="annual-entry__title">我的财富年度回顾</text>
-      <text class="annual-entry__text">财富变化、自由成长、人生消费与投资复盘</text>
     </view>
     <text class="annual-entry__arrow">›</text>
   </view>

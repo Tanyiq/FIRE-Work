@@ -29,7 +29,6 @@
   <view class="setting-card" bindtap="onGoToLivingCost">
     <view class="setting-main">
       <text class="setting-title">生活成本</text>
-      <text class="setting-description">用于财富健康、安全储备和 FIRE 目标参考</text>
     </view>
     <view class="setting-value">
       <text wx:if="{{livingCost}}" class="setting-amount">{{livingCost.essentialMonthlyCostText}} / 月</text>
@@ -41,7 +40,6 @@
   <view class="setting-card setting-card--secondary" bindtap="onGoToDataManagement">
     <view class="setting-main">
       <text class="setting-title">数据管理</text>
-      <text class="setting-description">导出、检查或恢复你的完整财富档案</text>
     </view>
     <view class="setting-value">
       <text class="setting-arrow">›</text>
@@ -51,7 +49,6 @@
   <view class="setting-card setting-card--secondary" bindtap="onGoToTheme">
     <view class="setting-main">
       <text class="setting-title">外观主题</text>
-      <text class="setting-description">选择预设颜色或输入自己的主题色</text>
     </view>
     <view class="setting-value">
       <view class="theme-swatch" style="background: {{themeColor}};"></view>

@@ -14,8 +14,7 @@
 }
 
 .annual-entry__eyebrow,
-.annual-entry__title,
-.annual-entry__text {
+.annual-entry__title {
   display: block;
 }
 
@@ -30,12 +29,6 @@
   margin-top: 8rpx;
   font-size: 29rpx;
   font-weight: 650;
-}
-
-.annual-entry__text {
-  margin-top: 7rpx;
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 21rpx;
 }
 
 .annual-entry__arrow {

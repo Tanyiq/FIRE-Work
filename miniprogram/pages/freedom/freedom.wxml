@@ -52,17 +52,17 @@
       </view>
       <view class="guide-step {{hasAssets ? 'guide-step--done' : ''}}">
         <text class="step-number">{{hasAssets ? '✓' : '2'}}</text>
-        <view class="step-main"><text class="step-title">记录当前资产</text><text class="step-text">让自由进度拥有真实起点</text></view>
+        <view class="step-main"><text class="step-title">记录当前资产</text></view>
         <text wx:if="{{!hasAssets}}" class="step-action" bindtap="onStartAssetGuide">去记录</text>
       </view>
       <view class="guide-step {{hasLivingCost ? 'guide-step--done' : ''}}">
         <text class="step-number">{{hasLivingCost ? '✓' : '3'}}</text>
-        <view class="step-main"><text class="step-title">填写生活成本</text><text class="step-text">评估安全储备与自由方案</text></view>
+        <view class="step-main"><text class="step-title">填写生活成本</text></view>
         <text wx:if="{{!hasLivingCost}}" class="step-action" bindtap="onStartLivingCostGuide">去填写</text>
       </view>
       <view class="guide-step guide-step--last {{museumCollectionCount > 0 ? 'guide-step--done' : ''}}">
         <text class="step-number">{{museumCollectionCount > 0 ? '✓' : '4'}}</text>
-        <view class="step-main"><text class="step-title">收藏第一段人生经历</text><text class="step-text">让财富计划不只剩下数字</text></view>
+        <view class="step-main"><text class="step-title">收藏第一段人生经历</text></view>
         <text wx:if="{{museumCollectionCount === 0}}" class="step-action" bindtap="onStartMuseumGuide">去收藏</text>
       </view>
     </view>
@@ -79,7 +79,6 @@
       <view>
         <text class="advice-entry__eyebrow">WEALTH GUIDANCE</text>
         <text class="advice-entry__title">查看财富建议中心</text>
-        <text class="advice-entry__text">理解当前状态、优势与长期关注信号</text>
       </view>
       <text class="advice-entry__arrow">›</text>
     </view>
@@ -112,12 +111,12 @@
     <view wx:if="{{!isEditingGoal}}" class="first-guide">
       <view class="guide-step guide-step--active">
         <text class="step-number">1</text>
-        <view class="step-main"><text class="step-title">选择梦想生活</text><text class="step-text">决定你想抵达的生活质量</text></view>
+        <view class="step-main"><text class="step-title">选择梦想生活</text></view>
         <text class="current-badge">当前</text>
       </view>
-      <view class="guide-step"><text class="step-number">2</text><view class="step-main"><text class="step-title">记录当前资产</text><text class="step-text">建立财富成长起点</text></view></view>
-      <view class="guide-step"><text class="step-number">3</text><view class="step-main"><text class="step-title">填写生活成本</text><text class="step-text">理解安全储备和自由成本</text></view></view>
-      <view class="guide-step guide-step--last"><text class="step-number">4</text><view class="step-main"><text class="step-title">收藏第一段人生经历</text><text class="step-text">记录财富真正创造的生活</text></view></view>
+      <view class="guide-step"><text class="step-number">2</text><view class="step-main"><text class="step-title">记录当前资产</text></view></view>
+      <view class="guide-step"><text class="step-number">3</text><view class="step-main"><text class="step-title">填写生活成本</text></view></view>
+      <view class="guide-step guide-step--last"><text class="step-number">4</text><view class="step-main"><text class="step-title">收藏第一段人生经历</text></view></view>
     </view>
 
     <view class="setup-section">
