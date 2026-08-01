@@ -1,4 +1,5 @@
 import { AssetTrendPoint } from '../models/snapshot'
+import { themeService } from '../services/themeService'
 
 const CANVAS_WIDTH = 300
 const CANVAS_HEIGHT = 160
@@ -45,7 +46,7 @@ export const drawAssetTrendChart = (
     y: PADDING_TOP + chartHeight - ((point.value - minValue) / valueRange) * chartHeight,
   }))
 
-  context.setStrokeStyle('#2f6b4f')
+  context.setStrokeStyle(themeService.getPalette().primary)
   context.setLineWidth(3)
   context.setLineJoin('round')
   context.beginPath()

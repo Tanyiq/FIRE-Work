@@ -5,6 +5,7 @@ import {
 } from '../../models/livingCost'
 import { fireService } from '../../services/fireService'
 import { livingCostService } from '../../services/livingCostService'
+import { themeService } from '../../services/themeService'
 import { formatAmount } from '../../utils/format'
 
 type CostField = keyof LivingCostInput
@@ -29,6 +30,7 @@ Page({
     comfortableMonthlyCostText: formatAmount(0),
     fireScenarios: [] as FireScenarioView[],
     validationMessage: '',
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onLoad() {
@@ -45,6 +47,10 @@ Page({
       })
       this.refreshPreview()
     }
+  },
+
+  onShow() {
+    this.setData({ themePageStyle: themeService.getPageStyle() })
   },
 
   onAmountInput(event: WechatMiniprogram.CustomEvent<{ value: string }>) {

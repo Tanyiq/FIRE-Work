@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">INVESTMENT REVIEW</view>
   <text class="page-title">投资复盘馆</text>

@@ -10,7 +10,8 @@
     "pages/data-management/data-management",
     "pages/investment/investment",
     "pages/advice/advice",
-    "pages/annual-report/annual-report"
+    "pages/annual-report/annual-report",
+    "pages/theme/theme"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -21,7 +22,7 @@
   },
   "tabBar": {
     "color": "#7a7d78",
-    "selectedColor": "#2f6b4f",
+    "selectedColor": "#536a8a",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [

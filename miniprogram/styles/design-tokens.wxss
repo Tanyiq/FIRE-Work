@@ -4,9 +4,11 @@ page {
   --color-text: #243029;
   --color-text-strong: #1f2a24;
   --color-text-muted: #727c76;
-  --color-brand: #2f6b4f;
-  --color-brand-dark: #294438;
-  --color-brand-soft: #e7eee9;
+  --color-brand: #536a8a;
+  --color-brand-dark: #3c4c63;
+  --color-brand-end: #73849f;
+  --color-brand-soft: #e8ebf0;
+  --color-brand-surface: #f5f6f8;
   --color-accent: #bd8e3f;
   --color-accent-soft: #f0dfb8;
   --color-danger: #a64138;

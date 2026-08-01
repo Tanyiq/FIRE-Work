@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">LIVING COST</view>
   <text class="page-title">生活成本档案</text>

@@ -49,7 +49,7 @@
   margin-top: 28rpx;
   border-radius: 999rpx;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
   font-size: 28rpx;
   font-weight: 600;
 }
@@ -227,7 +227,7 @@
 }
 
 .result-value--positive {
-  color: #2f6b4f;
+  color: var(--color-brand);
 }
 
 .result-value--negative {
@@ -237,7 +237,7 @@
 .back-action {
   display: block;
   margin-bottom: 18rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 24rpx;
 }
 
@@ -246,7 +246,7 @@
 }
 
 .status-badge--holding {
-  color: #2f6b4f;
+  color: var(--color-brand);
   background: #e5f0e8;
 }
 
@@ -340,7 +340,7 @@
 }
 
 .edit-button {
-  color: #2f6b4f;
+  color: var(--color-brand);
   background: #e5f0e8;
 }
 
@@ -352,7 +352,7 @@
   margin-top: 28rpx;
   border: 0;
   border-radius: 999rpx;
-  background: #193f35;
+  background: var(--color-brand-dark);
   color: #ffffff;
   font-size: 26rpx;
   line-height: 72rpx;

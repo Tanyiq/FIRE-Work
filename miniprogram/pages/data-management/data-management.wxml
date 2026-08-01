@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">DATA ARCHIVE</view>
   <text class="page-title">数据管理</text>
@@ -64,7 +65,7 @@
 
   <view class="action-card">
     <text class="action-title">导出数据</text>
-    <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏、生活成本和投资复盘。</text>
+    <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏、生活成本、投资复盘和外观主题。</text>
     <button class="primary-button" loading="{{isExporting}}" disabled="{{isExporting || isRestoring}}" bindtap="onExport">导出 JSON 备份</button>
   </view>
 

@@ -5,6 +5,7 @@ import { LivingCostProfile } from './livingCost'
 import { MuseumCollection } from './museum'
 import { WealthReport } from './report'
 import { AssetSnapshot } from './snapshot'
+import { ThemeProfile } from './theme'
 
 export interface BackupUserData {
   joinedAt: number
@@ -21,6 +22,7 @@ export interface WealthBackup {
   museum: MuseumCollection[]
   livingCost: LivingCostProfile | null
   investments: InvestmentRecord[]
+  theme?: ThemeProfile
 }
 
 export interface WealthArchiveStats {

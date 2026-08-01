@@ -1,8 +1,10 @@
 import { healthService } from '../../services/healthService'
+import { themeService } from '../../services/themeService'
 
 Page({
   data: {
     report: healthService.getHealthReport(),
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
@@ -10,7 +12,10 @@ Page({
   },
 
   refreshReport() {
-    this.setData({ report: healthService.getHealthReport() })
+    this.setData({
+      report: healthService.getHealthReport(),
+      themePageStyle: themeService.getPageStyle(),
+    })
   },
 
   onGoToLivingCost() {

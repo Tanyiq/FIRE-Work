@@ -5,6 +5,7 @@ import { freedomService } from '../../services/freedomService'
 import { livingCostService } from '../../services/livingCostService'
 import { museumService } from '../../services/museumService'
 import { snapshotService } from '../../services/snapshotService'
+import { themeService } from '../../services/themeService'
 import { formatAmount, formatProgress } from '../../utils/format'
 import { CancelGrowthAnimation, playGrowthAnimation } from '../../utils/growthAnimation'
 
@@ -29,6 +30,7 @@ Page({
     animatedCurrentAssetText: formatAmount(0),
     animatedRemainingProgressText: formatProgress(1),
     animatedProgressPercent: 0,
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
@@ -78,6 +80,7 @@ Page({
       animatedCurrentAssetText: formatAmount(0),
       animatedRemainingProgressText: formatProgress(1),
       animatedProgressPercent: 0,
+      themePageStyle: themeService.getPageStyle(),
     }, () => {
       if (!dashboard) return
       cancelHeroAnimation = playGrowthAnimation({

@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell {{isSwitchingYear ? 'report-switching' : ''}}">
   <view class="top-row">
     <view class="eyebrow">YEAR IN REVIEW</view>

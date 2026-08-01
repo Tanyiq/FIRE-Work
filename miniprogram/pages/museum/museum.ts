@@ -1,5 +1,6 @@
 import { MuseumCollectionView } from '../../models/museum'
 import { museumService } from '../../services/museumService'
+import { themeService } from '../../services/themeService'
 
 Page({
   data: {
@@ -19,6 +20,7 @@ Page({
     retiredDate: museumService.getToday(),
     storyInput: '',
     validationMessage: '',
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
@@ -26,7 +28,10 @@ Page({
   },
 
   refreshCollections() {
-    this.setData({ collections: museumService.getCollectionViews() })
+    this.setData({
+      collections: museumService.getCollectionViews(),
+      themePageStyle: themeService.getPageStyle(),
+    })
   },
 
   onToggleAddForm() {

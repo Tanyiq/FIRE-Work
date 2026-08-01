@@ -2,7 +2,7 @@
 .save-button {
   border-radius: 999rpx;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
   font-size: 30rpx;
   font-weight: 600;
 }
@@ -144,8 +144,8 @@
   display: inline-block;
   padding: 8rpx 16rpx;
   border-radius: 999rpx;
-  color: #2f6b4f;
-  background: #e6eee8;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
   font-size: 23rpx;
 }
 
@@ -189,7 +189,7 @@
 }
 
 .back-action {
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 27rpx;
 }
 
@@ -243,7 +243,7 @@
 }
 
 .daily-cost {
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 35rpx;
 }
 
@@ -271,7 +271,7 @@
   margin-top: 28rpx;
   border: 0;
   border-radius: 999rpx;
-  background: #193f35;
+  background: var(--color-brand-dark);
   color: #ffffff;
   font-size: 26rpx;
   line-height: 72rpx;

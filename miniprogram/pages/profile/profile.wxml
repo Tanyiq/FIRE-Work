@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">PROFILE</view>
   <text class="page-title">我的</text>
@@ -43,6 +44,17 @@
       <text class="setting-description">导出、检查或恢复你的完整财富档案</text>
     </view>
     <view class="setting-value">
+      <text class="setting-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="setting-card setting-card--secondary" bindtap="onGoToTheme">
+    <view class="setting-main">
+      <text class="setting-title">外观主题</text>
+      <text class="setting-description">选择预设颜色或输入自己的主题色</text>
+    </view>
+    <view class="setting-value">
+      <view class="theme-swatch" style="background: {{themeColor}};"></view>
       <text class="setting-arrow">›</text>
     </view>
   </view>

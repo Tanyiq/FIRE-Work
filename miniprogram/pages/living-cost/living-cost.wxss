@@ -108,7 +108,7 @@
   padding: 30rpx 34rpx;
   border-radius: 24rpx;
   color: #ffffff;
-  background: linear-gradient(145deg, #294438, #47705c);
+  background: linear-gradient(145deg, var(--color-brand-dark), var(--color-brand-end));
 }
 
 .summary-right {
@@ -181,7 +181,7 @@
 
 .scenario-asset {
   flex-shrink: 0;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 29rpx;
   font-weight: 700;
 }
@@ -206,7 +206,7 @@
   margin-top: 28rpx;
   border-radius: 999rpx;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
   font-size: 28rpx;
   font-weight: 600;
 }

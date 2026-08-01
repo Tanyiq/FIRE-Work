@@ -1,5 +1,6 @@
 import { AnnualWealthReport } from '../../models/annualReport'
 import { annualReportService } from '../../services/annualReportService'
+import { themeService } from '../../services/themeService'
 import { drawAnnualPoster } from '../../utils/annualPoster'
 
 const yearOptions = annualReportService.getAvailableYears()
@@ -12,6 +13,7 @@ Page({
     report: annualReportService.getAnnualReport(yearOptions[0]) as AnnualWealthReport,
     isGeneratingPoster: false,
     isSwitchingYear: false,
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
@@ -22,6 +24,7 @@ Page({
       yearOptions: years,
       selectedYearIndex,
       report: annualReportService.getAnnualReport(years[selectedYearIndex]),
+      themePageStyle: themeService.getPageStyle(),
     })
   },
 

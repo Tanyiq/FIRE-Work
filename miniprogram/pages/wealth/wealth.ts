@@ -1,5 +1,6 @@
 import { assetService } from '../../services/assetService'
 import { snapshotService } from '../../services/snapshotService'
+import { themeService } from '../../services/themeService'
 import { drawAssetTrendChart } from '../../utils/chart'
 import { formatAmount, formatSignedAmount } from '../../utils/format'
 
@@ -34,9 +35,11 @@ Page({
     trendStartAssetText: formatAmount(0),
     trendEndAssetText: formatAmount(0),
     trendChangeText: formatSignedAmount(0),
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
+    this.setData({ themePageStyle: themeService.getPageStyle() })
     this.refreshAssets()
     this.refreshTrend()
   },

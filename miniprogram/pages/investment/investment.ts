@@ -1,5 +1,6 @@
 import { InvestmentRecordView } from '../../models/investment'
 import { investmentService } from '../../services/investmentService'
+import { themeService } from '../../services/themeService'
 
 const createFormData = () => ({
   selectedTypeIndex: 0,
@@ -25,6 +26,7 @@ Page({
     typeOptions: investmentService.getTypeOptions(),
     statusOptions: investmentService.getStatusOptions(),
     currentMonth: investmentService.getCurrentMonth(),
+    themePageStyle: themeService.getPageStyle(),
     ...createFormData(),
   },
 
@@ -33,7 +35,10 @@ Page({
   },
 
   refreshRecords() {
-    this.setData({ records: investmentService.getRecordViews() })
+    this.setData({
+      records: investmentService.getRecordViews(),
+      themePageStyle: themeService.getPageStyle(),
+    })
   },
 
   onToggleForm() {

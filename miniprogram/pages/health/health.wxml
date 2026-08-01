@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">WEALTH HEALTH</view>
   <text class="page-title">财富体检报告</text>

@@ -4,7 +4,7 @@ Design Token 定义在 `miniprogram/styles/design-tokens.wxss`，由 `app.wxss` 
 
 ## 设计原则
 
-- 成长感：绿色代表长期积累，金色用于里程碑和年度回顾。
+- 成长感：用户主题色代表长期积累，金色用于里程碑和年度回顾。
 - 克制：一个页面只保留一个主要操作，危险操作使用低饱和红色。
 - 一致：卡片、按钮、空状态和标题只使用语义 Token，不为单页创造近似色或近似尺寸。
 - 可读：正文最小使用 `--font-caption`，辅助文字与背景保持清晰对比。
@@ -19,3 +19,5 @@ Design Token 定义在 `miniprogram/styles/design-tokens.wxss`，由 `app.wxss` 
 - `--motion-*`：180ms 操作反馈、420ms 成长动效。
 
 页面可使用主题渐变，但基础颜色、间距、圆角、字号和动效时长应优先引用 Token。
+
+品牌色由 `themeService` 写入页面 CSS 自定义属性。默认主题为暮蓝，用户可以选择预设主题或输入满足文字对比度要求的 HEX 颜色；正向、警告和危险色不跟随主题变化。

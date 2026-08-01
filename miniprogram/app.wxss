@@ -18,7 +18,7 @@ page {
 .eyebrow {
   margin-bottom: 16rpx;
   margin-bottom: var(--space-sm);
-  color: #2f6b4f;
+  color: #536a8a;
   color: var(--color-brand);
   font-size: 24rpx;
   font-size: var(--font-body);

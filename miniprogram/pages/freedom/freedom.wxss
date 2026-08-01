@@ -4,7 +4,7 @@
   border-radius: 28rpx;
   border-radius: var(--radius-lg);
   color: #ffffff;
-  background: linear-gradient(150deg, #254535, #47735b);
+  background: linear-gradient(150deg, var(--color-brand-dark), var(--color-brand-end));
   box-shadow: 0 18rpx 46rpx rgba(42, 72, 56, 0.2);
 }
 
@@ -145,7 +145,7 @@
   border: 1rpx solid #d8e6dc;
   border-radius: 24rpx;
   border-radius: var(--radius-md);
-  background: #f0f7f2;
+  background: var(--color-brand-surface);
   animation: achievement-in 420ms ease-out both;
   animation: achievement-in var(--motion-growth) ease-out both;
 }
@@ -156,7 +156,7 @@
   height: 48rpx;
   border-radius: 50%;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
   background: var(--color-brand);
   font-size: 24rpx;
   font-size: var(--font-body);
@@ -175,7 +175,7 @@
 }
 
 .achievement-title {
-  color: #294438;
+  color: var(--color-brand-dark);
   color: var(--color-brand-dark);
   font-size: 28rpx;
   font-size: var(--font-subtitle);
@@ -226,7 +226,7 @@
 }
 
 .onboarding-progress {
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 26rpx;
   font-weight: 700;
 }
@@ -259,7 +259,7 @@
 .guide-step--done .step-number,
 .guide-step--active .step-number {
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
 }
 
 .step-main {
@@ -281,7 +281,7 @@
 .step-action,
 .current-badge {
   flex-shrink: 0;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 22rpx;
   font-weight: 600;
 }
@@ -289,7 +289,7 @@
 .current-badge {
   padding: 6rpx 11rpx;
   border-radius: 999rpx;
-  background: #e6eee8;
+  background: var(--color-brand-soft);
 }
 
 .advice-entry {
@@ -300,7 +300,7 @@
   padding: 29rpx 31rpx;
   border-radius: 22rpx;
   color: #ffffff;
-  background: #304c3e;
+  background: var(--color-brand-dark);
 }
 
 .advice-entry__eyebrow {
@@ -354,7 +354,7 @@
 
 .fire-reference-action {
   margin-top: 14rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 22rpx;
   font-weight: 600;
   text-align: right;
@@ -369,6 +369,14 @@
 .action-button {
   flex: 1;
   margin: 0;
+  width: 0;
+  min-height: 88rpx;
+  padding: 0 20rpx;
+  line-height: 88rpx;
+}
+
+.primary-button.action-button {
+  margin-top: 0;
 }
 
 .primary-button,
@@ -381,12 +389,12 @@
 .primary-button {
   margin-top: 28rpx;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
 }
 
 .secondary-button {
-  color: #2f6b4f;
-  background: #e6eee8;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .primary-button::after,
@@ -422,8 +430,8 @@
 }
 
 .goal-card--selected {
-  border-color: #2f6b4f;
-  background: #f0f7f2;
+  border-color: var(--color-brand);
+  background: var(--color-brand-surface);
 }
 
 .goal-card__top {
@@ -440,7 +448,7 @@
 
 .goal-asset {
   flex-shrink: 0;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 25rpx;
   font-weight: 600;
 }

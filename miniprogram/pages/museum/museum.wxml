@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <view class="eyebrow">LIFE MUSEUM</view>
   <text class="page-title">人生博物馆</text>

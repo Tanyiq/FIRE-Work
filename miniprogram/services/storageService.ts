@@ -10,6 +10,7 @@ const STORAGE_KEYS = {
   lastBackupAt: 'retirement_plan.last_backup_at',
   investmentRecords: 'retirement_plan.investment_records',
   investmentRecordsUpdatedAt: 'retirement_plan.investment_records_updated_at',
+  themeProfile: 'retirement_plan.theme_profile',
 } as const
 
 export const storageService = {

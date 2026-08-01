@@ -75,7 +75,7 @@
   padding: 48rpx 38rpx;
   border-radius: 28rpx;
   color: #ffffff;
-  background: linear-gradient(150deg, #2b4437, #4e735f);
+  background: linear-gradient(150deg, #2b4437, var(--color-brand-end));
   text-align: center;
 }
 
@@ -114,7 +114,7 @@
 .secondary-button {
   margin-top: 34rpx;
   border-radius: 999rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   background: #ffffff;
   font-size: 28rpx;
 }
@@ -141,7 +141,7 @@
   padding: 48rpx 38rpx;
   border-radius: 28rpx;
   color: #ffffff;
-  background: linear-gradient(150deg, #243a30, #47705d);
+  background: linear-gradient(150deg, var(--color-brand-dark), var(--color-brand-end));
 }
 
 .report-cover__label {
@@ -227,8 +227,8 @@
 }
 
 .change-highlight--positive {
-  color: #2f6b4f;
-  background: #e8f1eb;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .change-highlight--negative {
@@ -255,7 +255,7 @@
 .distance-note {
   display: block;
   margin-top: 28rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 27rpx;
 }
 
@@ -280,7 +280,7 @@
 
 .source-chip--selected {
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
 }
 
 .museum-empty {
@@ -308,7 +308,7 @@
 
 .museum-type {
   margin-top: 7rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 24rpx;
 }
 
@@ -321,7 +321,7 @@
 
 .summary-card {
   color: #ffffff;
-  background: #2c493a;
+  background: var(--color-brand-dark);
 }
 
 .section-index--light,
@@ -346,7 +346,7 @@
   margin-top: 30rpx;
   border-radius: 999rpx;
   color: #ffffff;
-  background: #2f6b4f;
+  background: var(--color-brand);
   font-size: 29rpx;
   font-weight: 600;
 }
@@ -358,7 +358,7 @@
 .generated-message {
   display: block;
   margin-top: 26rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   text-align: center;
   font-size: 25rpx;
 }

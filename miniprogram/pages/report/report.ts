@@ -1,6 +1,7 @@
 import { WealthChangeSource, WealthReportView } from '../../models/report'
 import { reportService } from '../../services/reportService'
 import { snapshotService } from '../../services/snapshotService'
+import { themeService } from '../../services/themeService'
 
 Page({
   data: {
@@ -11,6 +12,7 @@ Page({
     snapshotCount: snapshotService.getSnapshotList().length,
     savedReportCount: reportService.getReportList().length,
     hasSavedCurrentReport: false,
+    themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
@@ -29,6 +31,7 @@ Page({
         ? reports.some((item) => item.date === report.currentDate)
         : false,
       generatedMessage: '',
+      themePageStyle: themeService.getPageStyle(),
     })
   },
 

@@ -14,7 +14,7 @@
   padding: 34rpx;
   border-radius: 26rpx;
   color: #ffffff;
-  background: linear-gradient(145deg, #294438, #47705c);
+  background: linear-gradient(145deg, var(--color-brand-dark), var(--color-brand-end));
   box-shadow: 0 16rpx 42rpx rgba(42, 57, 48, 0.16);
 }
 
@@ -116,7 +116,7 @@
 }
 
 .setting-amount {
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 25rpx;
   font-weight: 600;
 }
@@ -131,6 +131,14 @@
   color: #a7ada9;
   font-size: 42rpx;
   line-height: 1;
+}
+
+.theme-swatch {
+  width: 38rpx;
+  height: 38rpx;
+  border: 4rpx solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1rpx rgba(36, 48, 41, 0.14);
 }
 
 .privacy-card {

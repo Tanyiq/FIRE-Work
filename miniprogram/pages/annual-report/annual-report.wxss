@@ -12,9 +12,9 @@
   padding: 10rpx 18rpx;
   border-radius: 999rpx;
   border-radius: var(--radius-pill);
-  color: #2f6b4f;
   color: var(--color-brand);
-  background: #e7eee9;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
   background: var(--color-brand-soft);
   font-size: 23rpx;
 }
@@ -171,8 +171,8 @@
 }
 
 .growth-highlight--positive {
-  color: #2f6b4f;
-  background: #e8f1eb;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .growth-highlight--negative {
@@ -193,7 +193,7 @@
 .empty-action {
   display: block;
   margin-top: 10rpx;
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-weight: 600;
 }
 
@@ -208,7 +208,7 @@
 }
 
 .freedom-level--current {
-  color: #2f6b4f;
+  color: var(--color-brand);
 }
 
 .freedom-arrow {
@@ -236,7 +236,7 @@
 }
 
 .habit-number {
-  color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 39rpx;
   font-weight: 700;
 }
@@ -274,7 +274,7 @@
 
 .investment-card {
   color: #ffffff;
-  background: #2d493b;
+  background: var(--color-brand-dark);
 }
 
 .section-index--light {

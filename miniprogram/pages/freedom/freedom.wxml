@@ -1,3 +1,4 @@
+<page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
   <block wx:if="{{hasConfiguration}}">
     <view class="eyebrow">MY FREEDOM ARCHIVE</view>

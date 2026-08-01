@@ -19,6 +19,7 @@ import {
 } from '../models/museum'
 import { WealthChangeSource, WealthReport } from '../models/report'
 import { AssetSnapshot } from '../models/snapshot'
+import { ThemeProfile } from '../models/theme'
 import { assetService } from './assetService'
 import { investmentService } from './investmentService'
 import { livingCostService } from './livingCostService'
@@ -26,6 +27,7 @@ import { museumService } from './museumService'
 import { reportService } from './reportService'
 import { snapshotService } from './snapshotService'
 import { storageService } from './storageService'
+import { themeService } from './themeService'
 
 const BACKUP_VERSION = '1.0' as const
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
@@ -160,6 +162,10 @@ const isInvestmentRecord = (value: unknown): value is InvestmentRecord => {
   )
 }
 
+const isThemeProfile = (value: unknown): value is ThemeProfile =>
+  isObject(value) && /^#[0-9A-F]{6}$/.test(String(value.primaryColor)) &&
+  isNonNegativeNumber(value.updatedAt)
+
 const parseBackup = (json: string): WealthBackup | null => {
   let value: unknown
   try {
@@ -172,6 +178,7 @@ const parseBackup = (json: string): WealthBackup | null => {
   }
   const goal = value.user.freedomGoal
   const investments = value.investments === undefined ? [] : value.investments
+  const theme = value.theme
   if (
     !isTimestamp(value.exportedAt) ||
     !isTimestamp(value.user.joinedAt) ||
@@ -181,7 +188,8 @@ const parseBackup = (json: string): WealthBackup | null => {
     !Array.isArray(value.reports) || !value.reports.every(isReport) ||
     !Array.isArray(value.museum) || !value.museum.every(isCollection) ||
     (value.livingCost !== null && !isLivingCost(value.livingCost)) ||
-    !Array.isArray(investments) || !investments.every(isInvestmentRecord)
+    !Array.isArray(investments) || !investments.every(isInvestmentRecord) ||
+    (theme !== undefined && !isThemeProfile(theme))
   ) {
     return null
   }
@@ -198,6 +206,7 @@ const parseBackup = (json: string): WealthBackup | null => {
     museum: value.museum as MuseumCollection[],
     livingCost: value.livingCost as LivingCostProfile | null,
     investments: investments as InvestmentRecord[],
+    theme: theme as ThemeProfile | undefined,
   }
 }
 
@@ -233,6 +242,8 @@ const getLatestDataAt = (): number => {
     storageService.keys.investmentRecordsUpdatedAt,
   )
   if (isTimestamp(investmentUpdatedAt)) timestamps.push(investmentUpdatedAt)
+  const themeUpdatedAt = themeService.getProfile().updatedAt
+  if (isTimestamp(themeUpdatedAt)) timestamps.push(themeUpdatedAt)
   return timestamps.length > 0 ? Math.max(...timestamps) : getJoinedAt()
 }
 
@@ -258,6 +269,7 @@ const createBackup = (): WealthBackup => ({
   museum: museumService.getCollectionList(),
   livingCost: livingCostService.getProfile(),
   investments: investmentService.getRecordList(),
+  theme: themeService.getProfile(),
 })
 
 const copyBackupToClipboard = (json: string): Promise<BackupOperationResult> =>
@@ -298,6 +310,7 @@ const restoreBackup = (backup: WealthBackup): BackupOperationResult => {
     keys.profileJoinedAt,
     keys.investmentRecords,
     keys.investmentRecordsUpdatedAt,
+    keys.themeProfile,
   ]
   const previous = targetKeys.map((key) => ({ key, value: storageService.get<unknown>(key) }))
   const operations: Array<() => boolean> = [
@@ -315,6 +328,9 @@ const restoreBackup = (backup: WealthBackup): BackupOperationResult => {
     () => storageService.set(keys.profileJoinedAt, backup.user.joinedAt),
     () => storageService.set(keys.investmentRecords, backup.investments),
     () => storageService.remove(keys.investmentRecordsUpdatedAt),
+    () => backup.theme
+      ? storageService.set(keys.themeProfile, backup.theme)
+      : true,
   ]
   if (operations.every((operation) => operation())) {
     return { success: true, message: '财富档案已恢复。' }

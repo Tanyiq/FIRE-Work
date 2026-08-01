@@ -1,4 +1,5 @@
 import { AnnualWealthReport } from '../models/annualReport'
+import { themeService } from '../services/themeService'
 
 const drawText = (
   context: WechatMiniprogram.CanvasContext,
@@ -22,10 +23,11 @@ export const drawAnnualPoster = (
   complete: () => void,
 ) => {
   const context = wx.createCanvasContext(canvasId, page)
+  const palette = themeService.getPalette()
   context.setFillStyle('#f7f5ef')
   context.fillRect(0, 0, 600, 800)
 
-  context.setFillStyle('#2d493b')
+  context.setFillStyle(palette.dark)
   context.fillRect(0, 0, 600, 255)
   drawText(context, String(report.year), 48, 76, 54, '#e4bd6b')
   drawText(context, '我的财富年度回顾', 48, 132, 34, '#ffffff')
@@ -48,7 +50,7 @@ export const drawAnnualPoster = (
   drawText(context, '自由成长', 48, 493, 20, '#8a7447')
   drawText(context, report.startFreedomText, 48, 545, 35, '#253129')
   drawText(context, '→', 300, 542, 26, '#a4aaa6', 'center')
-  drawText(context, report.endFreedomText, 552, 545, 35, '#2f6b4f', 'right')
+  drawText(context, report.endFreedomText, 552, 545, 35, palette.primary, 'right')
 
   context.setFillStyle('#ffffff')
   context.fillRect(48, 598, 504, 116)
