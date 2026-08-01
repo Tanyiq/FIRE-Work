@@ -25,7 +25,8 @@ const GROWTH_ASSET_TYPES: ReadonlyArray<AssetType> = [
 const roundRatio = (value: number): number => Math.round(value * 10000) / 10000
 
 const getEssentialMonthlyCost = (): number | null => {
-  return livingCostService.getProfile()?.essentialMonthlyCost || null
+  const profile = livingCostService.getProfile()
+  return profile ? profile.essentialMonthlyCost || null : null
 }
 
 const getTrend = (): WealthHealthTrend => {
@@ -120,8 +121,8 @@ export const healthService = {
         .reduce((sum, category) => sum + category.totalAmount, 0)
     const safeAsset = getAmountByTypes(SAFE_ASSET_TYPES)
     const growthAsset = getAmountByTypes(GROWTH_ASSET_TYPES)
-    const otherAsset =
-      categories.find((category) => category.value === 'other')?.totalAmount || 0
+    const otherCategory = categories.find((category) => category.value === 'other')
+    const otherAsset = otherCategory ? otherCategory.totalAmount : 0
     const safeAssetRatio = totalAsset > 0 ? roundRatio(safeAsset / totalAsset) : 0
     const growthAssetRatio = totalAsset > 0 ? roundRatio(growthAsset / totalAsset) : 0
     const otherAssetRatio = totalAsset > 0 ? roundRatio(otherAsset / totalAsset) : 0

@@ -109,9 +109,10 @@ export const assetService = {
 
     const current = assets[index]
     const nextInput: AssetInput = {
-      type: updates.type ?? current.type,
-      name: updates.name ?? current.name,
-      currentAmount: updates.currentAmount ?? current.currentAmount,
+      type: updates.type !== undefined ? updates.type : current.type,
+      name: updates.name !== undefined ? updates.name : current.name,
+      currentAmount:
+        updates.currentAmount !== undefined ? updates.currentAmount : current.currentAmount,
     }
     if (!isValidInput(nextInput)) {
       return null

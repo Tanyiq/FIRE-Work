@@ -60,10 +60,12 @@ const toView = (record: InvestmentRecord): InvestmentRecordView => {
   const resultRate = record.investedAmount > 0
     ? Math.round((resultAmount / record.investedAmount) * 10000) / 10000
     : null
+  const typeOption = TYPE_OPTIONS.find((item) => item.value === record.type)
+  const statusOption = STATUS_OPTIONS.find((item) => item.value === record.status)
   return {
     ...record,
-    typeLabel: TYPE_OPTIONS.find((item) => item.value === record.type)?.label || '其他',
-    statusLabel: STATUS_OPTIONS.find((item) => item.value === record.status)?.label || record.status,
+    typeLabel: typeOption ? typeOption.label : '其他',
+    statusLabel: statusOption ? statusOption.label : record.status,
     investedAmountText: formatAmount(record.investedAmount),
     currentAmountText: formatAmount(record.currentAmount),
     resultAmount,

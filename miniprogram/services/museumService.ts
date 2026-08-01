@@ -113,11 +113,15 @@ const saveCollectionList = (collections: MuseumCollection[]): boolean =>
 const createCollectionId = (): string =>
   `museum_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
 
-const getTypeLabel = (type: MuseumCollectionType): string =>
-  TYPE_OPTIONS.find((option) => option.value === type)?.label || '收藏'
+const getTypeLabel = (type: MuseumCollectionType): string => {
+  const option = TYPE_OPTIONS.find((item) => item.value === type)
+  return option ? option.label : '收藏'
+}
 
-const getStatusLabel = (status: MuseumCollectionStatus): string =>
-  STATUS_OPTIONS.find((option) => option.value === status)?.label || status
+const getStatusLabel = (status: MuseumCollectionStatus): string => {
+  const option = STATUS_OPTIONS.find((item) => item.value === status)
+  return option ? option.label : status
+}
 
 const calculateUsageDays = (
   collection: MuseumCollection,
@@ -232,13 +236,13 @@ export const museumService = {
 
     const current = collections[index]
     const nextInput: MuseumCollectionInput = {
-      type: updates.type ?? current.type,
-      name: updates.name ?? current.name,
-      amount: updates.amount ?? current.amount,
-      startDate: updates.startDate ?? current.startDate,
-      status: updates.status ?? current.status,
+      type: updates.type !== undefined ? updates.type : current.type,
+      name: updates.name !== undefined ? updates.name : current.name,
+      amount: updates.amount !== undefined ? updates.amount : current.amount,
+      startDate: updates.startDate !== undefined ? updates.startDate : current.startDate,
+      status: updates.status !== undefined ? updates.status : current.status,
       retiredDate: updates.retiredDate === undefined ? current.retiredDate : updates.retiredDate,
-      story: updates.story ?? current.story,
+      story: updates.story !== undefined ? updates.story : current.story,
     }
     if (!isValidInput(nextInput)) {
       return null

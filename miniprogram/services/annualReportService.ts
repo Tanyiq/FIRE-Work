@@ -103,9 +103,9 @@ export const annualReportService = {
       snapshotCount: snapshots.length,
       hasWealthData: Boolean(startSnapshot),
       hasWealthChange: snapshots.length > 1,
-      startAsset: startSnapshot?.totalAsset ?? null,
+      startAsset: startSnapshot ? startSnapshot.totalAsset : null,
       startAssetText: startSnapshot ? formatAmount(startSnapshot.totalAsset) : '暂无快照',
-      endAsset: endSnapshot?.totalAsset ?? null,
+      endAsset: endSnapshot ? endSnapshot.totalAsset : null,
       endAssetText: endSnapshot ? formatAmount(endSnapshot.totalAsset) : '暂无快照',
       assetGrowth,
       assetGrowthText: assetGrowth === null ? '暂无可比数据' : formatSignedAmount(assetGrowth),
@@ -120,8 +120,8 @@ export const annualReportService = {
       investmentReview: {
         recordCount: investments.length,
         reviewedCount: lessons.length,
-        biggestLesson: lessonRecord?.lesson || null,
-        lessonRecordName: lessonRecord?.name || null,
+        biggestLesson: lessonRecord ? lessonRecord.lesson : null,
+        lessonRecordName: lessonRecord ? lessonRecord.name : null,
       },
     }
   },

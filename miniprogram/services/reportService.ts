@@ -47,8 +47,10 @@ const isReport = (value: unknown): value is WealthReport => {
 const saveReportList = (reports: WealthReport[]): boolean =>
   storageService.set(storageService.keys.reports, reports)
 
-const getSourceLabel = (source: WealthChangeSource): string =>
-  SOURCE_OPTIONS.find((option) => option.value === source)?.label || '其他'
+const getSourceLabel = (source: WealthChangeSource): string => {
+  const option = SOURCE_OPTIONS.find((item) => item.value === source)
+  return option ? option.label : '其他'
+}
 
 const getSummary = (assetChange: number): string => {
   if (assetChange > 0) {
