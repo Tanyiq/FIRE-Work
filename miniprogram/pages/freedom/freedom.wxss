@@ -16,8 +16,6 @@
 .onboarding-title,
 .step-title,
 .step-text,
-.advice-entry__eyebrow,
-.advice-entry__title,
 .fire-reference-label,
 .fire-reference-title,
 .fire-reference-text,
@@ -132,76 +130,6 @@
   background: var(--color-surface);
 }
 
-.archive-complete-card {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-  gap: var(--space-sm);
-  margin-top: 24rpx;
-  margin-top: var(--space-md);
-  padding: 24rpx 32rpx;
-  padding: var(--space-md) var(--space-lg);
-  border: 1rpx solid #d8e6dc;
-  border-radius: 24rpx;
-  border-radius: var(--radius-md);
-  background: var(--color-brand-surface);
-  animation: achievement-in 420ms ease-out both;
-  animation: achievement-in var(--motion-growth) ease-out both;
-}
-
-.achievement-mark {
-  flex-shrink: 0;
-  width: 48rpx;
-  height: 48rpx;
-  border-radius: 50%;
-  color: #ffffff;
-  background: var(--color-brand);
-  background: var(--color-brand);
-  font-size: 24rpx;
-  font-size: var(--font-body);
-  font-weight: 700;
-  line-height: 48rpx;
-  text-align: center;
-}
-
-.achievement-main {
-  min-width: 0;
-}
-
-.achievement-title,
-.achievement-text {
-  display: block;
-}
-
-.achievement-title {
-  color: var(--color-brand-dark);
-  color: var(--color-brand-dark);
-  font-size: 28rpx;
-  font-size: var(--font-subtitle);
-  font-weight: 650;
-}
-
-.achievement-text {
-  margin-top: 8rpx;
-  margin-top: var(--space-xs);
-  color: #727c76;
-  color: var(--color-text-muted);
-  font-size: 20rpx;
-  font-size: var(--font-caption);
-  line-height: 1.5;
-}
-
-@keyframes achievement-in {
-  from {
-    opacity: 0;
-    transform: translateY(12rpx);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .onboarding-heading {
   display: flex;
   align-items: center;
@@ -291,36 +219,6 @@
   background: var(--color-brand-soft);
 }
 
-.advice-entry {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 24rpx;
-  padding: 29rpx 31rpx;
-  border-radius: 22rpx;
-  color: #ffffff;
-  background: var(--color-brand-dark);
-}
-
-.advice-entry__eyebrow {
-  color: #e3bd6c;
-  font-size: 18rpx;
-  font-weight: 700;
-  letter-spacing: 2rpx;
-}
-
-.advice-entry__title {
-  margin-top: 7rpx;
-  font-size: 28rpx;
-  font-weight: 650;
-}
-
-.advice-entry__arrow {
-  margin-left: 18rpx;
-  color: #e3bd6c;
-  font-size: 44rpx;
-}
-
 .fire-reference-card {
   border: 1rpx solid #e5dfd2;
   background: #fffdf8;
@@ -369,6 +267,25 @@
 }
 
 .primary-button.action-button {
+  margin-top: 0;
+}
+
+.edit-goal-actions {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 28rpx;
+}
+
+.edit-goal-button {
+  flex: 1;
+  width: 0;
+  min-height: 88rpx;
+  margin: 0;
+  padding: 0 20rpx;
+  line-height: 88rpx;
+}
+
+.primary-button.edit-goal-button {
   margin-top: 0;
 }
 

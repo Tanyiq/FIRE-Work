@@ -1,6 +1,6 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
 <view class="page-shell">
-  <block wx:if="{{hasConfiguration}}">
+  <block wx:if="{{hasConfiguration && !isEditingGoal}}">
     <view class="eyebrow">MY FREEDOM ARCHIVE</view>
     <text class="page-title">我的自由档案</text>
 
@@ -66,22 +66,6 @@
       </view>
     </view>
 
-    <view wx:else class="archive-complete-card">
-      <view class="achievement-mark">✓</view>
-      <view class="achievement-main">
-        <text class="achievement-title">你的财富档案已建立</text>
-        <text class="achievement-text">自由目标 ✓　资产记录 ✓　生活成本 ✓　人生收藏 ✓</text>
-      </view>
-    </view>
-
-    <view class="advice-entry" hover-class="tap-card--active" bindtap="onGoToAdvice">
-      <view>
-        <text class="advice-entry__eyebrow">WEALTH GUIDANCE</text>
-        <text class="advice-entry__title">查看财富建议中心</text>
-      </view>
-      <text class="advice-entry__arrow">›</text>
-    </view>
-
     <view class="fire-reference-card" hover-class="tap-card--active" bindtap="onGoToLivingCost">
       <view wx:if="{{balancedFireScenario}}">
         <text class="fire-reference-label">按照你的基础生活成本</text>
@@ -106,7 +90,7 @@
     <view class="eyebrow">CREATE YOUR ARCHIVE</view>
     <text class="page-title">{{isEditingGoal ? '调整梦想生活' : '创建你的财富档案'}}</text>
 
-    <view wx:if="{{!isEditingGoal}}" class="first-guide">
+    <view wx:if="{{!hasConfiguration}}" class="first-guide">
       <view class="guide-step guide-step--active">
         <text class="step-number">1</text>
         <view class="step-main"><text class="step-title">选择梦想生活</text></view>
@@ -118,7 +102,7 @@
     </view>
 
     <view class="setup-section">
-      <text class="setup-kicker">STEP 1</text>
+      <text class="setup-kicker">{{isEditingGoal ? 'FREEDOM GOAL' : 'STEP 1'}}</text>
       <text class="section-title">选择你的梦想生活</text>
       <text class="setup-note">等级代表生活质量，之后可以随时调整。</text>
       <view class="goal-list">
@@ -128,7 +112,11 @@
         </view>
       </view>
       <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-      <button class="primary-button" bindtap="onSaveConfiguration">保存并进入下一步</button>
+      <view wx:if="{{isEditingGoal}}" class="edit-goal-actions">
+        <button class="secondary-button edit-goal-button" bindtap="onCancelEditConfiguration">取消修改</button>
+        <button class="primary-button edit-goal-button" bindtap="onSaveConfiguration">保存目标</button>
+      </view>
+      <button wx:else class="primary-button" bindtap="onSaveConfiguration">保存并进入下一步</button>
     </view>
   </block>
 </view>

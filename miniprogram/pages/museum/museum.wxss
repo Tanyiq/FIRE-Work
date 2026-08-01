@@ -55,7 +55,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 92rpx;
+  height: 92rpx;
+  line-height: 1;
+}
+
+.picker-field > text {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  line-height: 1;
 }
 
 .text-field {
@@ -71,6 +79,35 @@
 .picker-arrow {
   color: #7a817d;
   font-size: 25rpx;
+}
+
+.status-selector {
+  display: flex;
+  gap: 14rpx;
+  padding: 8rpx;
+  border: 2rpx solid #e0e2dd;
+  border-radius: 18rpx;
+  background: #fafbf9;
+}
+
+.status-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 1;
+  height: 76rpx;
+  border-radius: 13rpx;
+  color: #68716c;
+  font-size: 26rpx;
+  line-height: 1;
+  text-align: center;
+}
+
+.status-option--selected {
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
+  font-weight: 600;
 }
 
 .validation-message {

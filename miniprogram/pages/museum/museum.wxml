@@ -108,12 +108,16 @@
       </picker>
 
       <text class="field-label">{{statusFieldLabel}}</text>
-      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{selectedStatusIndex}}" bindchange="onStatusChange">
-        <view class="picker-field">
-          <text>{{selectedStatusLabel}}</text>
-          <text class="picker-arrow">选择 ›</text>
-        </view>
-      </picker>
+      <view class="status-selector">
+        <view
+          wx:for="{{statusOptions}}"
+          wx:key="value"
+          class="status-option {{selectedStatusIndex === index ? 'status-option--selected' : ''}}"
+          hover-class="tap-card--active"
+          data-index="{{index}}"
+          bindtap="onStatusSelect"
+        >{{item.label}}</view>
+      </view>
 
       <view wx:if="{{selectedStatusIndex === 1}}">
         <text class="field-label">{{retiredDateLabel}}</text>

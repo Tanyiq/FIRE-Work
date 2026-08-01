@@ -135,7 +135,7 @@ Page({
   },
 
   onSaveConfiguration() {
-    const isFirstConfiguration = !this.data.isEditingGoal
+    const isFirstConfiguration = !this.data.hasConfiguration
     const result = freedomService.saveConfiguration(this.data.selectedLevel)
 
     if (!result.success || !result.dashboard) {
@@ -145,6 +145,7 @@ Page({
 
     this.setData({
       validationMessage: '',
+      isEditingGoal: false,
     })
     if (isFirstConfiguration && assetService.calculateTotalAsset() <= 0) {
       onboardingFlowService.setStep('asset')
@@ -161,10 +162,18 @@ Page({
     }
 
     this.setData({
-      hasConfiguration: false,
       selectedLevel: dashboard.goal.level,
       validationMessage: '',
       isEditingGoal: true,
+    })
+  },
+
+  onCancelEditConfiguration() {
+    const dashboard = this.data.dashboard
+    this.setData({
+      selectedLevel: dashboard ? dashboard.goal.level : '',
+      validationMessage: '',
+      isEditingGoal: false,
     })
   },
 
@@ -174,10 +183,6 @@ Page({
 
   onGoToLivingCost() {
     wx.navigateTo({ url: '/pages/living-cost/living-cost' })
-  },
-
-  onGoToAdvice() {
-    wx.navigateTo({ url: '/pages/advice/advice' })
   },
 
   onGoToMuseum() {

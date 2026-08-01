@@ -21,7 +21,6 @@ const createFormData = () => ({
   selectedTypeLabel: '实物',
   statusOptions: museumService.getStatusOptions('physical'),
   selectedStatusIndex: 0,
-  selectedStatusLabel: '使用中',
   statusFieldLabel: '使用状态',
   retiredDateLabel: '退役 / 牺牲日期',
   nameInput: '',
@@ -147,18 +146,18 @@ Page({
       selectedTypeIndex,
       selectedTypeLabel: this.data.typeOptions[selectedTypeIndex].label,
       statusOptions,
-      selectedStatusLabel: statusOptions[this.data.selectedStatusIndex].label,
       statusFieldLabel: getStatusFieldLabel(type),
       retiredDateLabel: getRetiredDateLabel(type),
       validationMessage: '',
     })
   },
 
-  onStatusChange(event: WechatMiniprogram.CustomEvent<{ value: number }>) {
-    const selectedStatusIndex = Number(event.detail.value)
+  onStatusSelect(
+    event: WechatMiniprogram.BaseEvent<{}, { index: number }>,
+  ) {
+    const selectedStatusIndex = Number(event.currentTarget.dataset.index)
     this.setData({
       selectedStatusIndex,
-      selectedStatusLabel: this.data.statusOptions[selectedStatusIndex].label,
       validationMessage: '',
     })
   },
@@ -269,7 +268,6 @@ Page({
       selectedTypeLabel: this.data.typeOptions[selectedTypeIndex].label,
       statusOptions,
       selectedStatusIndex,
-      selectedStatusLabel: statusOptions[selectedStatusIndex].label,
       statusFieldLabel: getStatusFieldLabel(collection.type),
       retiredDateLabel: getRetiredDateLabel(collection.type),
       nameInput: collection.name,
