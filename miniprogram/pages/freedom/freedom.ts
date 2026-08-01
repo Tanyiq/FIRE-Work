@@ -1,9 +1,11 @@
 import { FireScenarioView } from '../../models/fire'
 import { FreedomDashboard, SelectableFreedomLevel } from '../../models/freedom'
 import { fireService } from '../../services/fireService'
+import { assetService } from '../../services/assetService'
 import { freedomService } from '../../services/freedomService'
 import { livingCostService } from '../../services/livingCostService'
 import { museumService } from '../../services/museumService'
+import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { formatAmount, formatProgress } from '../../utils/format'
@@ -107,6 +109,7 @@ Page({
   },
 
   onSaveConfiguration() {
+    const isFirstConfiguration = !this.data.isEditingGoal
     const result = freedomService.saveConfiguration(this.data.selectedLevel)
 
     if (!result.success || !result.dashboard) {
@@ -117,6 +120,11 @@ Page({
     this.setData({
       validationMessage: '',
     })
+    if (isFirstConfiguration && assetService.calculateTotalAsset() <= 0) {
+      onboardingFlowService.setStep('asset')
+      wx.switchTab({ url: '/pages/wealth/wealth' })
+      return
+    }
     this.refreshPage()
   },
 
@@ -147,6 +155,21 @@ Page({
   },
 
   onGoToMuseum() {
+    wx.switchTab({ url: '/pages/museum/museum' })
+  },
+
+  onStartAssetGuide() {
+    onboardingFlowService.setStep('asset')
+    wx.switchTab({ url: '/pages/wealth/wealth' })
+  },
+
+  onStartLivingCostGuide() {
+    onboardingFlowService.setStep('living_cost')
+    wx.navigateTo({ url: '/pages/living-cost/living-cost' })
+  },
+
+  onStartMuseumGuide() {
+    onboardingFlowService.setStep('museum')
     wx.switchTab({ url: '/pages/museum/museum' })
   },
 })

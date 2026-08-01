@@ -11,6 +11,7 @@ const STORAGE_KEYS = {
   investmentRecords: 'retirement_plan.investment_records',
   investmentRecordsUpdatedAt: 'retirement_plan.investment_records_updated_at',
   themeProfile: 'retirement_plan.theme_profile',
+  onboardingFlow: 'retirement_plan.onboarding_flow',
 } as const
 
 export const storageService = {

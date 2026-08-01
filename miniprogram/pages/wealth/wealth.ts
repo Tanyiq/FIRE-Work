@@ -1,4 +1,7 @@
 import { assetService } from '../../services/assetService'
+import { livingCostService } from '../../services/livingCostService'
+import { museumService } from '../../services/museumService'
+import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { drawAssetTrendChart } from '../../utils/chart'
@@ -27,6 +30,8 @@ Page({
     assetAmountInput: '',
     editingAssetId: '',
     validationMessage: '',
+    isGuidedAssetStep: false,
+    guidedAssetCompleted: false,
     trendRange: 'month' as 'month' | 'year',
     trendPoints: snapshotService.getTrendPoints('month'),
     trendStartAsset: 0,
@@ -41,7 +46,7 @@ Page({
   onShow() {
     this.setData({ themePageStyle: themeService.getPageStyle() })
     this.refreshAssets()
-    this.refreshTrend()
+    if (!this.data.isGuidedAssetStep) this.refreshTrend()
   },
 
   onReady() {
@@ -50,10 +55,14 @@ Page({
 
   refreshAssets() {
     const totalAsset = assetService.calculateTotalAsset()
+    const isGuidedAssetStep = onboardingFlowService.getStep() === 'asset'
     this.setData({
       totalAsset,
       totalAssetText: formatAmount(totalAsset),
       categories: getCategoryViews(),
+      isGuidedAssetStep,
+      guidedAssetCompleted: isGuidedAssetStep && totalAsset > 0,
+      showAssetForm: isGuidedAssetStep && totalAsset <= 0 ? true : this.data.showAssetForm,
     })
   },
 
@@ -162,6 +171,40 @@ Page({
       validationMessage: '',
     })
     this.refreshAssets()
+    if (this.data.isGuidedAssetStep) {
+      wx.showToast({ title: '资产基线已建立', icon: 'success' })
+      setTimeout(() => this.advanceOnboarding(), 350)
+      return
+    }
+    this.refreshTrend()
+  },
+
+  advanceOnboarding() {
+    if (!livingCostService.getProfile()) {
+      onboardingFlowService.setStep('living_cost')
+      wx.navigateTo({ url: '/pages/living-cost/living-cost' })
+      return
+    }
+    if (museumService.getCollectionList().length === 0) {
+      onboardingFlowService.setStep('museum')
+      wx.switchTab({ url: '/pages/museum/museum' })
+      return
+    }
+    onboardingFlowService.clear()
+    wx.switchTab({ url: '/pages/freedom/freedom' })
+  },
+
+  onContinueGuide() {
+    this.advanceOnboarding()
+  },
+
+  onExitGuide() {
+    onboardingFlowService.clear()
+    this.setData({
+      isGuidedAssetStep: false,
+      guidedAssetCompleted: false,
+      showAssetForm: false,
+    })
     this.refreshTrend()
   },
 

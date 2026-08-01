@@ -1,5 +1,6 @@
 import { MuseumCollectionView } from '../../models/museum'
 import { museumService } from '../../services/museumService'
+import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { themeService } from '../../services/themeService'
 
 Page({
@@ -22,6 +23,7 @@ Page({
     photoPathInput: '',
     isChoosingPhoto: false,
     validationMessage: '',
+    isGuidedMuseumStep: false,
     themePageStyle: themeService.getPageStyle(),
   },
 
@@ -36,8 +38,12 @@ Page({
   },
 
   refreshCollections() {
+    const collections = museumService.getCollectionViews()
+    const isGuidedMuseumStep = onboardingFlowService.getStep() === 'museum'
     this.setData({
-      collections: museumService.getCollectionViews(),
+      collections,
+      isGuidedMuseumStep,
+      showAddForm: isGuidedMuseumStep && collections.length === 0 ? true : this.data.showAddForm,
       themePageStyle: themeService.getPageStyle(),
     })
   },
@@ -185,6 +191,19 @@ Page({
       validationMessage: '',
     })
     this.refreshCollections()
+    if (this.data.isGuidedMuseumStep) {
+      onboardingFlowService.clear()
+      wx.showToast({ title: '财富档案已建立', icon: 'success' })
+      setTimeout(() => wx.switchTab({ url: '/pages/freedom/freedom' }), 350)
+    }
+  },
+
+  onExitGuide() {
+    onboardingFlowService.clear()
+    this.setData({
+      isGuidedMuseumStep: false,
+      showAddForm: false,
+    })
   },
 
   onViewCollection(event: WechatMiniprogram.BaseEvent<{}, { id: string }>) {

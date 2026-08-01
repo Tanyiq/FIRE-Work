@@ -5,6 +5,8 @@ import {
 } from '../../models/livingCost'
 import { fireService } from '../../services/fireService'
 import { livingCostService } from '../../services/livingCostService'
+import { museumService } from '../../services/museumService'
+import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { themeService } from '../../services/themeService'
 import { formatAmount } from '../../utils/format'
 
@@ -30,6 +32,7 @@ Page({
     comfortableMonthlyCostText: formatAmount(0),
     fireScenarios: [] as FireScenarioView[],
     validationMessage: '',
+    isGuidedLivingCostStep: false,
     themePageStyle: themeService.getPageStyle(),
   },
 
@@ -52,7 +55,10 @@ Page({
   },
 
   onShow() {
-    this.setData({ themePageStyle: themeService.getPageStyle() })
+    this.setData({
+      themePageStyle: themeService.getPageStyle(),
+      isGuidedLivingCostStep: onboardingFlowService.getStep() === 'living_cost',
+    })
   },
 
   onAmountInput(event: WechatMiniprogram.CustomEvent<{ value: string }>) {
@@ -126,6 +132,23 @@ Page({
     }
 
     wx.showToast({ title: '已保存', icon: 'success' })
+    if (this.data.isGuidedLivingCostStep) {
+      setTimeout(() => {
+        if (museumService.getCollectionList().length === 0) {
+          onboardingFlowService.setStep('museum')
+          wx.switchTab({ url: '/pages/museum/museum' })
+          return
+        }
+        onboardingFlowService.clear()
+        wx.switchTab({ url: '/pages/freedom/freedom' })
+      }, 350)
+      return
+    }
     setTimeout(() => wx.navigateBack(), 500)
+  },
+
+  onExitGuide() {
+    onboardingFlowService.clear()
+    this.setData({ isGuidedLivingCostStep: false })
   },
 })

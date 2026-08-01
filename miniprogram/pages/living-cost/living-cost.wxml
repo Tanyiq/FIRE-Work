@@ -4,6 +4,15 @@
   <text class="page-title">生活成本档案</text>
   <text class="page-description">自由不是一个固定数字，而是不同生活方式和风险选择下的结果。</text>
 
+  <view wx:if="{{isGuidedLivingCostStep}}" class="guide-focus-card">
+    <view class="guide-focus-card__top">
+      <text class="guide-focus-card__step">STEP 3 / 4</text>
+      <text class="guide-focus-card__exit" bindtap="onExitGuide">暂时退出引导</text>
+    </view>
+    <text class="guide-focus-card__title">填写每月生活成本</text>
+    <text class="guide-focus-card__text">先完成基础生活成本。保存后会自动进入人生收藏，分析内容稍后再看也不迟。</text>
+  </view>
+
   <view class="section-heading">
     <text class="section-title">基础生活成本</text>
     <text class="section-note">维持日常生活所需的每月支出</text>
@@ -77,7 +86,7 @@
     </view>
   </view>
 
-  <view wx:if="{{fireScenarios.length > 0}}" class="analysis-card">
+  <view wx:if="{{fireScenarios.length > 0 && !isGuidedLivingCostStep}}" class="analysis-card">
     <text class="analysis-title">自由成本分析</text>
     <text class="analysis-note">以下方案均按基础生活成本计算，只代表不同实现方式。平衡方案参考 5%，投资方案参考 8%。</text>
     <view wx:for="{{fireScenarios}}" wx:key="id" class="scenario-row">
@@ -94,5 +103,5 @@
   </view>
 
   <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-  <button class="save-button" bindtap="onSave">保存生活成本</button>
+  <button class="save-button" bindtap="onSave">{{isGuidedLivingCostStep ? '保存并进入下一步' : '保存生活成本'}}</button>
 </view>

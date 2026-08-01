@@ -4,7 +4,16 @@
   <text class="page-title">人生博物馆</text>
   <text class="page-description">收藏那些真正创造了人生价值的消费与经历。</text>
 
-  <view wx:if="{{selectedCollection}}" class="detail-section">
+  <view wx:if="{{isGuidedMuseumStep}}" class="guide-focus-card">
+    <view class="guide-focus-card__top">
+      <text class="guide-focus-card__step">STEP 4 / 4</text>
+      <text class="guide-focus-card__exit" bindtap="onExitGuide">暂时退出引导</text>
+    </view>
+    <text class="guide-focus-card__title">收藏第一段人生经历</text>
+    <text class="guide-focus-card__text">记录一件物品、一次经历或一个重要事件。保存后，你的财富档案就建立完成了。</text>
+  </view>
+
+  <view wx:if="{{selectedCollection && !isGuidedMuseumStep}}" class="detail-section">
     <text class="back-action" bindtap="onCloseDetail">‹ 返回收藏列表</text>
     <view class="detail-card">
       <image wx:if="{{selectedCollection.photoPath}}" class="detail-photo" src="{{selectedCollection.photoPath}}" mode="aspectFill"></image>
@@ -51,7 +60,7 @@
   </view>
 
   <view wx:else>
-    <button class="add-button" bindtap="onToggleAddForm">
+    <button wx:if="{{!isGuidedMuseumStep}}" class="add-button" bindtap="onToggleAddForm">
       {{showAddForm ? '收起录入' : '+ 添加人生收藏'}}
     </button>
 
@@ -109,17 +118,17 @@
       <button wx:else class="photo-button" loading="{{isChoosingPhoto}}" disabled="{{isChoosingPhoto}}" bindtap="onChoosePhoto">从相册或相机添加照片</button>
 
       <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-      <button class="save-button" bindtap="onAddCollection">保存收藏</button>
+      <button class="save-button" bindtap="onAddCollection">{{isGuidedMuseumStep ? '保存并完成档案' : '保存收藏'}}</button>
     </view>
 
-    <view wx:if="{{collections.length === 0 && !showAddForm}}" class="empty-card">
+    <view wx:if="{{collections.length === 0 && !showAddForm && !isGuidedMuseumStep}}" class="empty-card">
       <text class="empty-symbol">◇</text>
       <text class="empty-title">收藏第一段值得记住的人生</text>
       <text class="empty-text">不必等待特别时刻，从一件有故事的物品或一次真实经历开始。</text>
       <button class="empty-action" bindtap="onToggleAddForm">添加第一件收藏</button>
     </view>
 
-    <view wx:if="{{collections.length > 0}}" class="collection-section">
+    <view wx:if="{{collections.length > 0 && !isGuidedMuseumStep}}" class="collection-section">
       <view class="section-heading">
         <text class="section-title">我的收藏</text>
         <text class="collection-count">{{collections.length}} 件</text>
