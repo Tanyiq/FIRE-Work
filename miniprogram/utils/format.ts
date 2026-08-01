@@ -20,3 +20,8 @@ export const formatProgress = (progress: number): string => {
   const safeProgress = Number.isFinite(progress) ? progress : 0
   return `${trimDecimal(safeProgress * 100, 1)}%`
 }
+
+export const formatSignedProgress = (progress: number): string => {
+  const prefix = progress > 0 ? '+' : ''
+  return `${prefix}${formatProgress(progress)}`
+}

@@ -25,6 +25,14 @@
 - 资产变化后自动保存每日财富快照；
 - 使用微信原生 Canvas 展示月度和年度资产趋势。
 
+### 财富健康
+
+- 使用现金资产和月基础支出计算安全储备月数；
+- 展示安全资产、增长资产及各资产类型占比；
+- 提示单一资产类型占比达到 50% 的集中风险；
+- 展示过去 12 个月资产增长率和自由进度变化；
+- 通过规则生成财富画像、优势和提醒，不提供投资评分或买卖建议。
+
 ### 人生博物馆
 
 - 支持实物、经历、人生事件和收益事件；
@@ -59,6 +67,7 @@ miniprogram/
 ├── pages/
 │   ├── freedom/ 自由地图
 │   ├── wealth/  财富管家
+│   ├── health/  财富健康
 │   ├── museum/  人生博物馆
 │   ├── report/  财富报告
 │   └── profile/ 我的
@@ -79,6 +88,7 @@ retirement_plan.assets
 retirement_plan.museum_collections
 retirement_plan.snapshots
 retirement_plan.reports
+retirement_plan.monthly_essential_expense
 ```
 
 金额在模型和 Storage 中统一使用“元”，自由进度使用 `0–1`；页面通过公共格式化工具显示为元、万元和百分比。

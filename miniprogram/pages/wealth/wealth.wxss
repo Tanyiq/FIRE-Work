@@ -32,6 +32,47 @@
   font-size: 24rpx;
 }
 
+.health-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+  padding: 28rpx 30rpx;
+  border: 1rpx solid #e1e4df;
+  border-radius: 22rpx;
+  background: #ffffff;
+}
+
+.health-entry__eyebrow,
+.health-entry__title,
+.health-entry__text {
+  display: block;
+}
+
+.health-entry__eyebrow {
+  color: #b48b3d;
+  font-size: 19rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.health-entry__title {
+  margin-top: 7rpx;
+  font-size: 29rpx;
+  font-weight: 650;
+}
+
+.health-entry__text {
+  margin-top: 7rpx;
+  color: #7a817d;
+  font-size: 22rpx;
+}
+
+.health-entry__arrow {
+  color: #2f6b4f;
+  font-size: 46rpx;
+}
+
 .trend-card {
   margin-top: 28rpx;
   padding: 32rpx;

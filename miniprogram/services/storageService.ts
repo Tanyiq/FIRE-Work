@@ -4,6 +4,7 @@ const STORAGE_KEYS = {
   museumCollections: 'retirement_plan.museum_collections',
   snapshots: 'retirement_plan.snapshots',
   reports: 'retirement_plan.reports',
+  monthlyEssentialExpense: 'retirement_plan.monthly_essential_expense',
 } as const
 
 export const storageService = {

@@ -1,0 +1,132 @@
+<view class="page-shell">
+  <view class="eyebrow">WEALTH HEALTH</view>
+  <text class="page-title">财富体检报告</text>
+  <text class="page-description">关注安全储备、资产结构与长期变化，不为财富打分。</text>
+
+  <view class="health-hero">
+    <text class="health-hero__label">你的财富状态</text>
+    <text class="health-hero__type">{{report.profileType}}</text>
+    <text class="health-hero__asset">总资产 {{report.totalAssetText}}</text>
+  </view>
+
+  <view wx:if="{{!report.hasAssets}}" class="empty-card">
+    <text class="empty-title">还没有可体检的资产</text>
+    <text class="empty-text">先记录资产，才能分析安全储备、资产结构和财富趋势。</text>
+    <button class="secondary-button" bindtap="onBackToWealth">返回财富管家</button>
+  </view>
+
+  <view wx:else>
+    <view class="health-card">
+      <view class="card-heading">
+        <view>
+          <text class="section-index">01</text>
+          <text class="section-title">安全储备</text>
+        </view>
+        <text wx:if="{{report.safetyMonthsText}}" class="key-result">{{report.safetyMonthsText}}</text>
+      </view>
+
+      <view wx:if="{{report.safetyMonthsText}}" class="safety-detail">
+        <view>
+          <text class="detail-label">现金资产</text>
+          <text class="detail-value">{{report.cashAssetText}}</text>
+        </view>
+        <view class="detail-right">
+          <text class="detail-label">月基础支出</text>
+          <text class="detail-value">{{report.monthlyEssentialExpenseText}}</text>
+        </view>
+      </view>
+      <view wx:else class="missing-state">
+        <text class="missing-state__title">如果失去收入，你能生活多久？</text>
+        <text class="missing-state__text">完善生活成本后，可以评估安全储备。</text>
+      </view>
+
+      <view wx:if="{{showExpenseForm}}" class="expense-form">
+        <text class="field-label">每月基础生活支出</text>
+        <view class="expense-input-wrap">
+          <input class="expense-input" type="digit" value="{{expenseInput}}" placeholder="例如 5000" bindinput="onExpenseInput" />
+          <text class="expense-unit">元/月</text>
+        </view>
+        <text class="field-hint">只填写住房、饮食、交通等维持基本生活的支出。</text>
+        <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+        <button class="save-button" bindtap="onSaveExpense">保存生活成本</button>
+      </view>
+      <text wx:else class="text-action" bindtap="onToggleExpenseForm">
+        {{report.monthlyEssentialExpense ? '修改生活成本' : '填写生活成本'}}
+      </text>
+    </view>
+
+    <view class="health-card">
+      <text class="section-index">02</text>
+      <text class="section-title">资产结构</text>
+      <view class="structure-summary">
+        <view class="summary-item">
+          <text class="summary-label">安全资产</text>
+          <text class="summary-value">{{report.safeAssetRatioText}}</text>
+          <text class="summary-hint">活钱 + 定存</text>
+        </view>
+        <view class="summary-divider"></view>
+        <view class="summary-item summary-item--right">
+          <text class="summary-label">增长资产</text>
+          <text class="summary-value">{{report.growthAssetRatioText}}</text>
+          <text class="summary-hint">基金、红利、股票、黄金</text>
+        </view>
+      </view>
+      <view wx:if="{{report.otherAssetRatio > 0}}" class="other-ratio">其他资产 {{report.otherAssetRatioText}}</view>
+
+      <view class="structure-list">
+        <view wx:for="{{report.structure}}" wx:key="type" class="structure-item">
+          <view class="structure-row">
+            <text>{{item.label}}</text>
+            <text>{{item.amountText}} · {{item.ratioText}}</text>
+          </view>
+          <view class="structure-track">
+            <view class="structure-fill" style="width: {{item.ratioPercent}}%;"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="health-card">
+      <text class="section-index">03</text>
+      <text class="section-title">集中风险</text>
+      <view wx:if="{{report.concentrationRisks.length === 0}}" class="healthy-note">当前没有单一资产类型达到总资产的 50%。</view>
+      <view wx:for="{{report.concentrationRisks}}" wx:key="*this" class="risk-note">
+        <text class="risk-icon">!</text>
+        <text>{{item}}</text>
+      </view>
+    </view>
+
+    <view class="health-card">
+      <text class="section-index">04</text>
+      <text class="section-title">财富变化趋势</text>
+      <text class="period-label">{{report.trend.periodLabel}}</text>
+      <view wx:if="{{report.trend.hasHistory}}" class="trend-grid">
+        <view class="trend-item">
+          <text class="detail-label">资产增长率</text>
+          <text class="trend-value">{{report.trend.assetGrowthRateText}}</text>
+        </view>
+        <view class="trend-item trend-item--right">
+          <text class="detail-label">自由进度</text>
+          <text class="trend-value">{{report.trend.freedomProgressChangeText}}</text>
+        </view>
+      </view>
+      <view wx:else class="missing-state">
+        <text class="missing-state__title">财富变化正在积累</text>
+        <text class="missing-state__text">拥有两个不同日期的财富快照后，即可计算过去 12 个月趋势。</text>
+      </view>
+    </view>
+
+    <view class="conclusion-card">
+      <text class="conclusion-title">你的财富状态：{{report.profileType}}</text>
+      <view wx:if="{{report.advantages.length > 0}}" class="conclusion-section">
+        <text class="conclusion-label">优势</text>
+        <text wx:for="{{report.advantages}}" wx:key="*this" class="conclusion-item conclusion-item--good">✓ {{item}}</text>
+      </view>
+      <view wx:if="{{report.reminders.length > 0}}" class="conclusion-section">
+        <text class="conclusion-label">提醒</text>
+        <text wx:for="{{report.reminders}}" wx:key="*this" class="conclusion-item conclusion-item--warning">△ {{item}}</text>
+      </view>
+      <text class="disclaimer">体检只描述当前结构，不构成投资建议。</text>
+    </view>
+  </view>
+</view>

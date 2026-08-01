@@ -2,6 +2,7 @@
   "pages": [
     "pages/freedom/freedom",
     "pages/wealth/wealth",
+    "pages/health/health",
     "pages/museum/museum",
     "pages/report/report",
     "pages/profile/profile"

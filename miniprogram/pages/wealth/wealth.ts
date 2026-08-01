@@ -86,6 +86,10 @@ Page({
     this.setData({ trendRange: event.currentTarget.dataset.range }, () => this.refreshTrend())
   },
 
+  onGoToHealth() {
+    wx.navigateTo({ url: '/pages/health/health' })
+  },
+
   onToggleAssetForm() {
     this.setData({
       showAssetForm: !this.data.showAssetForm,

@@ -12,6 +12,15 @@
     <text wx:else class="total-card__hint">从第一项资产开始，建立你的财富成长基线。</text>
   </view>
 
+  <view class="health-entry" bindtap="onGoToHealth">
+    <view>
+      <text class="health-entry__eyebrow">WEALTH HEALTH</text>
+      <text class="health-entry__title">查看财富体检报告</text>
+      <text class="health-entry__text">安全储备、资产结构、集中风险与长期变化</text>
+    </view>
+    <text class="health-entry__arrow">›</text>
+  </view>
+
   <view class="trend-card">
     <view class="trend-heading">
       <view>
