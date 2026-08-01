@@ -154,8 +154,7 @@
 }
 
 .trend-baseline__label,
-.trend-baseline__value,
-.trend-baseline__hint {
+.trend-baseline__value {
   display: block;
 }
 
@@ -169,12 +168,6 @@
   color: var(--color-brand);
   font-size: 38rpx;
   font-weight: 700;
-}
-
-.trend-baseline__hint {
-  margin-top: 12rpx;
-  color: #8a918d;
-  font-size: 22rpx;
 }
 
 .add-button,
@@ -346,17 +339,4 @@
 
 .delete-action {
   color: #b5473c;
-}
-.empty-action {
-  margin-top: 28rpx;
-  border: 0;
-  border-radius: 999rpx;
-  background: var(--color-brand-dark);
-  color: #ffffff;
-  font-size: 26rpx;
-  line-height: 72rpx;
-}
-
-.empty-action::after {
-  border: 0;
 }

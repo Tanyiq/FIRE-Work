@@ -353,6 +353,20 @@ const restoreBackup = (backup: WealthBackup): BackupOperationResult => {
 }
 
 export const backupService = {
+  clearAllData(): boolean {
+    const photoPaths = museumService
+      .getCollectionList()
+      .map((collection) => collection.photoPath)
+      .filter((photoPath): photoPath is string => Boolean(photoPath))
+    try {
+      photoPaths.forEach((filePath) => wx.removeSavedFile({ filePath }))
+      wx.clearStorageSync()
+      return true
+    } catch (_error) {
+      return false
+    }
+  },
+
   getArchiveStats(): WealthArchiveStats {
     const joinedAt = getJoinedAt()
     return {

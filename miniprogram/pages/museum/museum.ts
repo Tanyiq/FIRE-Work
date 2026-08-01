@@ -52,11 +52,14 @@ Page({
     if (this.data.showAddForm && this.data.photoPathInput) {
       wx.removeSavedFile({ filePath: this.data.photoPathInput })
     }
+    const showAddForm = !this.data.showAddForm
     this.setData({
-      showAddForm: !this.data.showAddForm,
+      showAddForm,
       selectedCollection: null,
       photoPathInput: '',
       validationMessage: '',
+    }, () => {
+      if (showAddForm) wx.pageScrollTo({ selector: '#collectionForm', duration: 250 })
     })
   },
 

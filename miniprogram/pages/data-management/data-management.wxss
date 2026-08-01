@@ -230,6 +230,28 @@
   font-weight: 600;
 }
 
+.danger-card {
+  border: 1rpx solid #efd8d3;
+}
+
+.danger-title {
+  color: #943f35;
+}
+
+.clear-button {
+  margin-top: 24rpx;
+  border-radius: 999rpx;
+  color: #ffffff;
+  background: #a64b3c;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.clear-button[disabled] {
+  color: #a8756d;
+  background: #f2e5e2;
+}
+
 .primary-button {
   color: #ffffff;
   background: var(--color-brand);
@@ -242,6 +264,10 @@
 
 .primary-button::after,
 .restore-button::after {
+  border: 0;
+}
+
+.clear-button::after {
   border: 0;
 }
 

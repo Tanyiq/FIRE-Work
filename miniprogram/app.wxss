@@ -166,3 +166,11 @@ button::after {
   font-size: 23rpx;
   font-weight: 600;
 }
+
+button.page-bottom-action {
+  min-height: 88rpx;
+  margin-top: 40rpx;
+  border-radius: 999rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}

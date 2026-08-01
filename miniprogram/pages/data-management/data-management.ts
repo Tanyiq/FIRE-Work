@@ -7,18 +7,28 @@ import { DataIntegritySummary } from '../../models/dataIntegrity'
 import { dataIntegrityService } from '../../services/dataIntegrityService'
 import { themeService } from '../../services/themeService'
 
+let clearCountdownTimer: number | null = null
+
 Page({
   data: {
     stats: backupService.getArchiveStats() as WealthArchiveStats,
     backupCheck: backupService.getBackupCheck() as BackupCheck,
     isExporting: false,
     isRestoring: false,
+    isClearing: false,
+    isClearWaiting: false,
+    clearButtonText: '清空全部数据',
     integrity: dataIntegrityService.getSummary() as DataIntegritySummary,
     themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
     this.refreshData()
+  },
+
+  onUnload() {
+    if (clearCountdownTimer !== null) clearInterval(clearCountdownTimer)
+    clearCountdownTimer = null
   },
 
   refreshData() {
@@ -31,7 +41,12 @@ Page({
   },
 
   async onExport() {
-    if (this.data.isExporting || this.data.isRestoring) return
+    if (
+      this.data.isExporting ||
+      this.data.isRestoring ||
+      this.data.isClearing ||
+      this.data.isClearWaiting
+    ) return
     this.setData({ isExporting: true })
     const result = await backupService.exportBackup()
     this.setData({ isExporting: false })
@@ -49,7 +64,12 @@ Page({
   },
 
   onRestore() {
-    if (this.data.isExporting || this.data.isRestoring) return
+    if (
+      this.data.isExporting ||
+      this.data.isRestoring ||
+      this.data.isClearing ||
+      this.data.isClearWaiting
+    ) return
     wx.showModal({
       title: '恢复财富档案',
       content: '恢复会替换当前的目标、资产、快照、报告、人生收藏、生活成本、投资复盘和备份中的外观主题。建议先导出当前数据。',
@@ -76,6 +96,72 @@ Page({
       content: '财富档案已恢复，小程序将重新载入数据。',
       showCancel: false,
       success: () => wx.reLaunch({ url: '/pages/freedom/freedom' }),
+    })
+  },
+
+  onClearData() {
+    if (
+      this.data.isExporting ||
+      this.data.isRestoring ||
+      this.data.isClearing ||
+      this.data.isClearWaiting
+    ) return
+    wx.showModal({
+      title: '清空全部数据',
+      content: '目标、资产、快照、报告、人生收藏、生活成本和投资复盘都会被删除，且无法恢复。建议先导出备份。',
+      confirmText: '继续',
+      confirmColor: '#a64b3c',
+      success: (result) => {
+        if (!result.confirm) return
+        this.startClearCountdown()
+      },
+    })
+  },
+
+  startClearCountdown() {
+    let remainingSeconds = 2
+    this.setData({
+      isClearWaiting: true,
+      clearButtonText: `请等待 ${remainingSeconds} 秒`,
+    })
+    clearCountdownTimer = setInterval(() => {
+      remainingSeconds -= 1
+      if (remainingSeconds > 0) {
+        this.setData({ clearButtonText: `请等待 ${remainingSeconds} 秒` })
+        return
+      }
+      if (clearCountdownTimer !== null) clearInterval(clearCountdownTimer)
+      clearCountdownTimer = null
+      this.setData({
+        isClearWaiting: false,
+        clearButtonText: '清空全部数据',
+      })
+      this.showFinalClearConfirmation()
+    }, 1000)
+  },
+
+  showFinalClearConfirmation() {
+    wx.showModal({
+      title: '最后确认',
+      content: '等待已结束。确定永久清空当前设备上的全部 FIRE Work 数据吗？',
+      confirmText: '确认清空',
+      confirmColor: '#a64b3c',
+      success: (result) => {
+        if (!result.confirm) return
+        this.setData({ isClearing: true })
+        const success = backupService.clearAllData()
+        this.setData({ isClearing: false })
+        if (!success) {
+          wx.showModal({ title: '清空失败', content: '请稍后重试。', showCancel: false })
+          return
+        }
+        wx.showModal({
+          title: '数据已清空',
+          content: '小程序将返回首次使用页面。',
+          showCancel: false,
+          success: () => wx.reLaunch({ url: '/pages/freedom/freedom' }),
+        })
+      },
     })
   },
 })

@@ -74,8 +74,7 @@
 
 .baseline-card__eyebrow,
 .baseline-card__value,
-.baseline-card__date,
-.baseline-card__text {
+.baseline-card__date {
   display: block;
 }
 
@@ -97,11 +96,9 @@
   font-size: 24rpx;
 }
 
-.baseline-card__text {
-  margin-top: 34rpx;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 26rpx;
-  line-height: 1.7;
+.baseline-novice-tip {
+  margin-top: 30rpx;
+  text-align: left;
 }
 
 .secondary-button {

@@ -26,7 +26,11 @@
     <text class="baseline-card__eyebrow">财富基线已建立</text>
     <text class="baseline-card__value">{{report.currentAssetText}}</text>
     <text class="baseline-card__date">记录于 {{report.currentDate}}</text>
-    <text class="baseline-card__text">同一天的资产修改会合并到这份基线。下一个日期产生资产变化后，就能生成第一份对比报告。</text>
+    <view wx:if="{{showBaselineTip}}" class="novice-tip baseline-novice-tip">
+      <text class="novice-tip__label">快照记录提示</text>
+      <text class="novice-tip__text">同一天的资产修改会合并到这份基线；下一个日期发生资产变化后，才会生成对比报告。</text>
+      <text class="novice-tip__action" bindtap="onDismissBaselineTip">知道了</text>
+    </view>
     <button class="secondary-button" bindtap="onGoToWealth">查看当前资产</button>
   </view>
 

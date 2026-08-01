@@ -1,5 +1,6 @@
 import { WealthChangeSource, WealthReportView } from '../../models/report'
 import { reportService } from '../../services/reportService'
+import { noviceTipService } from '../../services/noviceTipService'
 import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 
@@ -12,6 +13,7 @@ Page({
     snapshotCount: snapshotService.getSnapshotList().length,
     savedReportCount: reportService.getReportList().length,
     hasSavedCurrentReport: false,
+    showBaselineTip: noviceTipService.shouldShow('snapshot_baseline'),
     themePageStyle: themeService.getPageStyle(),
   },
 
@@ -68,5 +70,10 @@ Page({
 
   onGoToAnnualReport() {
     wx.navigateTo({ url: '/pages/annual-report/annual-report' })
+  },
+
+  onDismissBaselineTip() {
+    noviceTipService.dismiss('snapshot_baseline')
+    this.setData({ showBaselineTip: false })
   },
 })

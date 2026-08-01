@@ -111,12 +111,15 @@ Page({
   },
 
   onToggleAssetForm() {
+    const showAssetForm = !this.data.showAssetForm
     this.setData({
-      showAssetForm: !this.data.showAssetForm,
+      showAssetForm,
       editingAssetId: '',
       assetNameInput: '',
       assetAmountInput: '',
       validationMessage: '',
+    }, () => {
+      if (showAssetForm) wx.pageScrollTo({ selector: '#assetForm', duration: 250 })
     })
   },
 
@@ -227,7 +230,7 @@ Page({
       assetNameInput: asset.name,
       assetAmountInput: String(asset.currentAmount / 10000),
       validationMessage: '',
-    })
+    }, () => wx.pageScrollTo({ selector: '#assetForm', duration: 250 }))
   },
 
   onDeleteAsset(event: WechatMiniprogram.BaseEvent<{}, { id: string }>) {

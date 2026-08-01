@@ -13,24 +13,6 @@
     <button wx:if="{{guidedAssetCompleted}}" class="guide-focus-card__button" bindtap="onContinueGuide">继续填写生活成本</button>
   </view>
 
-  <button wx:if="{{!isGuidedAssetStep}}" class="add-button add-button--primary-position" bindtap="onToggleAssetForm">
-    {{showAssetForm ? '收起录入' : (totalAsset > 0 ? '+ 新增资产' : '+ 添加第一项资产')}}
-  </button>
-
-  <view wx:if="{{showAssetForm}}" class="asset-form asset-form--focused">
-    <text class="form-title">{{editingAssetId ? '修改资产' : '记录一项资产'}}</text>
-    <text class="field-label">资产类型</text>
-    <picker mode="selector" range="{{assetTypeOptions}}" range-key="label" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
-      <view class="picker-field"><text>{{selectedTypeLabel}}</text><text class="picker-arrow">选择 ›</text></view>
-    </picker>
-    <text class="field-label">资产名称</text>
-    <input class="text-field" value="{{assetNameInput}}" placeholder="例如：招商银行活期" bindinput="onNameInput" />
-    <text class="field-label">当前金额</text>
-    <view class="amount-field"><input class="amount-input" type="digit" value="{{assetAmountInput}}" placeholder="例如 20" bindinput="onAmountInput" /><text class="amount-unit">万元</text></view>
-    <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-    <button class="save-button" bindtap="onAddAsset">{{editingAssetId ? '保存修改' : (isGuidedAssetStep ? '保存并进入下一步' : '保存资产')}}</button>
-  </view>
-
   <view wx:if="{{!isGuidedAssetStep}}" class="total-card">
     <text class="total-card__label">当前总资产</text>
     <view class="total-card__amount-row">
@@ -85,7 +67,6 @@
     <view wx:elif="{{trendPoints.length === 1}}" class="trend-baseline">
       <text class="trend-baseline__label">已记录第一份财富基线</text>
       <text class="trend-baseline__value">{{trendEndAssetText}}</text>
-      <text class="trend-baseline__hint">下一个日期的资产变化，将形成第一段成长曲线。</text>
     </view>
     <view wx:else class="trend-empty">添加资产后，将从第一份财富快照开始记录趋势。</view>
   </view>
@@ -95,7 +76,6 @@
     <view wx:if="{{categories.length === 0}}" class="empty-card">
       <text class="empty-title">建立第一份资产基线</text>
       <text class="empty-text">记录一项真实资产，自由进度和财富趋势会从这里开始。</text>
-      <button wx:if="{{!showAssetForm}}" class="empty-action" bindtap="onToggleAssetForm">记录第一项资产</button>
     </view>
 
     <view wx:for="{{categories}}" wx:key="value" class="category-card">
@@ -118,4 +98,22 @@
       </view>
     </view>
   </view>
+
+  <view id="assetForm" wx:if="{{showAssetForm}}" class="asset-form asset-form--focused">
+    <text class="form-title">{{editingAssetId ? '修改资产' : '记录一项资产'}}</text>
+    <text class="field-label">资产类型</text>
+    <picker mode="selector" range="{{assetTypeOptions}}" range-key="label" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
+      <view class="picker-field"><text>{{selectedTypeLabel}}</text><text class="picker-arrow">选择 ›</text></view>
+    </picker>
+    <text class="field-label">资产名称</text>
+    <input class="text-field" value="{{assetNameInput}}" placeholder="例如：招商银行活期" bindinput="onNameInput" />
+    <text class="field-label">当前金额</text>
+    <view class="amount-field"><input class="amount-input" type="digit" value="{{assetAmountInput}}" placeholder="例如 20" bindinput="onAmountInput" /><text class="amount-unit">万元</text></view>
+    <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+    <button class="save-button" bindtap="onAddAsset">{{editingAssetId ? '保存修改' : (isGuidedAssetStep ? '保存并进入下一步' : '保存资产')}}</button>
+  </view>
+
+  <button wx:if="{{!isGuidedAssetStep}}" class="add-button page-bottom-action" bindtap="onToggleAssetForm">
+    {{showAssetForm ? '收起录入' : (totalAsset > 0 ? '+ 新增资产' : '+ 添加第一项资产')}}
+  </button>
 </view>

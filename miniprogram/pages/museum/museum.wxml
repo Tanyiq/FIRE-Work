@@ -59,11 +59,27 @@
   </view>
 
   <view wx:else>
-    <button wx:if="{{!isGuidedMuseumStep}}" class="add-button" bindtap="onToggleAddForm">
-      {{showAddForm ? '收起录入' : '+ 添加人生收藏'}}
-    </button>
+    <view wx:if="{{collections.length === 0 && !showAddForm && !isGuidedMuseumStep}}" class="empty-card">
+      <text class="empty-symbol">◇</text>
+      <text class="empty-title">收藏第一段值得记住的人生</text>
+      <text class="empty-text">不必等待特别时刻，从一件有故事的物品或一次真实经历开始。</text>
+    </view>
 
-    <view wx:if="{{showAddForm}}" class="collection-form">
+    <view wx:if="{{collections.length > 0 && !isGuidedMuseumStep}}" class="collection-section">
+      <view class="section-heading">
+        <text class="section-title">我的收藏</text>
+        <text class="collection-count">{{collections.length}} 件</text>
+      </view>
+      <view wx:for="{{collections}}" wx:key="id" class="collection-card" data-id="{{item.id}}" bindtap="onViewCollection">
+        <image wx:if="{{item.photoPath}}" class="collection-photo" src="{{item.photoPath}}" mode="aspectFill"></image>
+        <view class="collection-card__top"><text class="type-badge">{{item.typeLabel}}</text><text class="collection-date">{{item.startDate}}</text></view>
+        <text class="collection-name">{{item.name}}</text>
+        <text class="collection-story">{{item.story || '这件收藏还没有写下故事。'}}</text>
+        <view class="collection-footer"><text>{{item.usageDays}} 天</text><text wx:if="{{item.dailyCost !== null}}">{{item.dailyCostText}} / 天</text><text wx:else>收益 {{item.amountText}}</text></view>
+      </view>
+    </view>
+
+    <view id="collectionForm" wx:if="{{showAddForm}}" class="collection-form">
       <text class="form-title">添加人生收藏</text>
 
       <text class="field-label">收藏类型</text>
@@ -120,38 +136,9 @@
       <button class="save-button" bindtap="onAddCollection">{{isGuidedMuseumStep ? '保存并完成档案' : '保存收藏'}}</button>
     </view>
 
-    <view wx:if="{{collections.length === 0 && !showAddForm && !isGuidedMuseumStep}}" class="empty-card">
-      <text class="empty-symbol">◇</text>
-      <text class="empty-title">收藏第一段值得记住的人生</text>
-      <text class="empty-text">不必等待特别时刻，从一件有故事的物品或一次真实经历开始。</text>
-      <button class="empty-action" bindtap="onToggleAddForm">添加第一件收藏</button>
-    </view>
+    <button wx:if="{{!isGuidedMuseumStep}}" class="add-button page-bottom-action" bindtap="onToggleAddForm">
+      {{showAddForm ? '收起录入' : '+ 添加人生收藏'}}
+    </button>
 
-    <view wx:if="{{collections.length > 0 && !isGuidedMuseumStep}}" class="collection-section">
-      <view class="section-heading">
-        <text class="section-title">我的收藏</text>
-        <text class="collection-count">{{collections.length}} 件</text>
-      </view>
-      <view
-        wx:for="{{collections}}"
-        wx:key="id"
-        class="collection-card"
-        data-id="{{item.id}}"
-        bindtap="onViewCollection"
-      >
-        <image wx:if="{{item.photoPath}}" class="collection-photo" src="{{item.photoPath}}" mode="aspectFill"></image>
-        <view class="collection-card__top">
-          <text class="type-badge">{{item.typeLabel}}</text>
-          <text class="collection-date">{{item.startDate}}</text>
-        </view>
-        <text class="collection-name">{{item.name}}</text>
-        <text class="collection-story">{{item.story || '这件收藏还没有写下故事。'}}</text>
-        <view class="collection-footer">
-          <text>{{item.usageDays}} 天</text>
-          <text wx:if="{{item.dailyCost !== null}}">{{item.dailyCostText}} / 天</text>
-          <text wx:else>收益 {{item.amountText}}</text>
-        </view>
-      </view>
-    </view>
   </view>
 </view>

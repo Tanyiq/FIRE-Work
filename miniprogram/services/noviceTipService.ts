@@ -5,7 +5,8 @@ const getDismissedTips = (): NoviceTipId[] => {
   const tips = storageService.get<unknown>(storageService.keys.dismissedNoviceTips)
   return Array.isArray(tips)
     ? tips.filter(
-        (tip): tip is NoviceTipId => tip === 'wealth_health' || tip === 'investment_review',
+        (tip): tip is NoviceTipId =>
+          tip === 'wealth_health' || tip === 'investment_review' || tip === 'snapshot_baseline',
       )
     : []
 }
