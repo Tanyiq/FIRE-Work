@@ -104,8 +104,9 @@
 
     <view wx:if="{{records.length === 0 && !showForm}}" class="empty-card">
       <text class="empty-symbol">◎</text>
-      <text class="empty-title">还没有投资复盘</text>
-      <text class="empty-text">从一次真实的投资决定开始，留下当时的理由，而不只记住结果。</text>
+      <text class="empty-title">记录你的第一次投资思考</text>
+      <text class="empty-text">不必等待一次完美投资，先留下当时的理由，再用结果帮助未来的自己。</text>
+      <button class="empty-action" bindtap="onToggleForm">开始记录</button>
     </view>
 
     <view wx:if="{{records.length > 0}}" class="record-section">

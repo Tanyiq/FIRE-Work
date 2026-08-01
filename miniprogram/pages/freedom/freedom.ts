@@ -3,6 +3,7 @@ import { FreedomDashboard, SelectableFreedomLevel } from '../../models/freedom'
 import { fireService } from '../../services/fireService'
 import { freedomService } from '../../services/freedomService'
 import { livingCostService } from '../../services/livingCostService'
+import { museumService } from '../../services/museumService'
 import { snapshotService } from '../../services/snapshotService'
 
 Page({
@@ -16,17 +17,34 @@ Page({
     hasRecentActivity: false,
     hasAssets: false,
     balancedFireScenario: null as FireScenarioView | null,
+    hasLivingCost: false,
+    museumCollectionCount: 0,
+    onboardingCompletedCount: 0,
+    showOnboarding: true,
+    isEditingGoal: false,
   },
 
   onShow() {
+    this.refreshPage()
+  },
+
+  refreshPage() {
     const dashboard = freedomService.getDashboard()
     const recentChange = snapshotService.getRecentYearChange()
     const livingCost = livingCostService.getProfile()
+    const museumCollectionCount = museumService.getCollectionList().length
+    const hasAssets = Boolean(dashboard && dashboard.currentAsset > 0)
+    const onboardingCompletedCount = [dashboard !== null, hasAssets, livingCost !== null, museumCollectionCount > 0]
+      .filter(Boolean).length
     this.setData({
       hasConfiguration: dashboard !== null,
       dashboard,
       recentChange,
-      hasAssets: Boolean(dashboard && dashboard.currentAsset > 0),
+      hasAssets,
+      hasLivingCost: livingCost !== null,
+      museumCollectionCount,
+      onboardingCompletedCount,
+      showOnboarding: onboardingCompletedCount < 4,
       balancedFireScenario: livingCost
         ? fireService.getScenarioView(livingCost.essentialMonthlyCost, 'balanced')
         : null,
@@ -57,11 +75,9 @@ Page({
     }
 
     this.setData({
-      hasConfiguration: true,
-      dashboard: result.dashboard,
-      hasAssets: result.dashboard.currentAsset > 0,
       validationMessage: '',
     })
+    this.refreshPage()
   },
 
   onEditConfiguration() {
@@ -74,6 +90,7 @@ Page({
       hasConfiguration: false,
       selectedLevel: dashboard.goal.level,
       validationMessage: '',
+      isEditingGoal: true,
     })
   },
 
@@ -87,5 +104,9 @@ Page({
 
   onGoToAdvice() {
     wx.navigateTo({ url: '/pages/advice/advice' })
+  },
+
+  onGoToMuseum() {
+    wx.switchTab({ url: '/pages/museum/museum' })
   },
 })

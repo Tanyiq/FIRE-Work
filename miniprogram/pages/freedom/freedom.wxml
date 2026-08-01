@@ -1,82 +1,78 @@
 <view class="page-shell">
-  <view class="eyebrow">RETIREMENT PLAN</view>
-  <text class="page-title">自由地图</text>
-  <text class="page-description">看见财富积累与理想生活之间的距离。</text>
+  <block wx:if="{{hasConfiguration}}">
+    <view class="eyebrow">MY FREEDOM ARCHIVE</view>
+    <text class="page-title">我的自由档案</text>
+    <text class="page-description">用长期记录，看见自己与梦想生活之间的距离。</text>
 
-  <view class="advice-entry" bindtap="onGoToAdvice">
-    <view>
-      <text class="advice-entry__eyebrow">WEALTH GUIDANCE</text>
-      <text class="advice-entry__title">查看财富建议中心</text>
-      <text class="advice-entry__text">从生活成本、资产结构和长期记录理解当前状态</text>
-    </view>
-    <text class="advice-entry__arrow">›</text>
-  </view>
-
-  <view wx:if="{{!hasConfiguration}}" class="setup-section">
-    <view class="section-heading">
-      <text class="step-label">第一步</text>
-      <text class="section-title">选择你的目标生活</text>
-    </view>
-
-    <view class="goal-list">
-      <view
-        wx:for="{{goalOptions}}"
-        wx:key="level"
-        class="goal-card {{selectedLevel === item.level ? 'goal-card--selected' : ''}}"
-        data-level="{{item.level}}"
-        bindtap="onSelectGoal"
-      >
-        <view class="goal-card__top">
-          <text class="goal-level">{{item.level}} · {{item.name}}</text>
-          <text class="goal-asset">{{item.targetAssetText}}</text>
-        </view>
-        <text class="goal-description">{{item.description}}</text>
+    <view class="archive-hero">
+      <text class="archive-label">距离梦想生活</text>
+      <text wx:if="{{dashboard.isGoalReached}}" class="distance-value">已经抵达</text>
+      <text wx:else class="distance-value">还有 {{dashboard.remainingProgressText}}</text>
+      <view class="level-summary">
+        <text class="continuous-level">{{dashboard.continuousLevelText}}</text>
+        <text class="stage-name">{{dashboard.accumulationStageName}}</text>
       </view>
-    </view>
+      <view class="hero-progress"><view class="hero-progress__fill" style="width: {{dashboard.progressPercent}}%;"></view></view>
 
-    <view class="asset-source-note">
-      <text class="asset-source-note__title">资产来自财富管家</text>
-      <text class="asset-source-note__text">自由进度会根据已录入资产的总额自动更新。</text>
-    </view>
-    <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-    <button class="primary-button" bindtap="onSaveConfiguration">生成我的自由地图</button>
-  </view>
-
-  <view wx:else class="dashboard">
-    <view class="overview-card">
-      <view class="overview-heading">
-        <view>
-          <text class="overview-label">当前自由等级</text>
-          <view class="level-line">
-            <text class="overview-level">{{dashboard.currentLevel}}</text>
-            <text class="overview-level-name">{{dashboard.currentLevelName}}</text>
-          </view>
-        </view>
-        <view class="goal-summary">
-          <text class="overview-label">目标</text>
-          <text class="goal-summary__value">{{dashboard.goal.level}} · {{dashboard.goal.name}}</text>
-        </view>
-      </view>
-      <view class="progress-line">
-        <view class="progress-track">
-          <view class="progress-fill" style="width: {{dashboard.progressPercent}}%;"></view>
-        </view>
-        <text class="progress-number">{{dashboard.progressText}}</text>
-      </view>
-      <view class="overview-metrics">
-        <view class="overview-metric">
-          <text class="metric-label">当前</text>
+      <view class="archive-metrics">
+        <view class="archive-metric">
+          <text class="metric-label">当前资产</text>
           <text class="metric-value">{{dashboard.currentAssetText}}</text>
         </view>
-        <view class="overview-metric overview-metric--center">
-          <text class="metric-label">目标</text>
-          <text class="metric-value">{{dashboard.targetAssetText}}</text>
+        <view class="archive-metric archive-metric--center">
+          <text class="metric-label">过去一年</text>
+          <text wx:if="{{recentChange}}" class="metric-value {{recentChange.assetChange >= 0 ? 'metric-value--positive' : 'metric-value--negative'}}">{{recentChange.assetChangeText}}</text>
+          <text wx:else class="metric-value">等待记录</text>
         </view>
-        <view class="overview-metric overview-metric--right">
-          <text class="metric-label">还差</text>
-          <text class="metric-value">{{dashboard.remainingAssetText}}</text>
+        <view class="archive-metric archive-metric--right">
+          <text class="metric-label">人生收藏</text>
+          <text class="metric-value">{{museumCollectionCount}} 件</text>
         </view>
       </view>
+      <view class="goal-footer">
+        <text>目标 {{dashboard.goal.level}} · {{dashboard.goal.name}}</text>
+        <text>{{dashboard.targetAssetText}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{showOnboarding}}" class="onboarding-card">
+      <view class="onboarding-heading">
+        <view>
+          <text class="onboarding-eyebrow">GETTING STARTED</text>
+          <text class="onboarding-title">完善你的财富档案</text>
+        </view>
+        <text class="onboarding-progress">{{onboardingCompletedCount}} / 4</text>
+      </view>
+
+      <view class="guide-step guide-step--done">
+        <text class="step-number">✓</text>
+        <view class="step-main"><text class="step-title">选择梦想生活</text><text class="step-text">已选择 {{dashboard.goal.level}} · {{dashboard.goal.name}}</text></view>
+        <text class="step-action" bindtap="onEditConfiguration">调整</text>
+      </view>
+      <view class="guide-step {{hasAssets ? 'guide-step--done' : ''}}">
+        <text class="step-number">{{hasAssets ? '✓' : '2'}}</text>
+        <view class="step-main"><text class="step-title">记录当前资产</text><text class="step-text">让自由进度拥有真实起点</text></view>
+        <text wx:if="{{!hasAssets}}" class="step-action" bindtap="onGoToWealth">去记录</text>
+      </view>
+      <view class="guide-step {{hasLivingCost ? 'guide-step--done' : ''}}">
+        <text class="step-number">{{hasLivingCost ? '✓' : '3'}}</text>
+        <view class="step-main"><text class="step-title">填写生活成本</text><text class="step-text">评估安全储备与自由方案</text></view>
+        <text wx:if="{{!hasLivingCost}}" class="step-action" bindtap="onGoToLivingCost">去填写</text>
+      </view>
+      <view class="guide-step guide-step--last {{museumCollectionCount > 0 ? 'guide-step--done' : ''}}">
+        <text class="step-number">{{museumCollectionCount > 0 ? '✓' : '4'}}</text>
+        <view class="step-main"><text class="step-title">收藏第一段人生经历</text><text class="step-text">让财富计划不只剩下数字</text></view>
+        <text wx:if="{{museumCollectionCount === 0}}" class="step-action" bindtap="onGoToMuseum">去收藏</text>
+      </view>
+    </view>
+
+    <view class="advice-entry" bindtap="onGoToAdvice">
+      <view>
+        <text class="advice-entry__eyebrow">WEALTH GUIDANCE</text>
+        <text class="advice-entry__title">查看财富建议中心</text>
+        <text class="advice-entry__text">理解当前状态、优势与长期关注信号</text>
+      </view>
+      <text class="advice-entry__arrow">›</text>
     </view>
 
     <view class="fire-reference-card" bindtap="onGoToLivingCost">
@@ -87,47 +83,46 @@
       </view>
       <view wx:else>
         <text class="fire-reference-label">生活成本参考</text>
-        <text class="fire-reference-title">完善生活成本，查看你的平衡自由方案</text>
-        <text class="fire-reference-text">生活方式与实现方式是自由计划的两个维度。</text>
+        <text class="fire-reference-title">完善生活成本，查看平衡自由方案</text>
+        <text class="fire-reference-text">生活方式与实现方式，是自由计划的两个维度。</text>
       </view>
       <text class="fire-reference-action">查看分析 →</text>
-    </view>
-
-    <view wx:if="{{!hasAssets}}" class="home-empty-card">
-      <text class="home-empty-card__title">自由地图已经准备好</text>
-      <text class="home-empty-card__text">添加第一项资产后，这里会开始记录你的自由进度。</text>
-      <text class="home-empty-card__action" bindtap="onGoToWealth">去添加资产 →</text>
-    </view>
-
-    <view wx:if="{{hasRecentActivity}}" class="recent-card">
-      <view class="recent-heading">
-        <view>
-          <text class="card-label">最近变化</text>
-          <text class="recent-title">过去一年</text>
-        </view>
-        <text class="recent-badge">财富成长记录</text>
-      </view>
-      <view class="recent-grid">
-        <view class="recent-item recent-item--wide">
-          <text class="recent-label">资产增长</text>
-          <text class="recent-value {{recentChange.assetChange >= 0 ? 'recent-value--positive' : 'recent-value--negative'}}">
-            {{recentChange.assetChangeText}}
-          </text>
-        </view>
-        <view class="recent-item">
-          <text class="recent-label">自由进度</text>
-          <text class="recent-value">{{recentChange.progressFromText}} → {{recentChange.progressToText}}</text>
-        </view>
-        <view class="recent-item">
-          <text class="recent-label">人生收藏</text>
-          <text class="recent-value">新增 {{recentChange.museumAddedCount}} 件</text>
-        </view>
-      </view>
     </view>
 
     <view class="action-row">
       <button class="primary-button action-button" bindtap="onGoToWealth">管理资产</button>
       <button class="secondary-button action-button" bindtap="onEditConfiguration">调整目标</button>
     </view>
-  </view>
+  </block>
+
+  <block wx:else>
+    <view class="eyebrow">CREATE YOUR ARCHIVE</view>
+    <text class="page-title">{{isEditingGoal ? '调整梦想生活' : '创建你的财富档案'}}</text>
+    <text class="page-description">{{isEditingGoal ? '生活会变化，目标也可以随时重新选择。' : '四个步骤，建立属于你的自由与人生记录。'}}</text>
+
+    <view wx:if="{{!isEditingGoal}}" class="first-guide">
+      <view class="guide-step guide-step--active">
+        <text class="step-number">1</text>
+        <view class="step-main"><text class="step-title">选择梦想生活</text><text class="step-text">决定你想抵达的生活质量</text></view>
+        <text class="current-badge">当前</text>
+      </view>
+      <view class="guide-step"><text class="step-number">2</text><view class="step-main"><text class="step-title">记录当前资产</text><text class="step-text">建立财富成长起点</text></view></view>
+      <view class="guide-step"><text class="step-number">3</text><view class="step-main"><text class="step-title">填写生活成本</text><text class="step-text">理解安全储备和自由成本</text></view></view>
+      <view class="guide-step guide-step--last"><text class="step-number">4</text><view class="step-main"><text class="step-title">收藏第一段人生经历</text><text class="step-text">记录财富真正创造的生活</text></view></view>
+    </view>
+
+    <view class="setup-section">
+      <text class="setup-kicker">STEP 1</text>
+      <text class="section-title">选择你的梦想生活</text>
+      <text class="setup-note">等级代表生活质量，之后可以随时调整。</text>
+      <view class="goal-list">
+        <view wx:for="{{goalOptions}}" wx:key="level" class="goal-card {{selectedLevel === item.level ? 'goal-card--selected' : ''}}" data-level="{{item.level}}" bindtap="onSelectGoal">
+          <view class="goal-card__top"><text class="goal-level">{{item.level}} · {{item.name}}</text><text class="goal-asset">{{item.targetAssetText}}</text></view>
+          <text class="goal-description">{{item.description}}</text>
+        </view>
+      </view>
+      <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+      <button class="primary-button" bindtap="onSaveConfiguration">保存并进入下一步</button>
+    </view>
+  </block>
 </view>

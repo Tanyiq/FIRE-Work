@@ -26,6 +26,11 @@ export interface FreedomDashboard {
   targetAssetText: string
   progressPercent: number
   progressText: string
+  remainingProgress: number
+  remainingProgressText: string
+  continuousLevel: number
+  continuousLevelText: string
+  accumulationStageName: string
   remainingAsset: number
   remainingAssetText: string
   isGoalReached: boolean

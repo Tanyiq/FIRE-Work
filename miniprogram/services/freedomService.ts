@@ -84,11 +84,34 @@ const getCurrentStage = (currentAsset: number): FreedomStage => {
   }, FREEDOM_STAGES[0])
 }
 
+const calculateContinuousFreedomIndex = (currentAsset: number): number => {
+  const thresholds = FREEDOM_STAGES.map((stage) => stage.targetAsset)
+  if (currentAsset >= thresholds[thresholds.length - 1]) return 4
+  for (let index = 0; index < thresholds.length - 1; index += 1) {
+    const start = thresholds[index]
+    const end = thresholds[index + 1]
+    if (currentAsset < end) {
+      return Math.round((index + (currentAsset - start) / (end - start)) * 10) / 10
+    }
+  }
+  return 4
+}
+
+const getAccumulationStageName = (continuousLevel: number): string => {
+  if (continuousLevel < 1) return '财富起步阶段'
+  if (continuousLevel < 2) return '稳定积累阶段'
+  if (continuousLevel < 3) return '舒适成长阶段'
+  if (continuousLevel < 4) return '富足积累阶段'
+  return '目标生活阶段'
+}
+
 const createDashboard = (profile: UserFreedomProfile): FreedomDashboard => {
   const currentAsset = assetService.calculateTotalAsset()
   const currentStage = getCurrentStage(currentAsset)
   const rawProgress = (currentAsset / profile.freedomGoal.targetAsset) * 100
   const progressPercent = Math.min(100, Math.round(rawProgress * 10) / 10)
+  const remainingProgress = Math.max(0, Math.round((1 - progressPercent / 100) * 10000) / 10000)
+  const continuousLevel = calculateContinuousFreedomIndex(currentAsset)
   const remainingAsset = Math.max(0, profile.freedomGoal.targetAsset - currentAsset)
 
   return {
@@ -100,6 +123,11 @@ const createDashboard = (profile: UserFreedomProfile): FreedomDashboard => {
     targetAssetText: formatAmount(profile.freedomGoal.targetAsset),
     progressPercent,
     progressText: formatProgress(progressPercent / 100),
+    remainingProgress,
+    remainingProgressText: formatProgress(remainingProgress),
+    continuousLevel,
+    continuousLevelText: `Lv${continuousLevel.toFixed(1)}`,
+    accumulationStageName: getAccumulationStageName(continuousLevel),
     remainingAsset,
     remainingAssetText: formatAmount(remainingAsset),
     isGoalReached: remainingAsset === 0,
@@ -133,6 +161,8 @@ export const freedomService = {
     const profile = getProfile()
     return profile ? createDashboard(profile) : null
   },
+
+  calculateContinuousFreedomIndex,
 
   calculateFreedomStatus(currentAsset: number): FreedomStatus {
     const currentStage = getCurrentStage(currentAsset)

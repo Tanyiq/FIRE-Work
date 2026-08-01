@@ -105,8 +105,9 @@
 
     <view wx:if="{{collections.length === 0 && !showAddForm}}" class="empty-card">
       <text class="empty-symbol">◇</text>
-      <text class="empty-title">博物馆还没有藏品</text>
-      <text class="empty-text">从一件有故事的物品，或一次值得的经历开始。</text>
+      <text class="empty-title">收藏第一段值得记住的人生</text>
+      <text class="empty-text">不必等待特别时刻，从一件有故事的物品或一次真实经历开始。</text>
+      <button class="empty-action" bindtap="onToggleAddForm">添加第一件收藏</button>
     </view>
 
     <view wx:if="{{collections.length > 0}}" class="collection-section">

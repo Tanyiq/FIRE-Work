@@ -5,10 +5,10 @@ import {
 import { MuseumCollection, MuseumCollectionType } from '../models/museum'
 import { formatAmount, formatSignedAmount } from '../utils/format'
 import { investmentService } from './investmentService'
+import { freedomService } from './freedomService'
 import { museumService } from './museumService'
 import { snapshotService } from './snapshotService'
 
-const FREEDOM_THRESHOLDS = [0, 600000, 1200000, 2000000, 5000000] as const
 const LIFE_ICONS: Record<MuseumCollectionType, string> = {
   physical: '📦',
   experience: '✈️',
@@ -20,18 +20,6 @@ const getYearRange = (year: number): { start: number; end: number } => ({
   start: new Date(year, 0, 1).getTime(),
   end: new Date(year + 1, 0, 1).getTime() - 1,
 })
-
-const getFreedomIndex = (asset: number): number => {
-  if (asset >= FREEDOM_THRESHOLDS[FREEDOM_THRESHOLDS.length - 1]) return 4
-  for (let index = 0; index < FREEDOM_THRESHOLDS.length - 1; index += 1) {
-    const start = FREEDOM_THRESHOLDS[index]
-    const end = FREEDOM_THRESHOLDS[index + 1]
-    if (asset < end) {
-      return Math.round((index + (asset - start) / (end - start)) * 10) / 10
-    }
-  }
-  return 4
-}
 
 const formatFreedomIndex = (value: number): string => `Lv${value.toFixed(1)}`
 
@@ -94,8 +82,12 @@ export const annualReportService = {
     const assetGrowth = startSnapshot && endSnapshot
       ? Math.round((endSnapshot.totalAsset - startSnapshot.totalAsset) * 100) / 100
       : null
-    const startFreedomIndex = startSnapshot ? getFreedomIndex(startSnapshot.totalAsset) : null
-    const endFreedomIndex = endSnapshot ? getFreedomIndex(endSnapshot.totalAsset) : null
+    const startFreedomIndex = startSnapshot
+      ? freedomService.calculateContinuousFreedomIndex(startSnapshot.totalAsset)
+      : null
+    const endFreedomIndex = endSnapshot
+      ? freedomService.calculateContinuousFreedomIndex(endSnapshot.totalAsset)
+      : null
     const lessons = investments.filter((item) => item.lesson.trim())
     const lessonRecord = lessons.length > 0
       ? lessons.reduce((current, item) => {

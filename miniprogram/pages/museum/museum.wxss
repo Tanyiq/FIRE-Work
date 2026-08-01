@@ -267,3 +267,16 @@
   background: #f8e9e7;
   font-size: 28rpx;
 }
+.empty-action {
+  margin-top: 28rpx;
+  border: 0;
+  border-radius: 999rpx;
+  background: #193f35;
+  color: #ffffff;
+  font-size: 26rpx;
+  line-height: 72rpx;
+}
+
+.empty-action::after {
+  border: 0;
+}

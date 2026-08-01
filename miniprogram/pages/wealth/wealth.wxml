@@ -115,8 +115,9 @@
   <view class="asset-section">
     <text class="section-title">资产分类</text>
     <view wx:if="{{categories.length === 0}}" class="empty-card">
-      <text class="empty-title">还没有资产记录</text>
-      <text class="empty-text">添加第一项资产后，自由地图会自动更新。</text>
+      <text class="empty-title">建立第一份资产基线</text>
+      <text class="empty-text">记录一项真实资产，自由进度和财富趋势会从这里开始。</text>
+      <button wx:if="{{!showAssetForm}}" class="empty-action" bindtap="onToggleAssetForm">记录第一项资产</button>
     </view>
 
     <view wx:for="{{categories}}" wx:key="value" class="category-card">

@@ -1,5 +1,6 @@
 import { AnnualWealthReport } from '../../models/annualReport'
 import { annualReportService } from '../../services/annualReportService'
+import { drawAnnualPoster } from '../../utils/annualPoster'
 
 const yearOptions = annualReportService.getAvailableYears()
 
@@ -8,6 +9,7 @@ Page({
     yearOptions,
     selectedYearIndex: 0,
     report: annualReportService.getAnnualReport(yearOptions[0]) as AnnualWealthReport,
+    isGeneratingPoster: false,
   },
 
   onShow() {
@@ -40,5 +42,30 @@ Page({
 
   onGoToMuseum() {
     wx.switchTab({ url: '/pages/museum/museum' })
+  },
+
+  onSharePoster() {
+    if (this.data.isGeneratingPoster) return
+    this.setData({ isGeneratingPoster: true })
+    drawAnnualPoster('annualShareCanvas', this.data.report, this, () => {
+      wx.canvasToTempFilePath({
+        canvasId: 'annualShareCanvas',
+        width: 600,
+        height: 800,
+        destWidth: 1200,
+        destHeight: 1600,
+        fileType: 'png',
+        success: (result) => {
+          wx.showShareImageMenu({
+            path: result.tempFilePath,
+            complete: () => this.setData({ isGeneratingPoster: false }),
+          })
+        },
+        fail: () => {
+          this.setData({ isGeneratingPoster: false })
+          wx.showToast({ title: '分享图生成失败', icon: 'none' })
+        },
+      }, this)
+    })
   },
 })

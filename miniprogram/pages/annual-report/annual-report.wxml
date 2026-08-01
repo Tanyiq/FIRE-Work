@@ -14,6 +14,8 @@
     <text class="cover-subtitle">RETIREMENT PLAN · YEAR IN REVIEW</text>
   </view>
 
+  <button class="share-button" loading="{{isGeneratingPoster}}" disabled="{{isGeneratingPoster}}" bindtap="onSharePoster">生成年度分享图</button>
+
   <view class="report-card">
     <text class="section-index">01</text>
     <text class="section-title">财富变化</text>
@@ -92,4 +94,5 @@
   </view>
 
   <text class="disclaimer">年度回顾只整理你已经记录的事实，不构成投资建议或收益评价。</text>
+  <canvas canvas-id="annualShareCanvas" class="share-canvas"></canvas>
 </view>
