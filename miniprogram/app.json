@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/freedom/freedom",
+    "pages/wealth/wealth",
+    "pages/museum/museum",
+    "pages/report/report",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "退休计划",
+    "navigationBarBackgroundColor": "#f7f5ef",
+    "backgroundColor": "#f7f5ef",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#7a7d78",
+    "selectedColor": "#2f6b4f",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/freedom/freedom",
+        "text": "自由"
+      },
+      {
+        "pagePath": "pages/wealth/wealth",
+        "text": "财富"
+      },
+      {
+        "pagePath": "pages/museum/museum",
+        "text": "博物馆"
+      },
+      {
+        "pagePath": "pages/report/report",
+        "text": "报告"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents"
+}

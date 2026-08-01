@@ -1,0 +1,110 @@
+<view class="page-shell">
+  <view class="eyebrow">WEALTH</view>
+  <text class="page-title">财富管家</text>
+  <text class="page-description">记录资产结构，为自由计划提供清晰的基础。</text>
+
+  <view class="total-card">
+    <text class="total-card__label">当前总资产</text>
+    <view class="total-card__amount-row">
+      <text class="total-card__amount">{{totalAsset / 10000}}</text>
+      <text class="total-card__unit">万元</text>
+    </view>
+    <text class="total-card__hint">自由地图将使用这里的资产总额计算进度。</text>
+  </view>
+
+  <view class="trend-card">
+    <view class="trend-heading">
+      <view>
+        <text class="trend-title">资产成长曲线</text>
+        <text class="trend-subtitle">只记录阶段性的财富变化</text>
+      </view>
+      <view class="range-switch">
+        <text class="range-option {{trendRange === 'month' ? 'range-option--active' : ''}}" data-range="month" bindtap="onTrendRangeChange">月</text>
+        <text class="range-option {{trendRange === 'year' ? 'range-option--active' : ''}}" data-range="year" bindtap="onTrendRangeChange">年</text>
+      </view>
+    </view>
+    <view wx:if="{{trendPoints.length > 0}}">
+      <canvas canvas-id="wealthTrendCanvas" class="trend-canvas"></canvas>
+      <view class="trend-metrics">
+        <text>起点 ¥{{trendStartAsset}}</text>
+        <text class="trend-change {{trendChange >= 0 ? 'trend-change--positive' : 'trend-change--negative'}}">
+          {{trendChange > 0 ? '+' : ''}}{{trendChange}} 元
+        </text>
+        <text>当前 ¥{{trendEndAsset}}</text>
+      </view>
+    </view>
+    <view wx:else class="trend-empty">添加资产后，将从第一份财富快照开始记录趋势。</view>
+  </view>
+
+  <button class="add-button" bindtap="onToggleAssetForm">
+    {{showAssetForm ? '收起录入' : '+ 新增资产'}}
+  </button>
+
+  <view wx:if="{{showAssetForm}}" class="asset-form">
+    <text class="form-title">{{editingAssetId ? '修改资产' : '记录一项资产'}}</text>
+    <text class="field-label">资产类型</text>
+    <picker
+      mode="selector"
+      range="{{assetTypeOptions}}"
+      range-key="label"
+      value="{{selectedTypeIndex}}"
+      bindchange="onTypeChange"
+    >
+      <view class="picker-field">
+        <text>{{selectedTypeLabel}}</text>
+        <text class="picker-arrow">选择 ›</text>
+      </view>
+    </picker>
+
+    <text class="field-label">资产名称</text>
+    <input
+      class="text-field"
+      value="{{assetNameInput}}"
+      placeholder="例如：招商银行活期"
+      bindinput="onNameInput"
+    />
+
+    <text class="field-label">当前金额</text>
+    <view class="amount-field">
+      <input
+        class="amount-input"
+        type="digit"
+        value="{{assetAmountInput}}"
+        placeholder="例如 20"
+        bindinput="onAmountInput"
+      />
+      <text class="amount-unit">万元</text>
+    </view>
+
+    <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+    <button class="save-button" bindtap="onAddAsset">{{editingAssetId ? '保存修改' : '保存资产'}}</button>
+  </view>
+
+  <view class="asset-section">
+    <text class="section-title">资产分类</text>
+    <view wx:if="{{categories.length === 0}}" class="empty-card">
+      <text class="empty-title">还没有资产记录</text>
+      <text class="empty-text">添加第一项资产后，自由地图会自动更新。</text>
+    </view>
+
+    <view wx:for="{{categories}}" wx:key="value" class="category-card">
+      <view class="category-heading">
+        <text class="category-name">{{item.label}}</text>
+        <text class="category-total">{{item.totalAmount / 10000}} 万元</text>
+      </view>
+      <view
+        wx:for="{{item.assets}}"
+        wx:for-item="asset"
+        wx:key="id"
+        class="asset-row"
+      >
+        <text class="asset-name">{{asset.name}}</text>
+        <view class="asset-row__right">
+          <text class="asset-amount">{{asset.currentAmount / 10000}} 万元</text>
+          <text class="edit-action" data-id="{{asset.id}}" bindtap="onEditAsset">编辑</text>
+          <text class="delete-action" data-id="{{asset.id}}" bindtap="onDeleteAsset">删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,287 @@
+.total-card {
+  margin-top: 48rpx;
+  padding: 40rpx;
+  border-radius: 28rpx;
+  color: #ffffff;
+  background: linear-gradient(145deg, #283d33, #3d6250);
+  box-shadow: 0 20rpx 50rpx rgba(42, 57, 48, 0.18);
+}
+
+.total-card__label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 25rpx;
+}
+
+.total-card__amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12rpx;
+  margin-top: 18rpx;
+}
+
+.total-card__amount {
+  font-size: 68rpx;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.total-card__unit {
+  font-size: 28rpx;
+}
+
+.total-card__hint {
+  display: block;
+  margin-top: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 24rpx;
+}
+
+.trend-card {
+  margin-top: 28rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+
+.trend-heading,
+.trend-metrics,
+.range-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trend-title {
+  display: block;
+  font-size: 31rpx;
+  font-weight: 650;
+}
+
+.trend-subtitle {
+  display: block;
+  margin-top: 7rpx;
+  color: #7a817d;
+  font-size: 23rpx;
+}
+
+.range-switch {
+  padding: 5rpx;
+  border-radius: 999rpx;
+  background: #edf0ec;
+}
+
+.range-option {
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  color: #6e7771;
+  font-size: 24rpx;
+}
+
+.range-option--active {
+  color: #ffffff;
+  background: #2f6b4f;
+}
+
+.trend-canvas {
+  width: 100%;
+  height: 320rpx;
+  margin-top: 24rpx;
+}
+
+.trend-metrics {
+  color: #77817b;
+  font-size: 22rpx;
+}
+
+.trend-change {
+  font-weight: 600;
+}
+
+.trend-change--positive {
+  color: #2f6b4f;
+}
+
+.trend-change--negative {
+  color: #a64138;
+}
+
+.trend-empty {
+  margin-top: 26rpx;
+  padding: 36rpx 20rpx;
+  border-radius: 18rpx;
+  color: #7a817d;
+  background: #f5f6f3;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+.add-button,
+.save-button {
+  border-radius: 999rpx;
+  color: #ffffff;
+  background: #2f6b4f;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.add-button {
+  margin-top: 28rpx;
+}
+
+.add-button::after,
+.save-button::after {
+  border: 0;
+}
+
+.asset-form {
+  margin-top: 24rpx;
+  padding: 34rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+
+.form-title,
+.section-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 650;
+}
+
+.field-label {
+  display: block;
+  margin-top: 28rpx;
+  margin-bottom: 12rpx;
+  color: #68716c;
+  font-size: 25rpx;
+}
+
+.picker-field,
+.text-field,
+.amount-field {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 92rpx;
+  padding: 0 26rpx;
+  border: 2rpx solid #e0e2dd;
+  border-radius: 18rpx;
+  background: #fafbf9;
+}
+
+.picker-field,
+.amount-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-field {
+  height: 92rpx;
+}
+
+.picker-arrow,
+.amount-unit {
+  color: #7a817d;
+  font-size: 25rpx;
+}
+
+.amount-input {
+  flex: 1;
+  height: 88rpx;
+  font-size: 30rpx;
+}
+
+.validation-message {
+  display: block;
+  margin-top: 18rpx;
+  color: #b5473c;
+  font-size: 26rpx;
+}
+
+.save-button {
+  margin-top: 30rpx;
+}
+
+.asset-section {
+  margin-top: 52rpx;
+}
+
+.empty-card,
+.category-card {
+  margin-top: 22rpx;
+  border-radius: 22rpx;
+  background: #ffffff;
+}
+
+.empty-card {
+  padding: 38rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.empty-text {
+  display: block;
+  margin-top: 12rpx;
+  color: #7a817d;
+  font-size: 25rpx;
+}
+
+.category-heading,
+.asset-row,
+.asset-row__right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-heading {
+  padding: 28rpx 30rpx;
+  border-bottom: 1rpx solid #eceeea;
+}
+
+.category-name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.category-total {
+  color: #2f6b4f;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.asset-row {
+  min-height: 92rpx;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #f0f1ee;
+}
+
+.asset-row:last-child {
+  border-bottom: 0;
+}
+
+.asset-name,
+.asset-amount {
+  font-size: 27rpx;
+}
+
+.asset-row__right {
+  gap: 22rpx;
+}
+
+.edit-action,
+.delete-action {
+  font-size: 24rpx;
+}
+
+.edit-action {
+  color: #2f6b4f;
+}
+
+.delete-action {
+  color: #b5473c;
+}

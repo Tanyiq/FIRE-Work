@@ -1,0 +1,255 @@
+import {
+  MuseumCollection,
+  MuseumCollectionInput,
+  MuseumCollectionStatus,
+  MuseumCollectionType,
+  MuseumCollectionView,
+  MuseumStatusOption,
+  MuseumTypeOption,
+} from '../models/museum'
+import { storageService } from './storageService'
+
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+const TYPE_OPTIONS: ReadonlyArray<MuseumTypeOption> = [
+  { value: 'physical', label: '实物' },
+  { value: 'experience', label: '经历' },
+  { value: 'life_event', label: '人生事件' },
+  { value: 'income_event', label: '收益事件' },
+]
+
+const STATUS_OPTIONS: ReadonlyArray<MuseumStatusOption> = [
+  { value: 'active', label: '进行中' },
+  { value: 'retired', label: '已结束 / 已牺牲' },
+]
+
+const padNumber = (value: number): string => String(value).padStart(2, '0')
+
+const getToday = (): string => {
+  const today = new Date()
+  return `${today.getFullYear()}-${padNumber(today.getMonth() + 1)}-${padNumber(today.getDate())}`
+}
+
+const parseDate = (value: string): number | null => {
+  if (!DATE_PATTERN.test(value)) {
+    return null
+  }
+
+  const parts = value.split('-').map(Number)
+  const timestamp = Date.UTC(parts[0], parts[1] - 1, parts[2])
+  const parsed = new Date(timestamp)
+  if (
+    parsed.getUTCFullYear() !== parts[0] ||
+    parsed.getUTCMonth() !== parts[1] - 1 ||
+    parsed.getUTCDate() !== parts[2]
+  ) {
+    return null
+  }
+
+  return timestamp
+}
+
+const isCollectionType = (value: unknown): value is MuseumCollectionType =>
+  value === 'physical' ||
+  value === 'experience' ||
+  value === 'life_event' ||
+  value === 'income_event'
+
+const isCollectionStatus = (value: unknown): value is MuseumCollectionStatus =>
+  value === 'active' || value === 'retired'
+
+const isValidInput = (input: MuseumCollectionInput): boolean => {
+  const startTimestamp = parseDate(input.startDate)
+  const todayTimestamp = parseDate(getToday())
+  if (
+    !isCollectionType(input.type) ||
+    !isCollectionStatus(input.status) ||
+    !input.name.trim() ||
+    !Number.isFinite(input.amount) ||
+    input.amount < 0 ||
+    startTimestamp === null ||
+    todayTimestamp === null ||
+    startTimestamp > todayTimestamp
+  ) {
+    return false
+  }
+
+  if (input.status === 'retired') {
+    const retiredTimestamp = parseDate(input.retiredDate || '')
+    return (
+      retiredTimestamp !== null &&
+      retiredTimestamp >= startTimestamp &&
+      retiredTimestamp <= todayTimestamp
+    )
+  }
+
+  return true
+}
+
+const isCollection = (value: unknown): value is MuseumCollection => {
+  if (!value || typeof value !== 'object') {
+    return false
+  }
+
+  const collection = value as MuseumCollection
+  return (
+    typeof collection.id === 'string' &&
+    typeof collection.name === 'string' &&
+    typeof collection.amount === 'number' &&
+    typeof collection.startDate === 'string' &&
+    (collection.retiredDate === null || typeof collection.retiredDate === 'string') &&
+    typeof collection.story === 'string' &&
+    typeof collection.createdAt === 'number' &&
+    typeof collection.updatedAt === 'number' &&
+    isValidInput(collection)
+  )
+}
+
+const saveCollectionList = (collections: MuseumCollection[]): boolean =>
+  storageService.set(storageService.keys.museumCollections, collections)
+
+const createCollectionId = (): string =>
+  `museum_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+
+const getTypeLabel = (type: MuseumCollectionType): string =>
+  TYPE_OPTIONS.find((option) => option.value === type)?.label || '收藏'
+
+const getStatusLabel = (status: MuseumCollectionStatus): string =>
+  STATUS_OPTIONS.find((option) => option.value === status)?.label || status
+
+const calculateUsageDays = (
+  collection: MuseumCollection,
+  referenceDate: string = getToday(),
+): number => {
+  const startTimestamp = parseDate(collection.startDate)
+  const endDate =
+    collection.status === 'retired' && collection.retiredDate
+      ? collection.retiredDate
+      : referenceDate
+  const endTimestamp = parseDate(endDate)
+  if (startTimestamp === null || endTimestamp === null || endTimestamp < startTimestamp) {
+    return 0
+  }
+
+  return Math.max(1, Math.floor((endTimestamp - startTimestamp) / MILLISECONDS_PER_DAY))
+}
+
+const calculateDailyCost = (
+  collection: MuseumCollection,
+  referenceDate: string = getToday(),
+): number | null => {
+  if (collection.type === 'income_event') {
+    return null
+  }
+
+  const usageDays = calculateUsageDays(collection, referenceDate)
+  if (usageDays === 0) {
+    return null
+  }
+
+  return Math.round((collection.amount / usageDays) * 100) / 100
+}
+
+const toCollectionView = (collection: MuseumCollection): MuseumCollectionView => ({
+  ...collection,
+  typeLabel: getTypeLabel(collection.type),
+  statusLabel: getStatusLabel(collection.status),
+  usageDays: calculateUsageDays(collection),
+  dailyCost: calculateDailyCost(collection),
+})
+
+export const museumService = {
+  getToday,
+
+  getTypeOptions(): MuseumTypeOption[] {
+    return TYPE_OPTIONS.map((option) => ({ ...option }))
+  },
+
+  getStatusOptions(): MuseumStatusOption[] {
+    return STATUS_OPTIONS.map((option) => ({ ...option }))
+  },
+
+  getCollectionList(): MuseumCollection[] {
+    const storedCollections = storageService.get<unknown>(storageService.keys.museumCollections)
+    if (!Array.isArray(storedCollections)) {
+      return []
+    }
+
+    return storedCollections
+      .filter(isCollection)
+      .map((collection) => ({ ...collection }))
+      .sort((a, b) => b.createdAt - a.createdAt)
+  },
+
+  getCollectionViews(): MuseumCollectionView[] {
+    return this.getCollectionList().map(toCollectionView)
+  },
+
+  addCollection(input: MuseumCollectionInput): MuseumCollection | null {
+    if (!isValidInput(input)) {
+      return null
+    }
+
+    const now = Date.now()
+    const collection: MuseumCollection = {
+      id: createCollectionId(),
+      type: input.type,
+      name: input.name.trim(),
+      amount: input.amount,
+      startDate: input.startDate,
+      status: input.status,
+      retiredDate: input.status === 'retired' ? input.retiredDate || null : null,
+      story: (input.story || '').trim(),
+      createdAt: now,
+      updatedAt: now,
+    }
+    const collections = [collection, ...this.getCollectionList()]
+    return saveCollectionList(collections) ? collection : null
+  },
+
+  deleteCollection(id: string): boolean {
+    const collections = this.getCollectionList()
+    const nextCollections = collections.filter((collection) => collection.id !== id)
+    return nextCollections.length !== collections.length && saveCollectionList(nextCollections)
+  },
+
+  updateCollection(
+    id: string,
+    updates: Partial<MuseumCollectionInput>,
+  ): MuseumCollection | null {
+    const collections = this.getCollectionList()
+    const index = collections.findIndex((collection) => collection.id === id)
+    if (index < 0) {
+      return null
+    }
+
+    const current = collections[index]
+    const nextInput: MuseumCollectionInput = {
+      type: updates.type ?? current.type,
+      name: updates.name ?? current.name,
+      amount: updates.amount ?? current.amount,
+      startDate: updates.startDate ?? current.startDate,
+      status: updates.status ?? current.status,
+      retiredDate: updates.retiredDate === undefined ? current.retiredDate : updates.retiredDate,
+      story: updates.story ?? current.story,
+    }
+    if (!isValidInput(nextInput)) {
+      return null
+    }
+
+    const updatedCollection: MuseumCollection = {
+      ...current,
+      ...nextInput,
+      name: nextInput.name.trim(),
+      retiredDate: nextInput.status === 'retired' ? nextInput.retiredDate || null : null,
+      story: (nextInput.story || '').trim(),
+      updatedAt: Date.now(),
+    }
+    collections[index] = updatedCollection
+    return saveCollectionList(collections) ? updatedCollection : null
+  },
+
+  calculateUsageDays,
+  calculateDailyCost,
+}

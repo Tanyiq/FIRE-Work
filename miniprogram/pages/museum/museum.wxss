@@ -1,0 +1,269 @@
+.add-button,
+.save-button {
+  border-radius: 999rpx;
+  color: #ffffff;
+  background: #2f6b4f;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.add-button {
+  margin-top: 42rpx;
+}
+
+.add-button::after,
+.save-button::after,
+.delete-button::after {
+  border: 0;
+}
+
+.collection-form,
+.detail-card {
+  margin-top: 26rpx;
+  padding: 34rpx;
+  border-radius: 26rpx;
+  background: #ffffff;
+}
+
+.form-title,
+.section-title {
+  font-size: 34rpx;
+  font-weight: 650;
+}
+
+.field-label {
+  display: block;
+  margin-top: 28rpx;
+  margin-bottom: 12rpx;
+  color: #68716c;
+  font-size: 25rpx;
+}
+
+.picker-field,
+.text-field,
+.story-field {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 26rpx;
+  border: 2rpx solid #e0e2dd;
+  border-radius: 18rpx;
+  background: #fafbf9;
+}
+
+.picker-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 92rpx;
+}
+
+.text-field {
+  height: 92rpx;
+}
+
+.story-field {
+  min-height: 190rpx;
+  padding-top: 24rpx;
+  padding-bottom: 24rpx;
+}
+
+.picker-arrow {
+  color: #7a817d;
+  font-size: 25rpx;
+}
+
+.validation-message {
+  display: block;
+  margin-top: 18rpx;
+  color: #b5473c;
+  font-size: 26rpx;
+}
+
+.save-button {
+  margin-top: 30rpx;
+}
+
+.empty-card {
+  margin-top: 48rpx;
+  padding: 64rpx 36rpx;
+  border-radius: 26rpx;
+  background: #ffffff;
+  text-align: center;
+}
+
+.empty-symbol {
+  display: block;
+  color: #d5a94e;
+  font-size: 64rpx;
+}
+
+.empty-title {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 31rpx;
+  font-weight: 600;
+}
+
+.empty-text {
+  display: block;
+  margin-top: 12rpx;
+  color: #7a817d;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.collection-section {
+  margin-top: 48rpx;
+}
+
+.section-heading,
+.collection-card__top,
+.collection-footer,
+.detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collection-count,
+.collection-date {
+  color: #7a817d;
+  font-size: 25rpx;
+}
+
+.collection-card {
+  margin-top: 22rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 32rpx rgba(42, 57, 48, 0.05);
+}
+
+.type-badge,
+.status-badge {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  color: #2f6b4f;
+  background: #e6eee8;
+  font-size: 23rpx;
+}
+
+.collection-name,
+.detail-title {
+  display: block;
+  color: #253229;
+  font-weight: 650;
+}
+
+.collection-name {
+  margin-top: 24rpx;
+  font-size: 34rpx;
+}
+
+.collection-story,
+.detail-story {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #737c77;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+}
+
+.collection-story {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  -webkit-line-clamp: 2;
+}
+
+.collection-footer {
+  margin-top: 26rpx;
+  padding-top: 22rpx;
+  border-top: 1rpx solid #eceeea;
+  color: #5f6a64;
+  font-size: 25rpx;
+}
+
+.detail-section {
+  margin-top: 38rpx;
+}
+
+.back-action {
+  color: #2f6b4f;
+  font-size: 27rpx;
+}
+
+.status-badge--retired {
+  color: #745d30;
+  background: #f4ead3;
+}
+
+.detail-title {
+  margin-top: 34rpx;
+  font-size: 44rpx;
+}
+
+.detail-story {
+  margin-top: 18rpx;
+  font-size: 28rpx;
+  -webkit-line-clamp: 8;
+}
+
+.detail-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18rpx;
+  margin-top: 36rpx;
+}
+
+.detail-metric {
+  width: calc(50% - 9rpx);
+  padding: 26rpx;
+  box-sizing: border-box;
+  border-radius: 18rpx;
+  background: #f5f5f1;
+}
+
+.detail-metric--wide {
+  width: 100%;
+}
+
+.metric-label {
+  display: block;
+  color: #768079;
+  font-size: 23rpx;
+}
+
+.metric-value,
+.daily-cost {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.daily-cost {
+  color: #2f6b4f;
+  font-size: 35rpx;
+}
+
+.date-section {
+  margin-top: 32rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #eceeea;
+}
+
+.date-row {
+  display: block;
+  margin-top: 8rpx;
+  color: #68716c;
+  font-size: 25rpx;
+}
+
+.delete-button {
+  margin-top: 34rpx;
+  border-radius: 999rpx;
+  color: #a64138;
+  background: #f8e9e7;
+  font-size: 28rpx;
+}

@@ -1,0 +1,138 @@
+<view class="page-shell">
+  <view class="eyebrow">LIFE MUSEUM</view>
+  <text class="page-title">人生博物馆</text>
+  <text class="page-description">收藏那些真正创造了人生价值的消费与经历。</text>
+
+  <view wx:if="{{selectedCollection}}" class="detail-section">
+    <text class="back-action" bindtap="onCloseDetail">‹ 返回收藏列表</text>
+    <view class="detail-card">
+      <view class="detail-heading">
+        <text class="type-badge">{{selectedCollection.typeLabel}}</text>
+        <text class="status-badge status-badge--{{selectedCollection.status}}">
+          {{selectedCollection.statusLabel}}
+        </text>
+      </view>
+      <text class="detail-title">{{selectedCollection.name}}</text>
+      <text class="detail-story">
+        {{selectedCollection.story || '还没有记录这件收藏背后的故事。'}}
+      </text>
+
+      <view class="detail-grid">
+        <view class="detail-metric">
+          <text class="metric-label">{{selectedCollection.type === 'income_event' ? '收益金额' : '花费金额'}}</text>
+          <text class="metric-value">¥{{selectedCollection.amount}}</text>
+        </view>
+        <view class="detail-metric">
+          <text class="metric-label">记录天数</text>
+          <text class="metric-value">{{selectedCollection.usageDays}} 天</text>
+        </view>
+        <view wx:if="{{selectedCollection.dailyCost !== null}}" class="detail-metric detail-metric--wide">
+          <text class="metric-label">
+            {{selectedCollection.status === 'retired' ? '最终每日成本' : '当前每日成本'}}
+          </text>
+          <text class="daily-cost">¥{{selectedCollection.dailyCost}} / 天</text>
+        </view>
+        <view wx:else class="detail-metric detail-metric--wide">
+          <text class="metric-label">价值记录</text>
+          <text class="metric-value">收益事件不计算每日成本</text>
+        </view>
+      </view>
+
+      <view class="date-section">
+        <text class="date-row">开始日期：{{selectedCollection.startDate}}</text>
+        <text wx:if="{{selectedCollection.retiredDate}}" class="date-row">
+          结束日期：{{selectedCollection.retiredDate}}
+        </text>
+      </view>
+      <button class="delete-button" bindtap="onDeleteCollection">删除这件收藏</button>
+    </view>
+  </view>
+
+  <view wx:else>
+    <button class="add-button" bindtap="onToggleAddForm">
+      {{showAddForm ? '收起录入' : '+ 添加人生收藏'}}
+    </button>
+
+    <view wx:if="{{showAddForm}}" class="collection-form">
+      <text class="form-title">添加人生收藏</text>
+
+      <text class="field-label">收藏类型</text>
+      <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
+        <view class="picker-field">
+          <text>{{selectedTypeLabel}}</text>
+          <text class="picker-arrow">选择 ›</text>
+        </view>
+      </picker>
+
+      <text class="field-label">名称</text>
+      <input class="text-field" value="{{nameInput}}" placeholder="例如：第一台相机" bindinput="onNameInput" />
+
+      <text class="field-label">{{selectedTypeIndex === 3 ? '收益金额' : '花费金额'}}（元）</text>
+      <input class="text-field" type="digit" value="{{amountInput}}" placeholder="例如 8000" bindinput="onAmountInput" />
+
+      <text class="field-label">开始 / 发生日期</text>
+      <picker mode="date" value="{{startDate}}" end="{{retiredDate}}" bindchange="onStartDateChange">
+        <view class="picker-field">
+          <text>{{startDate}}</text>
+          <text class="picker-arrow">选择 ›</text>
+        </view>
+      </picker>
+
+      <text class="field-label">当前状态</text>
+      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{selectedStatusIndex}}" bindchange="onStatusChange">
+        <view class="picker-field">
+          <text>{{selectedStatusLabel}}</text>
+          <text class="picker-arrow">选择 ›</text>
+        </view>
+      </picker>
+
+      <view wx:if="{{selectedStatusIndex === 1}}">
+        <text class="field-label">结束 / 牺牲日期</text>
+        <picker mode="date" value="{{retiredDate}}" start="{{startDate}}" end="{{today}}" bindchange="onRetiredDateChange">
+          <view class="picker-field">
+            <text>{{retiredDate}}</text>
+            <text class="picker-arrow">选择 ›</text>
+          </view>
+        </picker>
+      </view>
+
+      <text class="field-label">故事</text>
+      <textarea class="story-field" value="{{storyInput}}" maxlength="500" placeholder="它为什么值得被记住？" bindinput="onStoryInput"></textarea>
+
+      <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+      <button class="save-button" bindtap="onAddCollection">保存收藏</button>
+    </view>
+
+    <view wx:if="{{collections.length === 0 && !showAddForm}}" class="empty-card">
+      <text class="empty-symbol">◇</text>
+      <text class="empty-title">博物馆还没有藏品</text>
+      <text class="empty-text">从一件有故事的物品，或一次值得的经历开始。</text>
+    </view>
+
+    <view wx:if="{{collections.length > 0}}" class="collection-section">
+      <view class="section-heading">
+        <text class="section-title">我的收藏</text>
+        <text class="collection-count">{{collections.length}} 件</text>
+      </view>
+      <view
+        wx:for="{{collections}}"
+        wx:key="id"
+        class="collection-card"
+        data-id="{{item.id}}"
+        bindtap="onViewCollection"
+      >
+        <view class="collection-card__top">
+          <text class="type-badge">{{item.typeLabel}}</text>
+          <text class="collection-date">{{item.startDate}}</text>
+        </view>
+        <text class="collection-name">{{item.name}}</text>
+        <text class="collection-story">{{item.story || '这件收藏还没有写下故事。'}}</text>
+        <view class="collection-footer">
+          <text>{{item.usageDays}} 天</text>
+          <text wx:if="{{item.dailyCost !== null}}">¥{{item.dailyCost}} / 天</text>
+          <text wx:else>收益 ¥{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

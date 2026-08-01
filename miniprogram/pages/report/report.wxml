@@ -1,0 +1,102 @@
+<view class="page-shell">
+  <view class="eyebrow">WEALTH REPORT</view>
+  <text class="page-title">财富报告</text>
+  <text class="page-description">回看阶段性的财富变化，而不是每天的数字波动。</text>
+
+  <view wx:if="{{!report}}" class="empty-card">
+    <text class="empty-title">还没有可生成报告的快照</text>
+    <text class="empty-text">先在财富管家添加资产，系统会自动记录第一份财富快照。</text>
+    <button class="primary-button" bindtap="onGoToWealth">前往财富管家</button>
+  </view>
+
+  <view wx:else class="report-content">
+    <view class="report-cover">
+      <text class="report-cover__label">RETIREMENT PLAN</text>
+      <text class="report-cover__title">{{report.title}}</text>
+      <text class="report-cover__period">{{report.previousDate}} — {{report.currentDate}}</text>
+    </view>
+
+    <view class="report-card">
+      <text class="section-index">01</text>
+      <text class="section-title">财富变化</text>
+      <view class="comparison-row">
+        <view class="comparison-item">
+          <text class="metric-label">上次记录</text>
+          <text class="metric-value">¥{{report.previousAsset}}</text>
+        </view>
+        <text class="comparison-arrow">→</text>
+        <view class="comparison-item comparison-item--right">
+          <text class="metric-label">当前资产</text>
+          <text class="metric-value">¥{{report.currentAsset}}</text>
+        </view>
+      </view>
+      <view class="change-highlight {{report.assetChange >= 0 ? 'change-highlight--positive' : 'change-highlight--negative'}}">
+        <text>资产变化</text>
+        <text>{{report.assetChange > 0 ? '+' : ''}}{{report.assetChange}} 元</text>
+      </view>
+    </view>
+
+    <view class="report-card">
+      <text class="section-index">02</text>
+      <text class="section-title">自由变化</text>
+      <view class="level-flow">
+        <view>
+          <text class="level-name">{{report.previousFreedomLevel}}</text>
+          <text class="level-progress">{{report.previousFreedomProgress}}%</text>
+        </view>
+        <text class="level-arrow">→</text>
+        <view class="level-flow__current">
+          <text class="level-name">{{report.currentFreedomLevel}}</text>
+          <text class="level-progress">{{report.currentFreedomProgress}}%</text>
+        </view>
+      </view>
+      <text class="distance-note" wx:if="{{report.distanceChange < 0}}">
+        距离目标减少 {{0 - report.distanceChange}} 元
+      </text>
+      <text class="distance-note" wx:elif="{{report.distanceChange > 0}}">
+        距离目标增加 {{report.distanceChange}} 元
+      </text>
+      <text class="distance-note" wx:else>距离目标保持不变</text>
+    </view>
+
+    <view class="report-card">
+      <text class="section-index">03</text>
+      <text class="section-title">财富变化来源</text>
+      <text class="section-hint">本次变化主要来自：</text>
+      <view class="source-options">
+        <text
+          wx:for="{{sourceOptions}}"
+          wx:key="value"
+          class="source-chip {{selectedSource === item.value ? 'source-chip--selected' : ''}}"
+          data-source="{{item.value}}"
+          bindtap="onSelectSource"
+        >{{item.label}}</text>
+      </view>
+    </view>
+
+    <view class="report-card">
+      <text class="section-index">04</text>
+      <text class="section-title">人生收藏变化</text>
+      <view wx:if="{{report.addedCollections.length === 0}}" class="museum-empty">
+        本周期没有新增人生收藏。
+      </view>
+      <view wx:for="{{report.addedCollections}}" wx:key="id" class="museum-item">
+        <view>
+          <text class="museum-name">{{item.name}}</text>
+          <text class="museum-type">{{item.typeLabel}} · ¥{{item.amount}}</text>
+        </view>
+        <text class="museum-story">{{item.story || '值得被记住的人生片段'}}</text>
+      </view>
+    </view>
+
+    <view class="summary-card">
+      <text class="section-index section-index--light">05</text>
+      <text class="section-title">财富总结</text>
+      <text class="summary-text">{{report.summary}}</text>
+      <text class="source-note">本次变化来源：{{report.changeSourceLabel}}</text>
+    </view>
+
+    <text wx:if="{{generatedMessage}}" class="generated-message">{{generatedMessage}}</text>
+    <button class="primary-button" bindtap="onGenerateReport">生成并保存本期报告</button>
+  </view>
+</view>

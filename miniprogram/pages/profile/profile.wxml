@@ -1,0 +1,10 @@
+<view class="page-shell">
+  <view class="eyebrow">PROFILE</view>
+  <text class="page-title">我的</text>
+  <text class="page-description">管理个人偏好与本地数据。</text>
+
+  <view class="placeholder-card">
+    <text class="placeholder-title">个人设置</text>
+    <text class="placeholder-text">后续将在这里提供偏好设置、数据管理及产品说明。</text>
+  </view>
+</view>
