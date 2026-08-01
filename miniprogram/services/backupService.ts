@@ -6,6 +6,11 @@ import {
   WealthBackup,
 } from '../models/backup'
 import { FreedomGoal } from '../models/freedom'
+import {
+  InvestmentRecord,
+  InvestmentRecordStatus,
+  InvestmentRecordType,
+} from '../models/investment'
 import { LivingCostProfile } from '../models/livingCost'
 import {
   MuseumCollection,
@@ -15,6 +20,7 @@ import {
 import { WealthChangeSource, WealthReport } from '../models/report'
 import { AssetSnapshot } from '../models/snapshot'
 import { assetService } from './assetService'
+import { investmentService } from './investmentService'
 import { livingCostService } from './livingCostService'
 import { museumService } from './museumService'
 import { reportService } from './reportService'
@@ -25,6 +31,7 @@ const BACKUP_VERSION = '1.0' as const
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 const MAX_BACKUP_FILE_SIZE = 20 * 1024 * 1024
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+const MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/
 const ASSET_TYPES: ReadonlyArray<AssetType> = [
   'cash', 'deposit', 'fund', 'dividend', 'stock', 'gold', 'other',
 ]
@@ -35,6 +42,8 @@ const COLLECTION_STATUSES: ReadonlyArray<MuseumCollectionStatus> = ['active', 'r
 const CHANGE_SOURCES: ReadonlyArray<WealthChangeSource> = [
   'salary_saving', 'investment_return', 'income_increase', 'large_expense', 'other',
 ]
+const INVESTMENT_TYPES: ReadonlyArray<InvestmentRecordType> = ['stock', 'fund', 'etf', 'other']
+const INVESTMENT_STATUSES: ReadonlyArray<InvestmentRecordStatus> = ['holding', 'closed']
 
 interface WxFileShareOptions {
   filePath: string
@@ -134,6 +143,23 @@ const isLivingCost = (value: unknown): value is LivingCostProfile => {
   )
 }
 
+const isInvestmentRecord = (value: unknown): value is InvestmentRecord => {
+  if (!isObject(value)) return false
+  const hasValidEndDate = value.status === 'closed'
+    ? typeof value.endDate === 'string' && MONTH_PATTERN.test(value.endDate) &&
+      value.endDate >= String(value.startDate)
+    : value.endDate === undefined
+  return (
+    typeof value.id === 'string' && typeof value.name === 'string' && value.name.trim().length > 0 &&
+    INVESTMENT_TYPES.includes(value.type as InvestmentRecordType) &&
+    isNonNegativeNumber(value.investedAmount) && value.investedAmount > 0 &&
+    isNonNegativeNumber(value.currentAmount) && MONTH_PATTERN.test(String(value.startDate)) &&
+    INVESTMENT_STATUSES.includes(value.status as InvestmentRecordStatus) && hasValidEndDate &&
+    typeof value.reason === 'string' && value.reason.trim().length > 0 &&
+    typeof value.lesson === 'string' && isTimestamp(value.createdAt)
+  )
+}
+
 const parseBackup = (json: string): WealthBackup | null => {
   let value: unknown
   try {
@@ -145,6 +171,7 @@ const parseBackup = (json: string): WealthBackup | null => {
     return null
   }
   const goal = value.user.freedomGoal
+  const investments = value.investments === undefined ? [] : value.investments
   if (
     !isTimestamp(value.exportedAt) ||
     !isTimestamp(value.user.joinedAt) ||
@@ -153,11 +180,25 @@ const parseBackup = (json: string): WealthBackup | null => {
     !Array.isArray(value.snapshots) || !value.snapshots.every(isSnapshot) ||
     !Array.isArray(value.reports) || !value.reports.every(isReport) ||
     !Array.isArray(value.museum) || !value.museum.every(isCollection) ||
-    (value.livingCost !== null && !isLivingCost(value.livingCost))
+    (value.livingCost !== null && !isLivingCost(value.livingCost)) ||
+    !Array.isArray(investments) || !investments.every(isInvestmentRecord)
   ) {
     return null
   }
-  return value as unknown as WealthBackup
+  return {
+    version: BACKUP_VERSION,
+    exportedAt: value.exportedAt as number,
+    user: {
+      joinedAt: value.user.joinedAt as number,
+      freedomGoal: goal as FreedomGoal | null,
+    },
+    assets: value.assets as Asset[],
+    snapshots: value.snapshots as AssetSnapshot[],
+    reports: value.reports as WealthReport[],
+    museum: value.museum as MuseumCollection[],
+    livingCost: value.livingCost as LivingCostProfile | null,
+    investments: investments as InvestmentRecord[],
+  }
 }
 
 const getJoinedAt = (): number => {
@@ -169,6 +210,7 @@ const getJoinedAt = (): number => {
     ...snapshotService.getSnapshotList().map((item) => item.createdAt),
     ...reportService.getReportList().map((item) => item.createdAt),
     ...museumService.getCollectionList().map((item) => item.createdAt),
+    ...investmentService.getRecordList().map((item) => item.createdAt),
   ]
   const livingCost = livingCostService.getProfile()
   if (livingCost) timestamps.push(livingCost.updatedAt)
@@ -183,9 +225,14 @@ const getLatestDataAt = (): number => {
     ...snapshotService.getSnapshotList().map((item) => item.createdAt),
     ...reportService.getReportList().map((item) => item.createdAt),
     ...museumService.getCollectionList().map((item) => item.updatedAt),
+    ...investmentService.getRecordList().map((item) => item.createdAt),
   ]
   const livingCost = livingCostService.getProfile()
   if (livingCost) timestamps.push(livingCost.updatedAt)
+  const investmentUpdatedAt = storageService.get<number>(
+    storageService.keys.investmentRecordsUpdatedAt,
+  )
+  if (isTimestamp(investmentUpdatedAt)) timestamps.push(investmentUpdatedAt)
   return timestamps.length > 0 ? Math.max(...timestamps) : getJoinedAt()
 }
 
@@ -210,6 +257,7 @@ const createBackup = (): WealthBackup => ({
   reports: reportService.getReportList(),
   museum: museumService.getCollectionList(),
   livingCost: livingCostService.getProfile(),
+  investments: investmentService.getRecordList(),
 })
 
 const copyBackupToClipboard = (json: string): Promise<BackupOperationResult> =>
@@ -248,6 +296,8 @@ const restoreBackup = (backup: WealthBackup): BackupOperationResult => {
     keys.freedomGoal, keys.assets, keys.snapshots, keys.reports,
     keys.museumCollections, keys.livingCostProfile, keys.monthlyEssentialExpense,
     keys.profileJoinedAt,
+    keys.investmentRecords,
+    keys.investmentRecordsUpdatedAt,
   ]
   const previous = targetKeys.map((key) => ({ key, value: storageService.get<unknown>(key) }))
   const operations: Array<() => boolean> = [
@@ -263,6 +313,8 @@ const restoreBackup = (backup: WealthBackup): BackupOperationResult => {
       : storageService.remove(keys.livingCostProfile),
     () => storageService.remove(keys.monthlyEssentialExpense),
     () => storageService.set(keys.profileJoinedAt, backup.user.joinedAt),
+    () => storageService.set(keys.investmentRecords, backup.investments),
+    () => storageService.remove(keys.investmentRecordsUpdatedAt),
   ]
   if (operations.every((operation) => operation())) {
     return { success: true, message: '财富档案已恢复。' }
@@ -285,6 +337,7 @@ export const backupService = {
       snapshotCount: snapshotService.getSnapshotList().length,
       reportCount: reportService.getReportList().length,
       museumCount: museumService.getCollectionList().length,
+      investmentCount: investmentService.getRecordList().length,
     }
   },
 

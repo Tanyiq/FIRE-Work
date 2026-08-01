@@ -45,7 +45,7 @@ Page({
     if (this.data.isExporting || this.data.isRestoring) return
     wx.showModal({
       title: '恢复财富档案',
-      content: '恢复会替换当前的目标、资产、快照、报告、人生收藏和生活成本。建议先导出当前数据。',
+      content: '恢复会替换当前的目标、资产、快照、报告、人生收藏、生活成本和投资复盘。建议先导出当前数据。',
       confirmText: '选择备份',
       confirmColor: '#a64b3c',
       success: (modalResult) => {

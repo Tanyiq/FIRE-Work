@@ -73,6 +73,11 @@
   font-size: 46rpx;
 }
 
+.investment-entry {
+  margin-top: 16rpx;
+  background: #fffdf8;
+}
+
 .trend-card {
   margin-top: 28rpx;
   padding: 32rpx;

@@ -1,5 +1,6 @@
 import { Asset } from './asset'
 import { FreedomGoal } from './freedom'
+import { InvestmentRecord } from './investment'
 import { LivingCostProfile } from './livingCost'
 import { MuseumCollection } from './museum'
 import { WealthReport } from './report'
@@ -19,6 +20,7 @@ export interface WealthBackup {
   reports: WealthReport[]
   museum: MuseumCollection[]
   livingCost: LivingCostProfile | null
+  investments: InvestmentRecord[]
 }
 
 export interface WealthArchiveStats {
@@ -28,6 +30,7 @@ export interface WealthArchiveStats {
   snapshotCount: number
   reportCount: number
   museumCount: number
+  investmentCount: number
 }
 
 export interface BackupCheck {

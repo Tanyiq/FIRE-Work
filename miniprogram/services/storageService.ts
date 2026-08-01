@@ -8,6 +8,8 @@ const STORAGE_KEYS = {
   livingCostProfile: 'retirement_plan.living_cost_profile',
   profileJoinedAt: 'retirement_plan.profile_joined_at',
   lastBackupAt: 'retirement_plan.last_backup_at',
+  investmentRecords: 'retirement_plan.investment_records',
+  investmentRecordsUpdatedAt: 'retirement_plan.investment_records_updated_at',
 } as const
 
 export const storageService = {

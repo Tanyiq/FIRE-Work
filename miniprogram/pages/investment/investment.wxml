@@ -1,0 +1,127 @@
+<view class="page-shell">
+  <view class="eyebrow">INVESTMENT REVIEW</view>
+  <text class="page-title">投资复盘馆</text>
+  <text class="page-description">记录当时为什么做出选择，以及结果发生后真正学到了什么。</text>
+
+  <view class="principle-card">
+    <text class="principle-title">记录决策，不预测结果</text>
+    <text class="principle-text">这里的金额变化只描述已经发生的事实，不提供行情、推荐或未来收益判断。</text>
+  </view>
+
+  <view wx:if="{{selectedRecord}}" class="detail-section">
+    <text class="back-action" bindtap="onCloseDetail">‹ 返回记录列表</text>
+    <view class="detail-card">
+      <view class="detail-heading">
+        <text class="type-badge">{{selectedRecord.typeLabel}}</text>
+        <text class="status-badge status-badge--{{selectedRecord.status}}">{{selectedRecord.statusLabel}}</text>
+      </view>
+      <text class="detail-title">{{selectedRecord.name}}</text>
+      <text class="detail-period">{{selectedRecord.startDate}} 至 {{selectedRecord.endDate || '现在'}}</text>
+
+      <view class="amount-grid">
+        <view class="amount-item">
+          <text class="metric-label">累计投入</text>
+          <text class="metric-value">{{selectedRecord.investedAmountText}}</text>
+        </view>
+        <view class="amount-item amount-item--right">
+          <text class="metric-label">当前 / 结束金额</text>
+          <text class="metric-value">{{selectedRecord.currentAmountText}}</text>
+        </view>
+        <view class="result-row">
+          <text class="metric-label">已发生结果</text>
+          <text class="result-value {{selectedRecord.resultAmount >= 0 ? 'result-value--positive' : 'result-value--negative'}}">
+            {{selectedRecord.resultAmountText}} · {{selectedRecord.resultRateText}}
+          </text>
+        </view>
+      </view>
+
+      <view class="reflection-block">
+        <text class="reflection-label">当时的想法</text>
+        <text class="reflection-text">{{selectedRecord.reason}}</text>
+      </view>
+      <view class="reflection-block">
+        <text class="reflection-label">复盘</text>
+        <text class="reflection-text">{{selectedRecord.lesson || '还没有写下复盘结论。'}}</text>
+      </view>
+      <view class="detail-actions">
+        <button class="edit-button" bindtap="onEditRecord">编辑记录</button>
+        <button class="delete-button" bindtap="onDeleteRecord">删除记录</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else>
+    <button class="add-button" bindtap="onToggleForm">{{showForm ? '收起录入' : '+ 新增投资记录'}}</button>
+
+    <view wx:if="{{showForm}}" class="record-form">
+      <text class="form-title">{{editingRecordId ? '编辑投资记录' : '记录一次投资决策'}}</text>
+
+      <text class="field-label">名称</text>
+      <input class="text-field" value="{{nameInput}}" placeholder="例如：恒生科技 ETF" bindinput="onNameInput" />
+
+      <text class="field-label">类型</text>
+      <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
+        <view class="picker-field"><text>{{selectedTypeLabel}}</text><text class="picker-arrow">选择 ›</text></view>
+      </picker>
+
+      <view class="two-column">
+        <view class="column-field">
+          <text class="field-label">累计投入（元）</text>
+          <input class="text-field" type="digit" value="{{investedAmountInput}}" placeholder="30000" bindinput="onInvestedAmountInput" />
+        </view>
+        <view class="column-field">
+          <text class="field-label">当前金额（元）</text>
+          <input class="text-field" type="digit" value="{{currentAmountInput}}" placeholder="24000" bindinput="onCurrentAmountInput" />
+        </view>
+      </view>
+
+      <text class="field-label">开始时间</text>
+      <picker mode="date" fields="month" value="{{startDate}}" end="{{currentMonth}}" bindchange="onStartDateChange">
+        <view class="picker-field"><text>{{startDate}}</text><text class="picker-arrow">选择 ›</text></view>
+      </picker>
+
+      <text class="field-label">状态</text>
+      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{selectedStatusIndex}}" bindchange="onStatusChange">
+        <view class="picker-field"><text>{{selectedStatusLabel}}</text><text class="picker-arrow">选择 ›</text></view>
+      </picker>
+
+      <view wx:if="{{selectedStatusIndex === 1}}">
+        <text class="field-label">结束时间</text>
+        <picker mode="date" fields="month" value="{{endDate}}" start="{{startDate}}" end="{{currentMonth}}" bindchange="onEndDateChange">
+          <view class="picker-field"><text>{{endDate}}</text><text class="picker-arrow">选择 ›</text></view>
+        </picker>
+      </view>
+
+      <text class="field-label">我的想法</text>
+      <textarea class="textarea-field" value="{{reasonInput}}" maxlength="500" placeholder="当时为什么做出这个决定？" bindinput="onReasonInput"></textarea>
+
+      <text class="field-label">复盘</text>
+      <textarea class="textarea-field" value="{{lessonInput}}" maxlength="500" placeholder="结果发生后，你学到了什么？持有中也可以暂时留空。" bindinput="onLessonInput"></textarea>
+
+      <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+      <button class="save-button" bindtap="onSaveRecord">{{editingRecordId ? '保存修改' : '保存投资记录'}}</button>
+    </view>
+
+    <view wx:if="{{records.length === 0 && !showForm}}" class="empty-card">
+      <text class="empty-symbol">◎</text>
+      <text class="empty-title">还没有投资复盘</text>
+      <text class="empty-text">从一次真实的投资决定开始，留下当时的理由，而不只记住结果。</text>
+    </view>
+
+    <view wx:if="{{records.length > 0}}" class="record-section">
+      <view class="section-heading"><text class="section-title">我的投资记录</text><text class="record-count">{{records.length}} 条</text></view>
+      <view wx:for="{{records}}" wx:key="id" class="record-card" data-id="{{item.id}}" bindtap="onViewRecord">
+        <view class="record-card__top">
+          <view><text class="type-badge">{{item.typeLabel}}</text><text class="status-inline">{{item.statusLabel}}</text></view>
+          <text class="record-date">{{item.startDate}}</text>
+        </view>
+        <text class="record-name">{{item.name}}</text>
+        <text class="record-reason">{{item.reason}}</text>
+        <view class="record-footer">
+          <text>投入 {{item.investedAmountText}}</text>
+          <text class="{{item.resultAmount >= 0 ? 'result-value--positive' : 'result-value--negative'}}">{{item.resultAmountText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

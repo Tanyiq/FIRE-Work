@@ -90,6 +90,10 @@ Page({
     wx.navigateTo({ url: '/pages/health/health' })
   },
 
+  onGoToInvestment() {
+    wx.navigateTo({ url: '/pages/investment/investment' })
+  },
+
   onToggleAssetForm() {
     this.setData({
       showAssetForm: !this.data.showAssetForm,

@@ -21,6 +21,15 @@
     <text class="health-entry__arrow">›</text>
   </view>
 
+  <view class="health-entry investment-entry" bindtap="onGoToInvestment">
+    <view>
+      <text class="health-entry__eyebrow">INVESTMENT REVIEW</text>
+      <text class="health-entry__title">进入投资复盘馆</text>
+      <text class="health-entry__text">记录当时的判断、结果与真正学到的事</text>
+    </view>
+    <text class="health-entry__arrow">›</text>
+  </view>
+
   <view class="trend-card">
     <view class="trend-heading">
       <view>

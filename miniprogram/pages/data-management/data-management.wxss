@@ -58,6 +58,7 @@
 }
 
 .stats-grid {
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 28rpx;
   padding-top: 24rpx;
@@ -65,6 +66,7 @@
 }
 
 .stats-item {
+  width: 20%;
   text-align: center;
 }
 

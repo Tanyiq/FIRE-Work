@@ -28,6 +28,10 @@
         <text class="stats-number">{{stats.museumCount}}</text>
         <text class="stats-label">人生收藏</text>
       </view>
+      <view class="stats-item">
+        <text class="stats-number">{{stats.investmentCount}}</text>
+        <text class="stats-label">投资复盘</text>
+      </view>
     </view>
   </view>
 
@@ -42,13 +46,13 @@
 
   <view class="action-card">
     <text class="action-title">导出数据</text>
-    <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏和生活成本。</text>
+    <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏、生活成本和投资复盘。</text>
     <button class="primary-button" loading="{{isExporting}}" disabled="{{isExporting || isRestoring}}" bindtap="onExport">导出 JSON 备份</button>
   </view>
 
   <view class="action-card">
     <text class="action-title">恢复数据</text>
-    <text class="action-description">从微信会话选择 FIRE Work JSON 备份。系统会先检查文件，再替换当前档案。</text>
+    <text class="action-description">从微信会话选择 FIRE Work JSON 备份。系统会先检查文件，再替换当前完整档案。</text>
     <button class="restore-button" loading="{{isRestoring}}" disabled="{{isExporting || isRestoring}}" bindtap="onRestore">选择备份并恢复</button>
     <text class="restore-warning">恢复不可与当前数据合并，操作前建议先导出当前档案。</text>
   </view>
