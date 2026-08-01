@@ -145,57 +145,6 @@
   line-height: 1.6;
 }
 
-.expense-form {
-  margin-top: 26rpx;
-  padding-top: 24rpx;
-  border-top: 1rpx solid #eceeea;
-}
-
-.field-label,
-.field-hint {
-  display: block;
-  color: #68716c;
-  font-size: 24rpx;
-}
-
-.expense-input-wrap {
-  display: flex;
-  align-items: center;
-  margin-top: 12rpx;
-  padding: 0 24rpx;
-  border: 2rpx solid #dfe2dc;
-  border-radius: 17rpx;
-  background: #fafbf9;
-}
-
-.expense-input {
-  flex: 1;
-  height: 88rpx;
-  font-size: 30rpx;
-}
-
-.expense-unit,
-.field-hint {
-  color: #7a817d;
-}
-
-.expense-unit {
-  font-size: 24rpx;
-}
-
-.field-hint {
-  margin-top: 10rpx;
-  line-height: 1.5;
-}
-
-.validation-message {
-  display: block;
-  margin-top: 14rpx;
-  color: #b5473c;
-  font-size: 24rpx;
-}
-
-.save-button,
 .secondary-button {
   margin-top: 24rpx;
   border-radius: 999rpx;
@@ -203,17 +152,11 @@
   font-weight: 600;
 }
 
-.save-button {
-  color: #ffffff;
-  background: #2f6b4f;
-}
-
 .secondary-button {
   color: #2f6b4f;
   background: #e6eee8;
 }
 
-.save-button::after,
 .secondary-button::after {
   border: 0;
 }

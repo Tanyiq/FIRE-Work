@@ -11,7 +11,7 @@ import {
 } from '../utils/format'
 import { assetService } from './assetService'
 import { snapshotService } from './snapshotService'
-import { storageService } from './storageService'
+import { livingCostService } from './livingCostService'
 
 const YEAR_IN_MILLISECONDS = 366 * 24 * 60 * 60 * 1000
 const SAFE_ASSET_TYPES: ReadonlyArray<AssetType> = ['cash', 'deposit']
@@ -25,8 +25,7 @@ const GROWTH_ASSET_TYPES: ReadonlyArray<AssetType> = [
 const roundRatio = (value: number): number => Math.round(value * 10000) / 10000
 
 const getMonthlyEssentialExpense = (): number | null => {
-  const value = storageService.get<number>(storageService.keys.monthlyEssentialExpense)
-  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null
+  return livingCostService.getProfile()?.monthlyTotal || null
 }
 
 const getTrend = (): WealthHealthTrend => {
@@ -98,16 +97,6 @@ const getProfileType = (
 
 export const healthService = {
   getMonthlyEssentialExpense,
-
-  saveMonthlyEssentialExpense(amount: number): boolean {
-    if (!Number.isFinite(amount) || amount <= 0) {
-      return false
-    }
-    return storageService.set(
-      storageService.keys.monthlyEssentialExpense,
-      Math.round(amount * 100) / 100,
-    )
-  },
 
   getHealthReport(): WealthHealthReport {
     const totalAsset = assetService.calculateTotalAsset()

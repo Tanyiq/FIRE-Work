@@ -1,0 +1,140 @@
+.form-card,
+.summary-card {
+  margin-top: 30rpx;
+  padding: 0 32rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 36rpx rgba(42, 57, 48, 0.05);
+}
+
+.cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #eceeea;
+}
+
+.cost-row--last {
+  border-bottom: 0;
+}
+
+.cost-label,
+.cost-hint,
+.summary-label,
+.summary-total,
+.reference-label,
+.reference-note,
+.reference-disclaimer,
+.validation-message {
+  display: block;
+}
+
+.cost-label {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.cost-hint {
+  margin-top: 7rpx;
+  color: #89908c;
+  font-size: 21rpx;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  width: 230rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #dfe3de;
+  border-radius: 14rpx;
+  background: #fafbf9;
+}
+
+.cost-input {
+  flex: 1;
+  height: 72rpx;
+  font-size: 28rpx;
+  text-align: right;
+}
+
+.unit {
+  margin-left: 8rpx;
+  color: #7d8580;
+  font-size: 22rpx;
+}
+
+.summary-card {
+  padding: 34rpx;
+  color: #ffffff;
+  background: linear-gradient(145deg, #294438, #47705c);
+}
+
+.summary-label {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 23rpx;
+}
+
+.summary-total {
+  margin-top: 12rpx;
+  font-size: 47rpx;
+  font-weight: 700;
+}
+
+.summary-divider {
+  height: 1rpx;
+  margin: 28rpx 0;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.reference-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reference-label {
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.reference-note,
+.reference-disclaimer {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 21rpx;
+}
+
+.reference-note {
+  margin-top: 6rpx;
+}
+
+.reference-value {
+  margin-left: 24rpx;
+  font-size: 30rpx;
+  font-weight: 650;
+}
+
+.reference-disclaimer {
+  margin-top: 22rpx;
+  line-height: 1.55;
+}
+
+.validation-message {
+  margin-top: 20rpx;
+  color: #b5473c;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+.save-button {
+  margin-top: 28rpx;
+  border-radius: 999rpx;
+  color: #ffffff;
+  background: #2f6b4f;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.save-button::after {
+  border: 0;
+}

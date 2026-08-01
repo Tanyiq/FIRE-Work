@@ -40,18 +40,8 @@
         <text class="missing-state__text">完善生活成本后，可以评估安全储备。</text>
       </view>
 
-      <view wx:if="{{showExpenseForm}}" class="expense-form">
-        <text class="field-label">每月基础生活支出</text>
-        <view class="expense-input-wrap">
-          <input class="expense-input" type="digit" value="{{expenseInput}}" placeholder="例如 5000" bindinput="onExpenseInput" />
-          <text class="expense-unit">元/月</text>
-        </view>
-        <text class="field-hint">只填写住房、饮食、交通等维持基本生活的支出。</text>
-        <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-        <button class="save-button" bindtap="onSaveExpense">保存生活成本</button>
-      </view>
-      <text wx:else class="text-action" bindtap="onToggleExpenseForm">
-        {{report.monthlyEssentialExpense ? '修改生活成本' : '填写生活成本'}}
+      <text class="text-action" bindtap="onGoToLivingCost">
+        {{report.monthlyEssentialExpense ? '修改生活成本档案' : '完善生活成本档案'}} →
       </text>
     </view>
 

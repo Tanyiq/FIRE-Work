@@ -5,7 +5,8 @@
     "pages/health/health",
     "pages/museum/museum",
     "pages/report/report",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/living-cost/living-cost"
   ],
   "window": {
     "navigationBarTextStyle": "black",

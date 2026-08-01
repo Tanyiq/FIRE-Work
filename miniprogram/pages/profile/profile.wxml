@@ -1,10 +1,22 @@
 <view class="page-shell">
   <view class="eyebrow">PROFILE</view>
   <text class="page-title">我的</text>
-  <text class="page-description">管理个人偏好与本地数据。</text>
+  <text class="page-description">管理生活档案与本地数据。</text>
 
-  <view class="placeholder-card">
-    <text class="placeholder-title">个人设置</text>
-    <text class="placeholder-text">后续将在这里提供偏好设置、数据管理及产品说明。</text>
+  <view class="setting-card" bindtap="onGoToLivingCost">
+    <view class="setting-main">
+      <text class="setting-title">生活成本</text>
+      <text class="setting-description">用于财富健康、安全储备和 FIRE 目标参考</text>
+    </view>
+    <view class="setting-value">
+      <text wx:if="{{livingCost}}" class="setting-amount">{{livingCost.monthlyTotalText}} / 月</text>
+      <text wx:else class="setting-empty">未完善</text>
+      <text class="setting-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="privacy-card">
+    <text class="privacy-title">数据保存在本机</text>
+    <text class="privacy-text">生活成本和资产数据仅保存在微信本地 Storage，不会上传到云端。</text>
   </view>
 </view>

@@ -1,6 +1,7 @@
 export * from './asset'
 export * from './freedom'
 export * from './health'
+export * from './livingCost'
 export * from './museum'
 export * from './report'
 export * from './snapshot'

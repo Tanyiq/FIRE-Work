@@ -1,6 +1,7 @@
 export { assetService } from './assetService'
 export { freedomService } from './freedomService'
 export { healthService } from './healthService'
+export { livingCostService } from './livingCostService'
 export { museumService } from './museumService'
 export { reportService } from './reportService'
 export { snapshotService } from './snapshotService'

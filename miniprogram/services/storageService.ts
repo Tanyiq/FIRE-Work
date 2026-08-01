@@ -5,6 +5,7 @@ const STORAGE_KEYS = {
   snapshots: 'retirement_plan.snapshots',
   reports: 'retirement_plan.reports',
   monthlyEssentialExpense: 'retirement_plan.monthly_essential_expense',
+  livingCostProfile: 'retirement_plan.living_cost_profile',
 } as const
 
 export const storageService = {

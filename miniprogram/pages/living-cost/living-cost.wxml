@@ -1,0 +1,65 @@
+<view class="page-shell">
+  <view class="eyebrow">LIVING COST</view>
+  <text class="page-title">生活成本档案</text>
+  <text class="page-description">只记录维持基础生活所需的月支出，用于评估收入中断时的安全储备。</text>
+
+  <view class="form-card">
+    <view class="cost-row">
+      <view>
+        <text class="cost-label">房租</text>
+        <text class="cost-hint">房租或基础住房成本</text>
+      </view>
+      <view class="input-wrap">
+        <input class="cost-input" type="digit" value="{{form.rent}}" placeholder="0" data-field="rent" bindinput="onAmountInput" />
+        <text class="unit">元</text>
+      </view>
+    </view>
+    <view class="cost-row">
+      <view>
+        <text class="cost-label">饮食</text>
+        <text class="cost-hint">日常基本餐饮支出</text>
+      </view>
+      <view class="input-wrap">
+        <input class="cost-input" type="digit" value="{{form.food}}" placeholder="0" data-field="food" bindinput="onAmountInput" />
+        <text class="unit">元</text>
+      </view>
+    </view>
+    <view class="cost-row">
+      <view>
+        <text class="cost-label">交通</text>
+        <text class="cost-hint">通勤和基础出行</text>
+      </view>
+      <view class="input-wrap">
+        <input class="cost-input" type="digit" value="{{form.transport}}" placeholder="0" data-field="transport" bindinput="onAmountInput" />
+        <text class="unit">元</text>
+      </view>
+    </view>
+    <view class="cost-row cost-row--last">
+      <view>
+        <text class="cost-label">其他</text>
+        <text class="cost-hint">水电、通讯等必要支出</text>
+      </view>
+      <view class="input-wrap">
+        <input class="cost-input" type="digit" value="{{form.other}}" placeholder="0" data-field="other" bindinput="onAmountInput" />
+        <text class="unit">元</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="summary-card">
+    <text class="summary-label">每月基础生活成本</text>
+    <text class="summary-total">{{monthlyTotalText}}</text>
+    <view class="summary-divider"></view>
+    <view class="reference-row">
+      <view>
+        <text class="reference-label">FIRE 参考资产</text>
+        <text class="reference-note">年基础支出 × 25</text>
+      </view>
+      <text class="reference-value">{{fireReferenceAssetText}}</text>
+    </view>
+    <text class="reference-disclaimer">该金额仅供规划参考，不会修改你已经选择的自由目标。</text>
+  </view>
+
+  <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+  <button class="save-button" bindtap="onSave">保存生活成本</button>
+</view>
