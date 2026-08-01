@@ -6,7 +6,8 @@
     "pages/museum/museum",
     "pages/report/report",
     "pages/profile/profile",
-    "pages/living-cost/living-cost"
+    "pages/living-cost/living-cost",
+    "pages/data-management/data-management"
   ],
   "window": {
     "navigationBarTextStyle": "black",

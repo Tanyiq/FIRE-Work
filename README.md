@@ -58,6 +58,15 @@
 - 使用本地规则模板生成总结；
 - 同日重复生成会更新本期报告，不产生重复记录。
 
+### 个人财富档案
+
+- 在“我的”展示加入天数、资产、财富变化和人生收藏统计；
+- 从“我的 → 数据管理”导出版本化 JSON 备份；
+- 备份包含目标、资产、快照、报告、人生收藏和生活成本；
+- 支持从微信会话选择 JSON 文件并恢复完整档案；
+- 恢复前校验版本和全部数据，写入失败时回滚原数据；
+- 根据最近备份时间和数据更新时间提示是否需要重新备份。
+
 ## 技术方案
 
 - 微信原生小程序；
@@ -81,7 +90,8 @@ miniprogram/
 │   ├── museum/  人生博物馆
 │   ├── report/  财富报告
 │   ├── profile/ 我的
-│   └── living-cost/ 生活成本档案
+│   ├── living-cost/ 生活成本档案
+│   └── data-management/ 数据管理
 ├── app.ts
 ├── app.json
 └── app.wxss
@@ -101,6 +111,8 @@ retirement_plan.snapshots
 retirement_plan.reports
 retirement_plan.monthly_essential_expense
 retirement_plan.living_cost_profile
+retirement_plan.profile_joined_at
+retirement_plan.last_backup_at
 ```
 
 金额在模型和 Storage 中统一使用“元”，自由进度使用 `0–1`；页面通过公共格式化工具显示为元、万元和百分比。
@@ -130,7 +142,10 @@ retirement_plan.living_cost_profile
 7. 同日多次修改资产，确认快照数量不增加、当天金额更新；
 8. 添加人生收藏，检查使用天数和每日成本；
 9. 在拥有两个不同日期快照后生成财富报告；
-10. 重新编译，确认所有数据仍然存在。
+10. 在“我的 → 数据管理”导出 JSON，确认备份状态更新；
+11. 修改一项资产后确认出现“有新数据待备份”；
+12. 选择刚导出的 JSON 恢复，确认资产、收藏、报告和生活成本完整；
+13. 重新编译，确认所有数据仍然存在。
 
 ## 开发边界
 

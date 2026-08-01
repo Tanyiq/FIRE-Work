@@ -1,0 +1,57 @@
+<view class="page-shell">
+  <view class="eyebrow">DATA ARCHIVE</view>
+  <text class="page-title">数据管理</text>
+  <text class="page-description">你的财富档案属于你。定期导出，在更换设备或清理数据后可以重新恢复。</text>
+
+  <view class="stats-card">
+    <view class="stats-heading">
+      <view>
+        <text class="card-label">当前档案</text>
+        <text class="card-title">已记录 {{stats.joinedDays}} 天</text>
+      </view>
+      <text class="version-badge">备份 v1.0</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <text class="stats-number">{{stats.assetCount}}</text>
+        <text class="stats-label">资产</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-number">{{stats.snapshotCount}}</text>
+        <text class="stats-label">财富变化</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-number">{{stats.reportCount}}</text>
+        <text class="stats-label">报告</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-number">{{stats.museumCount}}</text>
+        <text class="stats-label">人生收藏</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="backup-check backup-check--{{backupCheck.state}}">
+    <view class="backup-check__dot"></view>
+    <view class="backup-check__main">
+      <text class="backup-check__title">{{backupCheck.title}}</text>
+      <text class="backup-check__description">{{backupCheck.description}}</text>
+      <text class="backup-check__time">最近备份：{{backupCheck.lastBackupText}}</text>
+    </view>
+  </view>
+
+  <view class="action-card">
+    <text class="action-title">导出数据</text>
+    <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏和生活成本。</text>
+    <button class="primary-button" loading="{{isExporting}}" disabled="{{isExporting || isRestoring}}" bindtap="onExport">导出 JSON 备份</button>
+  </view>
+
+  <view class="action-card">
+    <text class="action-title">恢复数据</text>
+    <text class="action-description">从微信会话选择 FIRE Work JSON 备份。系统会先检查文件，再替换当前档案。</text>
+    <button class="restore-button" loading="{{isRestoring}}" disabled="{{isExporting || isRestoring}}" bindtap="onRestore">选择备份并恢复</button>
+    <text class="restore-warning">恢复不可与当前数据合并，操作前建议先导出当前档案。</text>
+  </view>
+
+  <text class="local-note">所有操作均在本机完成，不会上传到云端。</text>
+</view>

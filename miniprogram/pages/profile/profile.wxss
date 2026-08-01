@@ -2,11 +2,85 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 48rpx;
+  margin-top: 24rpx;
   padding: 34rpx;
   border-radius: 24rpx;
   background: #ffffff;
   box-shadow: 0 12rpx 36rpx rgba(42, 57, 48, 0.05);
+}
+
+.archive-card {
+  margin-top: 42rpx;
+  padding: 34rpx;
+  border-radius: 26rpx;
+  color: #ffffff;
+  background: linear-gradient(145deg, #294438, #47705c);
+  box-shadow: 0 16rpx 42rpx rgba(42, 57, 48, 0.16);
+}
+
+.archive-eyebrow,
+.archive-joined__label,
+.archive-joined__value,
+.archive-number,
+.archive-label {
+  display: block;
+}
+
+.archive-eyebrow {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 21rpx;
+  letter-spacing: 2rpx;
+}
+
+.archive-joined {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 18rpx;
+}
+
+.archive-joined__label {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.archive-joined__value {
+  font-size: 38rpx;
+  font-weight: 700;
+}
+
+.archive-grid {
+  display: flex;
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.15);
+}
+
+.archive-item {
+  flex: 1;
+}
+
+.archive-item--center {
+  text-align: center;
+}
+
+.archive-item--right {
+  text-align: right;
+}
+
+.archive-number {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.archive-label {
+  margin-top: 6rpx;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 20rpx;
+}
+
+.setting-card--secondary {
+  margin-top: 16rpx;
 }
 
 .setting-main {

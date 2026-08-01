@@ -1,4 +1,5 @@
 export { assetService } from './assetService'
+export { backupService } from './backupService'
 export { fireService } from './fireService'
 export { freedomService } from './freedomService'
 export { healthService } from './healthService'

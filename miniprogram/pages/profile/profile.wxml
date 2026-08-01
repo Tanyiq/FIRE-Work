@@ -3,6 +3,28 @@
   <text class="page-title">我的</text>
   <text class="page-description">管理生活档案与本地数据。</text>
 
+  <view wx:if="{{archiveStats}}" class="archive-card">
+    <text class="archive-eyebrow">我的财富档案</text>
+    <view class="archive-joined">
+      <text class="archive-joined__label">加入退休计划</text>
+      <text class="archive-joined__value">{{archiveStats.joinedDays}} 天</text>
+    </view>
+    <view class="archive-grid">
+      <view class="archive-item">
+        <text class="archive-number">{{archiveStats.assetCount}}</text>
+        <text class="archive-label">项资产</text>
+      </view>
+      <view class="archive-item archive-item--center">
+        <text class="archive-number">{{archiveStats.snapshotCount}}</text>
+        <text class="archive-label">次财富变化</text>
+      </view>
+      <view class="archive-item archive-item--right">
+        <text class="archive-number">{{archiveStats.museumCount}}</text>
+        <text class="archive-label">件人生收藏</text>
+      </view>
+    </view>
+  </view>
+
   <view class="setting-card" bindtap="onGoToLivingCost">
     <view class="setting-main">
       <text class="setting-title">生活成本</text>
@@ -15,8 +37,18 @@
     </view>
   </view>
 
+  <view class="setting-card setting-card--secondary" bindtap="onGoToDataManagement">
+    <view class="setting-main">
+      <text class="setting-title">数据管理</text>
+      <text class="setting-description">导出、检查或恢复你的完整财富档案</text>
+    </view>
+    <view class="setting-value">
+      <text class="setting-arrow">›</text>
+    </view>
+  </view>
+
   <view class="privacy-card">
     <text class="privacy-title">数据保存在本机</text>
-    <text class="privacy-text">生活成本和资产数据仅保存在微信本地 Storage，不会上传到云端。</text>
+    <text class="privacy-text">档案仅保存在微信本地 Storage。建议定期导出备份，避免清理小程序后数据丢失。</text>
   </view>
 </view>

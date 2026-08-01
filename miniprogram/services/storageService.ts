@@ -6,6 +6,8 @@ const STORAGE_KEYS = {
   reports: 'retirement_plan.reports',
   monthlyEssentialExpense: 'retirement_plan.monthly_essential_expense',
   livingCostProfile: 'retirement_plan.living_cost_profile',
+  profileJoinedAt: 'retirement_plan.profile_joined_at',
+  lastBackupAt: 'retirement_plan.last_backup_at',
 } as const
 
 export const storageService = {
@@ -21,6 +23,15 @@ export const storageService = {
   set<T>(key: string, value: T): boolean {
     try {
       wx.setStorageSync(key, value)
+      return true
+    } catch (_error) {
+      return false
+    }
+  },
+
+  remove(key: string): boolean {
+    try {
+      wx.removeStorageSync(key)
       return true
     } catch (_error) {
       return false

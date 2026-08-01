@@ -1,0 +1,171 @@
+.stats-card,
+.action-card,
+.backup-check {
+  margin-top: 26rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+
+.stats-card {
+  margin-top: 42rpx;
+  color: #ffffff;
+  background: linear-gradient(145deg, #294438, #47705c);
+}
+
+.stats-heading,
+.stats-grid,
+.backup-check {
+  display: flex;
+  align-items: center;
+}
+
+.stats-heading {
+  justify-content: space-between;
+}
+
+.card-label,
+.card-title,
+.stats-number,
+.stats-label,
+.backup-check__title,
+.backup-check__description,
+.backup-check__time,
+.action-title,
+.action-description,
+.restore-warning,
+.local-note {
+  display: block;
+}
+
+.card-label {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 21rpx;
+}
+
+.card-title {
+  margin-top: 8rpx;
+  font-size: 31rpx;
+  font-weight: 650;
+}
+
+.version-badge {
+  padding: 7rpx 14rpx;
+  border-radius: 999rpx;
+  color: #6c5629;
+  background: #f1dfb6;
+  font-size: 20rpx;
+}
+
+.stats-grid {
+  justify-content: space-between;
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.15);
+}
+
+.stats-item {
+  text-align: center;
+}
+
+.stats-number {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.stats-label {
+  margin-top: 6rpx;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 20rpx;
+}
+
+.backup-check {
+  align-items: flex-start;
+  gap: 20rpx;
+  border: 1rpx solid #e6e3da;
+}
+
+.backup-check__dot {
+  flex-shrink: 0;
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 8rpx;
+  border-radius: 50%;
+  background: #b5883f;
+}
+
+.backup-check--current .backup-check__dot {
+  background: #3f815d;
+}
+
+.backup-check__main {
+  flex: 1;
+}
+
+.backup-check__title {
+  font-size: 28rpx;
+  font-weight: 650;
+}
+
+.backup-check__description,
+.backup-check__time,
+.action-description,
+.restore-warning,
+.local-note {
+  color: #7d8580;
+  font-size: 22rpx;
+  line-height: 1.55;
+}
+
+.backup-check__description {
+  margin-top: 7rpx;
+}
+
+.backup-check__time {
+  margin-top: 10rpx;
+  color: #999f9b;
+  font-size: 20rpx;
+}
+
+.action-title {
+  font-size: 30rpx;
+  font-weight: 650;
+}
+
+.action-description {
+  margin-top: 10rpx;
+}
+
+.primary-button,
+.restore-button {
+  margin-top: 24rpx;
+  border-radius: 999rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.primary-button {
+  color: #ffffff;
+  background: #2f6b4f;
+}
+
+.restore-button {
+  color: #8d453b;
+  background: #f7e9e6;
+}
+
+.primary-button::after,
+.restore-button::after {
+  border: 0;
+}
+
+.restore-warning {
+  margin-top: 16rpx;
+  color: #a06055;
+  text-align: center;
+}
+
+.local-note {
+  margin-top: 28rpx;
+  text-align: center;
+}
