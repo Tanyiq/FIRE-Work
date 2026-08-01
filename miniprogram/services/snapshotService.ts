@@ -117,7 +117,8 @@ export const snapshotService = {
   ensureRecentSnapshot(): AssetSnapshot | null {
     const snapshots = getSnapshotList()
     const latest = snapshots[snapshots.length - 1]
-    if (!latest || Date.now() - latest.createdAt > 30 * DAY_IN_MILLISECONDS) {
+    const today = formatDate(new Date())
+    if (!latest || latest.date !== today) {
       return this.createSnapshot()
     }
     return latest

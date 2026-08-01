@@ -3,6 +3,8 @@ import {
   WealthArchiveStats,
 } from '../../models/backup'
 import { backupService } from '../../services/backupService'
+import { DataIntegritySummary } from '../../models/dataIntegrity'
+import { dataIntegrityService } from '../../services/dataIntegrityService'
 
 Page({
   data: {
@@ -10,6 +12,7 @@ Page({
     backupCheck: backupService.getBackupCheck() as BackupCheck,
     isExporting: false,
     isRestoring: false,
+    integrity: dataIntegrityService.getSummary() as DataIntegritySummary,
   },
 
   onShow() {
@@ -20,6 +23,7 @@ Page({
     this.setData({
       stats: backupService.getArchiveStats(),
       backupCheck: backupService.getBackupCheck(),
+      integrity: dataIntegrityService.getSummary(),
     })
   },
 

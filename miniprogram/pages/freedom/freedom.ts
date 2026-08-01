@@ -5,6 +5,10 @@ import { freedomService } from '../../services/freedomService'
 import { livingCostService } from '../../services/livingCostService'
 import { museumService } from '../../services/museumService'
 import { snapshotService } from '../../services/snapshotService'
+import { formatAmount, formatProgress } from '../../utils/format'
+import { CancelGrowthAnimation, playGrowthAnimation } from '../../utils/growthAnimation'
+
+let cancelHeroAnimation: CancelGrowthAnimation | null = null
 
 Page({
   data: {
@@ -22,10 +26,26 @@ Page({
     onboardingCompletedCount: 0,
     showOnboarding: true,
     isEditingGoal: false,
+    animatedCurrentAssetText: formatAmount(0),
+    animatedRemainingProgressText: formatProgress(1),
+    animatedProgressPercent: 0,
   },
 
   onShow() {
     this.refreshPage()
+  },
+
+  onHide() {
+    this.stopHeroAnimation()
+  },
+
+  onUnload() {
+    this.stopHeroAnimation()
+  },
+
+  stopHeroAnimation() {
+    if (cancelHeroAnimation) cancelHeroAnimation()
+    cancelHeroAnimation = null
   },
 
   refreshPage() {
@@ -36,6 +56,7 @@ Page({
     const hasAssets = Boolean(dashboard && dashboard.currentAsset > 0)
     const onboardingCompletedCount = [dashboard !== null, hasAssets, livingCost !== null, museumCollectionCount > 0]
       .filter(Boolean).length
+    this.stopHeroAnimation()
     this.setData({
       hasConfiguration: dashboard !== null,
       dashboard,
@@ -54,6 +75,22 @@ Page({
             recentChange.progressFrom !== recentChange.progressTo ||
             recentChange.museumAddedCount > 0),
       ),
+      animatedCurrentAssetText: formatAmount(0),
+      animatedRemainingProgressText: formatProgress(1),
+      animatedProgressPercent: 0,
+    }, () => {
+      if (!dashboard) return
+      cancelHeroAnimation = playGrowthAnimation({
+        currentAsset: dashboard.currentAsset,
+        progressPercent: dashboard.progressPercent,
+        remainingProgress: dashboard.remainingProgress,
+      }, (values) => {
+        this.setData({
+          animatedCurrentAssetText: formatAmount(values.currentAsset),
+          animatedRemainingProgressText: formatProgress(values.remainingProgress),
+          animatedProgressPercent: Math.round(values.progressPercent * 10) / 10,
+        })
+      })
     })
   },
 

@@ -2,6 +2,7 @@
   margin-top: 40rpx;
   padding: 38rpx 34rpx;
   border-radius: 28rpx;
+  border-radius: var(--radius-lg);
   color: #ffffff;
   background: linear-gradient(150deg, #254535, #47735b);
   box-shadow: 0 18rpx 46rpx rgba(42, 72, 56, 0.2);
@@ -71,6 +72,7 @@
   height: 100%;
   border-radius: 999rpx;
   background: #e5bd67;
+  transition: width 32ms linear;
 }
 
 .archive-metrics {
@@ -126,7 +128,79 @@
   margin-top: 24rpx;
   padding: 32rpx;
   border-radius: 24rpx;
+  border-radius: var(--radius-md);
   background: #ffffff;
+  background: var(--color-surface);
+}
+
+.archive-complete-card {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  gap: var(--space-sm);
+  margin-top: 24rpx;
+  margin-top: var(--space-md);
+  padding: 24rpx 32rpx;
+  padding: var(--space-md) var(--space-lg);
+  border: 1rpx solid #d8e6dc;
+  border-radius: 24rpx;
+  border-radius: var(--radius-md);
+  background: #f0f7f2;
+  animation: achievement-in 420ms ease-out both;
+  animation: achievement-in var(--motion-growth) ease-out both;
+}
+
+.achievement-mark {
+  flex-shrink: 0;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #2f6b4f;
+  background: var(--color-brand);
+  font-size: 24rpx;
+  font-size: var(--font-body);
+  font-weight: 700;
+  line-height: 48rpx;
+  text-align: center;
+}
+
+.achievement-main {
+  min-width: 0;
+}
+
+.achievement-title,
+.achievement-text {
+  display: block;
+}
+
+.achievement-title {
+  color: #294438;
+  color: var(--color-brand-dark);
+  font-size: 28rpx;
+  font-size: var(--font-subtitle);
+  font-weight: 650;
+}
+
+.achievement-text {
+  margin-top: 8rpx;
+  margin-top: var(--space-xs);
+  color: #727c76;
+  color: var(--color-text-muted);
+  font-size: 20rpx;
+  font-size: var(--font-caption);
+  line-height: 1.5;
+}
+
+@keyframes achievement-in {
+  from {
+    opacity: 0;
+    transform: translateY(12rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .onboarding-heading {

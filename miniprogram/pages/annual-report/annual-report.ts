@@ -3,6 +3,7 @@ import { annualReportService } from '../../services/annualReportService'
 import { drawAnnualPoster } from '../../utils/annualPoster'
 
 const yearOptions = annualReportService.getAvailableYears()
+let yearSwitchTimer: ReturnType<typeof setTimeout> | null = null
 
 Page({
   data: {
@@ -10,6 +11,7 @@ Page({
     selectedYearIndex: 0,
     report: annualReportService.getAnnualReport(yearOptions[0]) as AnnualWealthReport,
     isGeneratingPoster: false,
+    isSwitchingYear: false,
   },
 
   onShow() {
@@ -29,7 +31,19 @@ Page({
     this.setData({
       selectedYearIndex,
       report: annualReportService.getAnnualReport(year),
+      isSwitchingYear: true,
     })
+    if (yearSwitchTimer !== null) clearTimeout(yearSwitchTimer)
+    yearSwitchTimer = setTimeout(() => {
+      this.setData({ isSwitchingYear: false })
+      yearSwitchTimer = null
+    }, 360)
+  },
+
+  onHide() {
+    if (yearSwitchTimer !== null) clearTimeout(yearSwitchTimer)
+    yearSwitchTimer = null
+    this.setData({ isSwitchingYear: false })
   },
 
   onGoToWealth() {

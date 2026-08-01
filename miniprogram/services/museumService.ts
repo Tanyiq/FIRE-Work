@@ -247,6 +247,7 @@ export const museumService = {
     const updatedCollection: MuseumCollection = {
       ...current,
       ...nextInput,
+      createdAt: current.createdAt,
       name: nextInput.name.trim(),
       retiredDate: nextInput.status === 'retired' ? nextInput.retiredDate || null : null,
       story: (nextInput.story || '').trim(),

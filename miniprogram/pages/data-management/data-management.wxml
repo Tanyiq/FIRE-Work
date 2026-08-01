@@ -44,6 +44,24 @@
     </view>
   </view>
 
+  <view class="integrity-card">
+    <view class="integrity-heading">
+      <view>
+        <text class="card-label card-label--dark">BETA DATA POLICY</text>
+        <text class="action-title">历史数据保护</text>
+      </view>
+      <text class="integrity-badge">{{integrity.version}}</text>
+    </view>
+    <text class="action-description">当前保护 {{integrity.snapshotCount}} 份财富快照和 {{integrity.reportCount}} 份既有报告。</text>
+    <view wx:for="{{integrity.rules}}" wx:key="id" class="integrity-rule">
+      <text class="integrity-check">✓</text>
+      <view class="integrity-main">
+        <text class="integrity-title">{{item.title}}</text>
+        <text class="integrity-description">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
   <view class="action-card">
     <text class="action-title">导出数据</text>
     <text class="action-description">生成 JSON 文件，包含目标、资产、快照、报告、人生收藏、生活成本和投资复盘。</text>

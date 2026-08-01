@@ -1,19 +1,27 @@
+@import "./styles/design-tokens.wxss";
+
 page {
   min-height: 100%;
   background: #f7f5ef;
+  background: var(--color-background);
   color: #243029;
+  color: var(--color-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .page-shell {
   padding: 48rpx 36rpx 64rpx;
+  padding: var(--space-xl) 36rpx 64rpx;
   box-sizing: border-box;
 }
 
 .eyebrow {
   margin-bottom: 16rpx;
+  margin-bottom: var(--space-sm);
   color: #2f6b4f;
+  color: var(--color-brand);
   font-size: 24rpx;
+  font-size: var(--font-body);
   font-weight: 600;
   letter-spacing: 4rpx;
 }
@@ -21,7 +29,9 @@ page {
 .page-title {
   display: block;
   color: #1f2a24;
+  color: var(--color-text-strong);
   font-size: 52rpx;
+  font-size: var(--font-display);
   font-weight: 700;
   line-height: 1.25;
 }
@@ -29,7 +39,8 @@ page {
 .page-description {
   display: block;
   margin-top: 20rpx;
-  color: #68716c;
+  color: #727c76;
+  color: var(--color-text-muted);
   font-size: 30rpx;
   line-height: 1.7;
 }
@@ -38,9 +49,27 @@ page {
   margin-top: 56rpx;
   padding: 36rpx;
   border: 1rpx solid #e4e1d8;
+  border: 1rpx solid var(--color-border);
   border-radius: 24rpx;
+  border-radius: var(--radius-md);
   background: #ffffff;
-  box-shadow: 0 12rpx 36rpx rgba(42, 57, 48, 0.05);
+  background: var(--color-surface);
+  box-shadow: 0 12rpx 36rpx rgba(42, 57, 48, 0.06);
+  box-shadow: var(--shadow-card);
+}
+
+button {
+  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity var(--motion-fast) ease, transform var(--motion-fast) ease;
+}
+
+button:active {
+  opacity: 0.86;
+  transform: scale(0.985);
+}
+
+button::after {
+  border: 0;
 }
 
 .placeholder-title {

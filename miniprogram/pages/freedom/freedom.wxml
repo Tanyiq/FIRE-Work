@@ -7,17 +7,17 @@
     <view class="archive-hero">
       <text class="archive-label">距离梦想生活</text>
       <text wx:if="{{dashboard.isGoalReached}}" class="distance-value">已经抵达</text>
-      <text wx:else class="distance-value">还有 {{dashboard.remainingProgressText}}</text>
+      <text wx:else class="distance-value">还有 {{animatedRemainingProgressText}}</text>
       <view class="level-summary">
         <text class="continuous-level">{{dashboard.continuousLevelText}}</text>
         <text class="stage-name">{{dashboard.accumulationStageName}}</text>
       </view>
-      <view class="hero-progress"><view class="hero-progress__fill" style="width: {{dashboard.progressPercent}}%;"></view></view>
+      <view class="hero-progress"><view class="hero-progress__fill" style="width: {{animatedProgressPercent}}%;"></view></view>
 
       <view class="archive-metrics">
         <view class="archive-metric">
           <text class="metric-label">当前资产</text>
-          <text class="metric-value">{{dashboard.currentAssetText}}</text>
+          <text class="metric-value">{{animatedCurrentAssetText}}</text>
         </view>
         <view class="archive-metric archive-metric--center">
           <text class="metric-label">过去一年</text>
@@ -63,6 +63,14 @@
         <text class="step-number">{{museumCollectionCount > 0 ? '✓' : '4'}}</text>
         <view class="step-main"><text class="step-title">收藏第一段人生经历</text><text class="step-text">让财富计划不只剩下数字</text></view>
         <text wx:if="{{museumCollectionCount === 0}}" class="step-action" bindtap="onGoToMuseum">去收藏</text>
+      </view>
+    </view>
+
+    <view wx:else class="archive-complete-card">
+      <view class="achievement-mark">✓</view>
+      <view class="achievement-main">
+        <text class="achievement-title">你的财富档案已建立</text>
+        <text class="achievement-text">自由目标 ✓　资产记录 ✓　生活成本 ✓　人生收藏 ✓</text>
       </view>
     </view>
 
