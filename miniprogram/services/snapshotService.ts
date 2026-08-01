@@ -9,6 +9,7 @@ import { assetService } from './assetService'
 import { freedomService } from './freedomService'
 import { museumService } from './museumService'
 import { storageService } from './storageService'
+import { formatProgress, formatSignedAmount } from '../utils/format'
 
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 const MONTH_IN_MILLISECONDS = 31 * DAY_IN_MILLISECONDS
@@ -51,10 +52,26 @@ const getSnapshotList = (): AssetSnapshot[] => {
     return []
   }
 
-  return storedSnapshots
+  const snapshots = storedSnapshots
     .filter(isSnapshot)
     .map((snapshot) => ({ ...snapshot }))
     .sort((a, b) => a.createdAt - b.createdAt)
+
+  return snapshots.reduce<AssetSnapshot[]>((result, snapshot) => {
+    const existingIndex = result.findIndex((item) => item.date === snapshot.date)
+    if (existingIndex < 0) {
+      result.push(snapshot)
+      return result
+    }
+
+    const existing = result[existingIndex]
+    result[existingIndex] = {
+      ...snapshot,
+      id: existing.id,
+      createdAt: Math.min(existing.createdAt, snapshot.createdAt),
+    }
+    return result
+  }, [])
 }
 
 const calculateGrowthFromSnapshots = (snapshots: AssetSnapshot[]): SnapshotGrowth => {
@@ -77,15 +94,23 @@ export const snapshotService = {
   createSnapshot(): AssetSnapshot | null {
     const totalAsset = assetService.calculateTotalAsset()
     const freedomStatus = freedomService.calculateFreedomStatus(totalAsset)
+    const date = formatDate(new Date())
+    const snapshots = getSnapshotList()
+    const existingIndex = snapshots.findIndex((snapshot) => snapshot.date === date)
+    const existing = existingIndex >= 0 ? snapshots[existingIndex] : null
     const snapshot: AssetSnapshot = {
-      id: createSnapshotId(),
-      date: formatDate(new Date()),
+      id: existing ? existing.id : createSnapshotId(),
+      date,
       totalAsset,
       freedomLevel: freedomStatus.level,
       freedomProgress: freedomStatus.progress,
-      createdAt: Date.now(),
+      createdAt: existing ? existing.createdAt : Date.now(),
     }
-    const snapshots = [...getSnapshotList(), snapshot]
+    if (existingIndex >= 0) {
+      snapshots[existingIndex] = snapshot
+    } else {
+      snapshots.push(snapshot)
+    }
     return saveSnapshotList(snapshots) ? snapshot : null
   },
 
@@ -130,8 +155,11 @@ export const snapshotService = {
 
     return {
       assetChange: Math.round((current.totalAsset - previous.totalAsset) * 100) / 100,
+      assetChangeText: formatSignedAmount(current.totalAsset - previous.totalAsset),
       progressFrom: Math.round(previous.freedomProgress * 1000) / 10,
+      progressFromText: formatProgress(previous.freedomProgress),
       progressTo: Math.round(current.freedomProgress * 1000) / 10,
+      progressToText: formatProgress(current.freedomProgress),
       museumAddedCount,
     }
   },

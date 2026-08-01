@@ -25,10 +25,6 @@
   line-height: 1.1;
 }
 
-.total-card__unit {
-  font-size: 28rpx;
-}
-
 .total-card__hint {
   display: block;
   margin-top: 24rpx;
@@ -113,6 +109,38 @@
   background: #f5f6f3;
   text-align: center;
   font-size: 24rpx;
+}
+
+.trend-baseline {
+  margin-top: 26rpx;
+  padding: 30rpx;
+  border-radius: 18rpx;
+  background: #f5f6f3;
+  text-align: center;
+}
+
+.trend-baseline__label,
+.trend-baseline__value,
+.trend-baseline__hint {
+  display: block;
+}
+
+.trend-baseline__label {
+  color: #68716c;
+  font-size: 24rpx;
+}
+
+.trend-baseline__value {
+  margin-top: 12rpx;
+  color: #2f6b4f;
+  font-size: 38rpx;
+  font-weight: 700;
+}
+
+.trend-baseline__hint {
+  margin-top: 12rpx;
+  color: #8a918d;
+  font-size: 22rpx;
 }
 
 .add-button,

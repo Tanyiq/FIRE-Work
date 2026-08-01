@@ -1,6 +1,7 @@
 import {
   FreedomDashboard,
   FreedomGoal,
+  FreedomGoalView,
   FreedomLevel,
   FreedomStatus,
   FreedomStage,
@@ -8,6 +9,7 @@ import {
   SelectableFreedomLevel,
 } from '../models/freedom'
 import { UserFreedomProfile } from '../models/user'
+import { formatAmount, formatProgress } from '../utils/format'
 import { assetService } from './assetService'
 import { storageService } from './storageService'
 
@@ -82,11 +84,6 @@ const getCurrentStage = (currentAsset: number): FreedomStage => {
   }, FREEDOM_STAGES[0])
 }
 
-const formatAsset = (amount: number): string => {
-  const amountInWan = amount / TEN_THOUSAND
-  return `${Number.isInteger(amountInWan) ? amountInWan : amountInWan.toFixed(2)} 万元`
-}
-
 const createDashboard = (profile: UserFreedomProfile): FreedomDashboard => {
   const currentAsset = assetService.calculateTotalAsset()
   const currentStage = getCurrentStage(currentAsset)
@@ -98,13 +95,13 @@ const createDashboard = (profile: UserFreedomProfile): FreedomDashboard => {
     currentLevel: currentStage.level,
     currentLevelName: currentStage.name,
     currentAsset,
-    currentAssetText: formatAsset(currentAsset),
+    currentAssetText: formatAmount(currentAsset),
     goal: profile.freedomGoal,
-    targetAssetText: formatAsset(profile.freedomGoal.targetAsset),
+    targetAssetText: formatAmount(profile.freedomGoal.targetAsset),
     progressPercent,
-    progressText: `${progressPercent}%`,
+    progressText: formatProgress(progressPercent / 100),
     remainingAsset,
-    remainingAssetText: formatAsset(remainingAsset),
+    remainingAssetText: formatAmount(remainingAsset),
     isGoalReached: remainingAsset === 0,
   }
 }
@@ -123,9 +120,12 @@ export const freedomService = {
     freedomConfigurationChangeListener = listener
   },
 
-  getGoalOptions(): FreedomGoal[] {
+  getGoalOptions(): FreedomGoalView[] {
     return FREEDOM_STAGES.filter((stage) => stage.level !== 'Lv0').map((stage) =>
-      getGoalByLevel(stage.level as SelectableFreedomLevel),
+      {
+        const goal = getGoalByLevel(stage.level as SelectableFreedomLevel)
+        return { ...goal, targetAssetText: formatAmount(goal.targetAsset) }
+      },
     )
   },
 

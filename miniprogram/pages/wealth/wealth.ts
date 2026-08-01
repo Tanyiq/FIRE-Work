@@ -1,11 +1,23 @@
 import { assetService } from '../../services/assetService'
 import { snapshotService } from '../../services/snapshotService'
 import { drawAssetTrendChart } from '../../utils/chart'
+import { formatAmount, formatSignedAmount } from '../../utils/format'
+
+const getCategoryViews = () =>
+  assetService.getCategorySummaries().map((category) => ({
+    ...category,
+    totalAmountText: formatAmount(category.totalAmount),
+    assets: category.assets.map((asset) => ({
+      ...asset,
+      currentAmountText: formatAmount(asset.currentAmount),
+    })),
+  }))
 
 Page({
   data: {
     totalAsset: 0,
-    categories: assetService.getCategorySummaries(),
+    totalAssetText: formatAmount(0),
+    categories: getCategoryViews(),
     assetTypeOptions: assetService.getAssetTypeOptions(),
     selectedTypeIndex: 0,
     selectedTypeLabel: '活钱',
@@ -19,6 +31,9 @@ Page({
     trendStartAsset: 0,
     trendEndAsset: 0,
     trendChange: 0,
+    trendStartAssetText: formatAmount(0),
+    trendEndAssetText: formatAmount(0),
+    trendChangeText: formatSignedAmount(0),
   },
 
   onShow() {
@@ -31,9 +46,11 @@ Page({
   },
 
   refreshAssets() {
+    const totalAsset = assetService.calculateTotalAsset()
     this.setData({
-      totalAsset: assetService.calculateTotalAsset(),
-      categories: assetService.getCategorySummaries(),
+      totalAsset,
+      totalAssetText: formatAmount(totalAsset),
+      categories: getCategoryViews(),
     })
   },
 
@@ -47,13 +64,20 @@ Page({
         trendStartAsset: firstPoint ? firstPoint.value : 0,
         trendEndAsset: lastPoint ? lastPoint.value : 0,
         trendChange: firstPoint && lastPoint ? lastPoint.value - firstPoint.value : 0,
+        trendStartAssetText: formatAmount(firstPoint ? firstPoint.value : 0),
+        trendEndAssetText: formatAmount(lastPoint ? lastPoint.value : 0),
+        trendChangeText: formatSignedAmount(
+          firstPoint && lastPoint ? lastPoint.value - firstPoint.value : 0,
+        ),
       },
       () => this.renderTrend(),
     )
   },
 
   renderTrend() {
-    drawAssetTrendChart('wealthTrendCanvas', this.data.trendPoints, this)
+    if (this.data.trendPoints.length > 1) {
+      drawAssetTrendChart('wealthTrendCanvas', this.data.trendPoints, this)
+    }
   },
 
   onTrendRangeChange(

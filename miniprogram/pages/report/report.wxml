@@ -3,10 +3,23 @@
   <text class="page-title">财富报告</text>
   <text class="page-description">回看阶段性的财富变化，而不是每天的数字波动。</text>
 
-  <view wx:if="{{!report}}" class="empty-card">
+  <view class="report-status">
+    <text>财富快照 {{snapshotCount}} 份</text>
+    <text>已存报告 {{savedReportCount}} 份</text>
+  </view>
+
+  <view wx:if="{{snapshotCount === 0}}" class="empty-card">
     <text class="empty-title">还没有可生成报告的快照</text>
     <text class="empty-text">先在财富管家添加资产，系统会自动记录第一份财富快照。</text>
     <button class="primary-button" bindtap="onGoToWealth">前往财富管家</button>
+  </view>
+
+  <view wx:elif="{{snapshotCount === 1}}" class="baseline-card">
+    <text class="baseline-card__eyebrow">财富基线已建立</text>
+    <text class="baseline-card__value">{{report.currentAssetText}}</text>
+    <text class="baseline-card__date">记录于 {{report.currentDate}}</text>
+    <text class="baseline-card__text">同一天的资产修改会合并到这份基线。下一个日期产生资产变化后，就能生成第一份对比报告。</text>
+    <button class="secondary-button" bindtap="onGoToWealth">查看当前资产</button>
   </view>
 
   <view wx:else class="report-content">
@@ -22,17 +35,17 @@
       <view class="comparison-row">
         <view class="comparison-item">
           <text class="metric-label">上次记录</text>
-          <text class="metric-value">¥{{report.previousAsset}}</text>
+          <text class="metric-value">{{report.previousAssetText}}</text>
         </view>
         <text class="comparison-arrow">→</text>
         <view class="comparison-item comparison-item--right">
           <text class="metric-label">当前资产</text>
-          <text class="metric-value">¥{{report.currentAsset}}</text>
+          <text class="metric-value">{{report.currentAssetText}}</text>
         </view>
       </view>
       <view class="change-highlight {{report.assetChange >= 0 ? 'change-highlight--positive' : 'change-highlight--negative'}}">
         <text>资产变化</text>
-        <text>{{report.assetChange > 0 ? '+' : ''}}{{report.assetChange}} 元</text>
+        <text>{{report.assetChangeText}}</text>
       </view>
     </view>
 
@@ -42,19 +55,19 @@
       <view class="level-flow">
         <view>
           <text class="level-name">{{report.previousFreedomLevel}}</text>
-          <text class="level-progress">{{report.previousFreedomProgress}}%</text>
+          <text class="level-progress">{{report.previousFreedomProgressText}}</text>
         </view>
         <text class="level-arrow">→</text>
         <view class="level-flow__current">
           <text class="level-name">{{report.currentFreedomLevel}}</text>
-          <text class="level-progress">{{report.currentFreedomProgress}}%</text>
+          <text class="level-progress">{{report.currentFreedomProgressText}}</text>
         </view>
       </view>
       <text class="distance-note" wx:if="{{report.distanceChange < 0}}">
-        距离目标减少 {{0 - report.distanceChange}} 元
+        距离目标减少 {{report.distanceChangeText}}
       </text>
       <text class="distance-note" wx:elif="{{report.distanceChange > 0}}">
-        距离目标增加 {{report.distanceChange}} 元
+        距离目标增加 {{report.distanceChangeText}}
       </text>
       <text class="distance-note" wx:else>距离目标保持不变</text>
     </view>
@@ -83,7 +96,7 @@
       <view wx:for="{{report.addedCollections}}" wx:key="id" class="museum-item">
         <view>
           <text class="museum-name">{{item.name}}</text>
-          <text class="museum-type">{{item.typeLabel}} · ¥{{item.amount}}</text>
+          <text class="museum-type">{{item.typeLabel}} · {{item.amountText}}</text>
         </view>
         <text class="museum-story">{{item.story || '值得被记住的人生片段'}}</text>
       </view>
@@ -97,6 +110,8 @@
     </view>
 
     <text wx:if="{{generatedMessage}}" class="generated-message">{{generatedMessage}}</text>
-    <button class="primary-button" bindtap="onGenerateReport">生成并保存本期报告</button>
+    <button class="primary-button" bindtap="onGenerateReport">
+      {{hasSavedCurrentReport ? '更新本期报告' : '生成并保存本期报告'}}
+    </button>
   </view>
 </view>

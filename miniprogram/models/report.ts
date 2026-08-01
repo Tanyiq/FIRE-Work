@@ -27,14 +27,20 @@ export interface WealthReportView {
   previousDate: string
   currentDate: string
   previousAsset: number
+  previousAssetText: string
   currentAsset: number
+  currentAssetText: string
   assetChange: number
+  assetChangeText: string
   previousFreedomLevel: string
   currentFreedomLevel: string
   previousFreedomProgress: number
+  previousFreedomProgressText: string
   currentFreedomProgress: number
+  currentFreedomProgressText: string
   freedomChange: number
   distanceChange: number
+  distanceChangeText: string
   changeSourceLabel: string
   addedCollections: MuseumCollectionView[]
   summary: string

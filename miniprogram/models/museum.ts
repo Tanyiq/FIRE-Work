@@ -44,4 +44,6 @@ export interface MuseumCollectionView extends MuseumCollection {
   statusLabel: string
   usageDays: number
   dailyCost: number | null
+  amountText: string
+  dailyCostText: string | null
 }

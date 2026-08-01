@@ -21,7 +21,10 @@ export interface AssetTrendPoint {
 
 export interface RecentFreedomChange {
   assetChange: number
+  assetChangeText: string
   progressFrom: number
+  progressFromText: string
   progressTo: number
+  progressToText: string
   museumAddedCount: number
 }

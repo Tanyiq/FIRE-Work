@@ -13,6 +13,10 @@ export interface FreedomGoal extends FreedomStage {
   level: SelectableFreedomLevel
 }
 
+export interface FreedomGoalView extends FreedomGoal {
+  targetAssetText: string
+}
+
 export interface FreedomDashboard {
   currentLevel: FreedomLevel
   currentLevelName: string

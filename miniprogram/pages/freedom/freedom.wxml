@@ -19,7 +19,7 @@
       >
         <view class="goal-card__top">
           <text class="goal-level">{{item.level}} · {{item.name}}</text>
-          <text class="goal-asset">{{item.targetAsset / 10000}} 万元</text>
+          <text class="goal-asset">{{item.targetAssetText}}</text>
         </view>
         <text class="goal-description">{{item.description}}</text>
       </view>
@@ -34,43 +34,49 @@
   </view>
 
   <view wx:else class="dashboard">
-    <view class="level-card">
-      <text class="level-card__label">当前自由等级</text>
-      <text class="level-card__value">{{dashboard.currentLevel}}</text>
-      <text class="level-card__name">{{dashboard.currentLevelName}}</text>
-    </view>
-
-    <view class="progress-card">
-      <view class="progress-heading">
+    <view class="overview-card">
+      <view class="overview-heading">
         <view>
-          <text class="card-label">目标生活</text>
-          <text class="card-title">{{dashboard.goal.level}} · {{dashboard.goal.name}}</text>
+          <text class="overview-label">当前自由等级</text>
+          <view class="level-line">
+            <text class="overview-level">{{dashboard.currentLevel}}</text>
+            <text class="overview-level-name">{{dashboard.currentLevelName}}</text>
+          </view>
+        </view>
+        <view class="goal-summary">
+          <text class="overview-label">目标</text>
+          <text class="goal-summary__value">{{dashboard.goal.level}} · {{dashboard.goal.name}}</text>
+        </view>
+      </view>
+      <view class="progress-line">
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{dashboard.progressPercent}}%;"></view>
         </view>
         <text class="progress-number">{{dashboard.progressText}}</text>
       </view>
-      <view class="progress-track">
-        <view class="progress-fill" style="width: {{dashboard.progressPercent}}%;"></view>
-      </view>
-      <text class="goal-message" wx:if="{{dashboard.isGoalReached}}">你已经到达这个生活目标。</text>
-      <text class="goal-message" wx:else>再积累 {{dashboard.remainingAssetText}}，即可到达目标。</text>
-    </view>
-
-    <view class="metric-grid">
-      <view class="metric-card">
-        <text class="metric-label">当前资产</text>
-        <text class="metric-value">{{dashboard.currentAssetText}}</text>
-      </view>
-      <view class="metric-card">
-        <text class="metric-label">目标资产</text>
-        <text class="metric-value">{{dashboard.targetAssetText}}</text>
-      </view>
-      <view class="metric-card metric-card--wide">
-        <text class="metric-label">距离目标</text>
-        <text class="metric-value">{{dashboard.remainingAssetText}}</text>
+      <view class="overview-metrics">
+        <view class="overview-metric">
+          <text class="metric-label">当前</text>
+          <text class="metric-value">{{dashboard.currentAssetText}}</text>
+        </view>
+        <view class="overview-metric overview-metric--center">
+          <text class="metric-label">目标</text>
+          <text class="metric-value">{{dashboard.targetAssetText}}</text>
+        </view>
+        <view class="overview-metric overview-metric--right">
+          <text class="metric-label">还差</text>
+          <text class="metric-value">{{dashboard.remainingAssetText}}</text>
+        </view>
       </view>
     </view>
 
-    <view wx:if="{{recentChange}}" class="recent-card">
+    <view wx:if="{{!hasAssets}}" class="home-empty-card">
+      <text class="home-empty-card__title">自由地图已经准备好</text>
+      <text class="home-empty-card__text">添加第一项资产后，这里会开始记录你的自由进度。</text>
+      <text class="home-empty-card__action" bindtap="onGoToWealth">去添加资产 →</text>
+    </view>
+
+    <view wx:if="{{hasRecentActivity}}" class="recent-card">
       <view class="recent-heading">
         <view>
           <text class="card-label">最近变化</text>
@@ -82,12 +88,12 @@
         <view class="recent-item recent-item--wide">
           <text class="recent-label">资产增长</text>
           <text class="recent-value {{recentChange.assetChange >= 0 ? 'recent-value--positive' : 'recent-value--negative'}}">
-            {{recentChange.assetChange > 0 ? '+' : ''}}{{recentChange.assetChange}} 元
+            {{recentChange.assetChangeText}}
           </text>
         </view>
         <view class="recent-item">
           <text class="recent-label">自由进度</text>
-          <text class="recent-value">{{recentChange.progressFrom}}% → {{recentChange.progressTo}}%</text>
+          <text class="recent-value">{{recentChange.progressFromText}} → {{recentChange.progressToText}}</text>
         </view>
         <view class="recent-item">
           <text class="recent-label">人生收藏</text>
@@ -96,7 +102,9 @@
       </view>
     </view>
 
-    <button class="primary-button" bindtap="onGoToWealth">管理我的资产</button>
-    <button class="secondary-button" bindtap="onEditConfiguration">调整生活目标</button>
+    <view class="action-row">
+      <button class="primary-button action-button" bindtap="onGoToWealth">管理资产</button>
+      <button class="secondary-button action-button" bindtap="onEditConfiguration">调整目标</button>
+    </view>
   </view>
 </view>

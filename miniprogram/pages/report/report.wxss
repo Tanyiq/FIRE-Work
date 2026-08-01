@@ -2,6 +2,17 @@
   margin-top: 44rpx;
 }
 
+.report-status {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 34rpx;
+  padding: 20rpx 26rpx;
+  border-radius: 16rpx;
+  color: #6d7771;
+  background: #ecefe9;
+  font-size: 23rpx;
+}
+
 .empty-card,
 .report-card,
 .summary-card {
@@ -15,6 +26,59 @@
   margin-top: 48rpx;
   padding: 56rpx 38rpx;
   text-align: center;
+}
+
+.baseline-card {
+  margin-top: 32rpx;
+  padding: 48rpx 38rpx;
+  border-radius: 28rpx;
+  color: #ffffff;
+  background: linear-gradient(150deg, #2b4437, #4e735f);
+  text-align: center;
+}
+
+.baseline-card__eyebrow,
+.baseline-card__value,
+.baseline-card__date,
+.baseline-card__text {
+  display: block;
+}
+
+.baseline-card__eyebrow {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 23rpx;
+  letter-spacing: 3rpx;
+}
+
+.baseline-card__value {
+  margin-top: 26rpx;
+  font-size: 54rpx;
+  font-weight: 700;
+}
+
+.baseline-card__date {
+  margin-top: 10rpx;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 24rpx;
+}
+
+.baseline-card__text {
+  margin-top: 34rpx;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.secondary-button {
+  margin-top: 34rpx;
+  border-radius: 999rpx;
+  color: #2f6b4f;
+  background: #ffffff;
+  font-size: 28rpx;
+}
+
+.secondary-button::after {
+  border: 0;
 }
 
 .empty-title {

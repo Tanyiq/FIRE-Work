@@ -8,6 +8,7 @@ import { AssetSnapshot } from '../models/snapshot'
 import { museumService } from './museumService'
 import { snapshotService } from './snapshotService'
 import { storageService } from './storageService'
+import { formatAmount, formatProgress, formatSignedAmount } from '../utils/format'
 
 const SOURCE_OPTIONS: ReadonlyArray<WealthChangeSourceOption> = [
   { value: 'salary_saving', label: '工资储蓄' },
@@ -91,14 +92,20 @@ const buildReportView = (
     previousDate: previous.date,
     currentDate: current.date,
     previousAsset: previous.totalAsset,
+    previousAssetText: formatAmount(previous.totalAsset),
     currentAsset: current.totalAsset,
+    currentAssetText: formatAmount(current.totalAsset),
     assetChange,
+    assetChangeText: formatSignedAmount(assetChange),
     previousFreedomLevel: previous.freedomLevel,
     currentFreedomLevel: current.freedomLevel,
     previousFreedomProgress: Math.round(previous.freedomProgress * 1000) / 10,
+    previousFreedomProgressText: formatProgress(previous.freedomProgress),
     currentFreedomProgress: Math.round(current.freedomProgress * 1000) / 10,
+    currentFreedomProgressText: formatProgress(current.freedomProgress),
     freedomChange,
     distanceChange: Math.round(-assetChange * 100) / 100,
+    distanceChangeText: formatAmount(Math.abs(assetChange)),
     changeSourceLabel: getSourceLabel(source),
     addedCollections,
     summary: getSummary(assetChange),
@@ -146,7 +153,15 @@ export const reportService = {
       changeSource: source,
       createdAt: Date.now(),
     }
-    const reports = [report, ...this.getReportList()]
+    const reports = this.getReportList()
+    const existingIndex = reports.findIndex((item) => item.date === report.date)
+    if (existingIndex >= 0) {
+      report.id = reports[existingIndex].id
+      report.createdAt = reports[existingIndex].createdAt
+      reports[existingIndex] = report
+    } else {
+      reports.unshift(report)
+    }
     return saveReportList(reports) ? view : null
   },
 }

@@ -6,10 +6,10 @@
   <view class="total-card">
     <text class="total-card__label">当前总资产</text>
     <view class="total-card__amount-row">
-      <text class="total-card__amount">{{totalAsset / 10000}}</text>
-      <text class="total-card__unit">万元</text>
+      <text class="total-card__amount">{{totalAssetText}}</text>
     </view>
-    <text class="total-card__hint">自由地图将使用这里的资产总额计算进度。</text>
+    <text wx:if="{{totalAsset > 0}}" class="total-card__hint">自由地图将使用这里的资产总额计算进度。</text>
+    <text wx:else class="total-card__hint">从第一项资产开始，建立你的财富成长基线。</text>
   </view>
 
   <view class="trend-card">
@@ -23,21 +23,26 @@
         <text class="range-option {{trendRange === 'year' ? 'range-option--active' : ''}}" data-range="year" bindtap="onTrendRangeChange">年</text>
       </view>
     </view>
-    <view wx:if="{{trendPoints.length > 0}}">
+    <view wx:if="{{trendPoints.length > 1}}">
       <canvas canvas-id="wealthTrendCanvas" class="trend-canvas"></canvas>
       <view class="trend-metrics">
-        <text>起点 ¥{{trendStartAsset}}</text>
+        <text>起点 {{trendStartAssetText}}</text>
         <text class="trend-change {{trendChange >= 0 ? 'trend-change--positive' : 'trend-change--negative'}}">
-          {{trendChange > 0 ? '+' : ''}}{{trendChange}} 元
+          {{trendChangeText}}
         </text>
-        <text>当前 ¥{{trendEndAsset}}</text>
+        <text>当前 {{trendEndAssetText}}</text>
       </view>
+    </view>
+    <view wx:elif="{{trendPoints.length === 1}}" class="trend-baseline">
+      <text class="trend-baseline__label">已记录第一份财富基线</text>
+      <text class="trend-baseline__value">{{trendEndAssetText}}</text>
+      <text class="trend-baseline__hint">下一个日期的资产变化，将形成第一段成长曲线。</text>
     </view>
     <view wx:else class="trend-empty">添加资产后，将从第一份财富快照开始记录趋势。</view>
   </view>
 
   <button class="add-button" bindtap="onToggleAssetForm">
-    {{showAssetForm ? '收起录入' : '+ 新增资产'}}
+    {{showAssetForm ? '收起录入' : (totalAsset > 0 ? '+ 新增资产' : '+ 添加第一项资产')}}
   </button>
 
   <view wx:if="{{showAssetForm}}" class="asset-form">
@@ -90,7 +95,7 @@
     <view wx:for="{{categories}}" wx:key="value" class="category-card">
       <view class="category-heading">
         <text class="category-name">{{item.label}}</text>
-        <text class="category-total">{{item.totalAmount / 10000}} 万元</text>
+        <text class="category-total">{{item.totalAmountText}}</text>
       </view>
       <view
         wx:for="{{item.assets}}"
@@ -100,7 +105,7 @@
       >
         <text class="asset-name">{{asset.name}}</text>
         <view class="asset-row__right">
-          <text class="asset-amount">{{asset.currentAmount / 10000}} 万元</text>
+          <text class="asset-amount">{{asset.currentAmountText}}</text>
           <text class="edit-action" data-id="{{asset.id}}" bindtap="onEditAsset">编辑</text>
           <text class="delete-action" data-id="{{asset.id}}" bindtap="onDeleteAsset">删除</text>
         </view>

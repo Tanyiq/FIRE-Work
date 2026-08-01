@@ -8,6 +8,7 @@ import {
   MuseumTypeOption,
 } from '../models/museum'
 import { storageService } from './storageService'
+import { formatAmount } from '../utils/format'
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
@@ -151,13 +152,18 @@ const calculateDailyCost = (
   return Math.round((collection.amount / usageDays) * 100) / 100
 }
 
-const toCollectionView = (collection: MuseumCollection): MuseumCollectionView => ({
-  ...collection,
-  typeLabel: getTypeLabel(collection.type),
-  statusLabel: getStatusLabel(collection.status),
-  usageDays: calculateUsageDays(collection),
-  dailyCost: calculateDailyCost(collection),
-})
+const toCollectionView = (collection: MuseumCollection): MuseumCollectionView => {
+  const dailyCost = calculateDailyCost(collection)
+  return {
+    ...collection,
+    typeLabel: getTypeLabel(collection.type),
+    statusLabel: getStatusLabel(collection.status),
+    usageDays: calculateUsageDays(collection),
+    dailyCost,
+    amountText: formatAmount(collection.amount),
+    dailyCostText: dailyCost === null ? null : formatAmount(dailyCost),
+  }
+}
 
 export const museumService = {
   getToday,

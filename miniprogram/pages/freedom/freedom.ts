@@ -10,14 +10,24 @@ Page({
     validationMessage: '',
     dashboard: null as FreedomDashboard | null,
     recentChange: snapshotService.getRecentYearChange(),
+    hasRecentActivity: false,
+    hasAssets: false,
   },
 
   onShow() {
     const dashboard = freedomService.getDashboard()
+    const recentChange = snapshotService.getRecentYearChange()
     this.setData({
       hasConfiguration: dashboard !== null,
       dashboard,
-      recentChange: snapshotService.getRecentYearChange(),
+      recentChange,
+      hasAssets: Boolean(dashboard && dashboard.currentAsset > 0),
+      hasRecentActivity: Boolean(
+        recentChange &&
+          (recentChange.assetChange !== 0 ||
+            recentChange.progressFrom !== recentChange.progressTo ||
+            recentChange.museumAddedCount > 0),
+      ),
     })
   },
 
@@ -41,6 +51,7 @@ Page({
     this.setData({
       hasConfiguration: true,
       dashboard: result.dashboard,
+      hasAssets: result.dashboard.currentAsset > 0,
       validationMessage: '',
     })
   },

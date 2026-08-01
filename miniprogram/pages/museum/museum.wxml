@@ -20,7 +20,7 @@
       <view class="detail-grid">
         <view class="detail-metric">
           <text class="metric-label">{{selectedCollection.type === 'income_event' ? '收益金额' : '花费金额'}}</text>
-          <text class="metric-value">¥{{selectedCollection.amount}}</text>
+          <text class="metric-value">{{selectedCollection.amountText}}</text>
         </view>
         <view class="detail-metric">
           <text class="metric-label">记录天数</text>
@@ -30,7 +30,7 @@
           <text class="metric-label">
             {{selectedCollection.status === 'retired' ? '最终每日成本' : '当前每日成本'}}
           </text>
-          <text class="daily-cost">¥{{selectedCollection.dailyCost}} / 天</text>
+          <text class="daily-cost">{{selectedCollection.dailyCostText}} / 天</text>
         </view>
         <view wx:else class="detail-metric detail-metric--wide">
           <text class="metric-label">价值记录</text>
@@ -129,8 +129,8 @@
         <text class="collection-story">{{item.story || '这件收藏还没有写下故事。'}}</text>
         <view class="collection-footer">
           <text>{{item.usageDays}} 天</text>
-          <text wx:if="{{item.dailyCost !== null}}">¥{{item.dailyCost}} / 天</text>
-          <text wx:else>收益 ¥{{item.amount}}</text>
+          <text wx:if="{{item.dailyCost !== null}}">{{item.dailyCostText}} / 天</text>
+          <text wx:else>收益 {{item.amountText}}</text>
         </view>
       </view>
     </view>
