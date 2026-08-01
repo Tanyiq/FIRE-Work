@@ -1,12 +1,12 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
-<view class="page-shell">
+<view class="page-shell {{pageMotionClass}}">
   <view class="eyebrow">WEALTH</view>
   <text class="page-title">财富管家</text>
 
   <view wx:if="{{isGuidedAssetStep}}" class="guide-focus-card">
     <view class="guide-focus-card__top">
       <text class="guide-focus-card__step">STEP 2 / 4</text>
-      <text class="guide-focus-card__exit" bindtap="onExitGuide">暂时退出引导</text>
+      <text class="guide-focus-card__exit" hover-class="tap-text--active" bindtap="onExitGuide">暂时退出引导</text>
     </view>
     <text class="guide-focus-card__title">{{guidedAssetCompleted ? '资产基线已建立' : '记录第一项资产'}}</text>
     <text class="guide-focus-card__text">{{guidedAssetCompleted ? '下一步填写生活成本，用于评估安全储备。' : '先记录一项真实资产。保存后会自动进入下一步，不会跳去其他功能。'}}</text>
@@ -20,7 +20,7 @@
     </view>
   </view>
 
-  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry advice-center-entry" bindtap="onGoToAdvice">
+  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry advice-center-entry" hover-class="tap-card--active" bindtap="onGoToAdvice">
     <view>
       <text class="health-entry__eyebrow">WEALTH GUIDANCE</text>
       <text class="health-entry__title">财富建议中心</text>
@@ -28,7 +28,7 @@
     <text class="health-entry__arrow">›</text>
   </view>
 
-  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry" bindtap="onGoToHealth">
+  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry" hover-class="tap-card--active" bindtap="onGoToHealth">
     <view>
       <text class="health-entry__eyebrow">WEALTH HEALTH</text>
       <text class="health-entry__title">查看财富体检报告</text>
@@ -36,7 +36,7 @@
     <text class="health-entry__arrow">›</text>
   </view>
 
-  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry investment-entry" bindtap="onGoToInvestment">
+  <view wx:if="{{!isGuidedAssetStep}}" class="health-entry investment-entry" hover-class="tap-card--active" bindtap="onGoToInvestment">
     <view>
       <text class="health-entry__eyebrow">INVESTMENT REVIEW</text>
       <text class="health-entry__title">进入投资复盘馆</text>
@@ -50,8 +50,8 @@
         <text class="trend-title">资产成长曲线</text>
       </view>
       <view class="range-switch">
-        <text class="range-option {{trendRange === 'month' ? 'range-option--active' : ''}}" data-range="month" bindtap="onTrendRangeChange">月</text>
-        <text class="range-option {{trendRange === 'year' ? 'range-option--active' : ''}}" data-range="year" bindtap="onTrendRangeChange">年</text>
+        <text class="range-option {{trendRange === 'month' ? 'range-option--active' : ''}}" hover-class="tap-text--active" data-range="month" bindtap="onTrendRangeChange">月</text>
+        <text class="range-option {{trendRange === 'year' ? 'range-option--active' : ''}}" hover-class="tap-text--active" data-range="year" bindtap="onTrendRangeChange">年</text>
       </view>
     </view>
     <view wx:if="{{trendPoints.length > 1}}">
@@ -92,8 +92,8 @@
         <text class="asset-name">{{asset.name}}</text>
         <view class="asset-row__right">
           <text class="asset-amount">{{asset.currentAmountText}}</text>
-          <text class="edit-action" data-id="{{asset.id}}" bindtap="onEditAsset">编辑</text>
-          <text class="delete-action" data-id="{{asset.id}}" bindtap="onDeleteAsset">删除</text>
+          <text class="edit-action" hover-class="tap-text--active" data-id="{{asset.id}}" bindtap="onEditAsset">编辑</text>
+          <text class="delete-action" hover-class="tap-text--active" data-id="{{asset.id}}" bindtap="onDeleteAsset">删除</text>
         </view>
       </view>
     </view>

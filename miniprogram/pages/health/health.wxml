@@ -6,7 +6,7 @@
   <view wx:if="{{showNoviceTip}}" class="novice-tip">
     <text class="novice-tip__label">初次使用提示</text>
     <text class="novice-tip__text">这里关注安全储备、资产结构与长期变化，不会为你的财富打分。</text>
-    <text class="novice-tip__action" bindtap="onDismissNoviceTip">知道了</text>
+    <text class="novice-tip__action" hover-class="tap-text--active" bindtap="onDismissNoviceTip">知道了</text>
   </view>
 
   <view class="health-hero">
@@ -46,7 +46,7 @@
         <text class="missing-state__text">完善生活成本后，可以评估安全储备。</text>
       </view>
 
-      <text class="text-action" bindtap="onGoToLivingCost">
+      <text class="text-action" hover-class="tap-text--active" bindtap="onGoToLivingCost">
         {{report.essentialMonthlyCost ? '修改生活成本档案' : '完善生活成本档案'}} →
       </text>
     </view>

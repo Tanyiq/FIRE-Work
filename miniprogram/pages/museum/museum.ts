@@ -2,6 +2,7 @@ import { MuseumCollectionView } from '../../models/museum'
 import { museumService } from '../../services/museumService'
 import { onboardingFlowService } from '../../services/onboardingFlowService'
 import { themeService } from '../../services/themeService'
+import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 Page({
   data: {
@@ -25,9 +26,13 @@ Page({
     validationMessage: '',
     isGuidedMuseumStep: false,
     themePageStyle: themeService.getPageStyle(),
+    pageMotionClass: '',
   },
 
   onShow() {
+    this.setData({
+      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
+    })
     this.refreshCollections()
   },
 

@@ -71,9 +71,9 @@
   <view class="action-card">
     <text class="action-title">让建议保持准确</text>
     <view class="action-links">
-      <text bindtap="onGoToWealth">更新资产</text>
-      <text bindtap="onGoToLivingCost">生活成本</text>
-      <text bindtap="onGoToInvestment">投资复盘</text>
+      <text hover-class="tap-text--active" bindtap="onGoToWealth">更新资产</text>
+      <text hover-class="tap-text--active" bindtap="onGoToLivingCost">生活成本</text>
+      <text hover-class="tap-text--active" bindtap="onGoToInvestment">投资复盘</text>
     </view>
   </view>
 

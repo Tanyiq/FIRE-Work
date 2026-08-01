@@ -6,6 +6,7 @@ import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { drawAssetTrendChart } from '../../utils/chart'
 import { formatAmount, formatSignedAmount } from '../../utils/format'
+import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 const getCategoryViews = () =>
   assetService.getCategorySummaries().map((category) => ({
@@ -41,10 +42,14 @@ Page({
     trendEndAssetText: formatAmount(0),
     trendChangeText: formatSignedAmount(0),
     themePageStyle: themeService.getPageStyle(),
+    pageMotionClass: '',
   },
 
   onShow() {
-    this.setData({ themePageStyle: themeService.getPageStyle() })
+    this.setData({
+      themePageStyle: themeService.getPageStyle(),
+      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
+    })
     this.refreshAssets()
     if (!this.data.isGuidedAssetStep) this.refreshTrend()
   },

@@ -1,5 +1,5 @@
 <page-meta page-style="{{themePageStyle}}"></page-meta>
-<view class="page-shell">
+<view class="page-shell {{pageMotionClass}}">
   <view class="eyebrow">PROFILE</view>
   <text class="page-title">我的</text>
 
@@ -25,7 +25,7 @@
     </view>
   </view>
 
-  <view class="setting-card" bindtap="onGoToLivingCost">
+  <view class="setting-card" hover-class="tap-card--active" bindtap="onGoToLivingCost">
     <view class="setting-main">
       <text class="setting-title">生活成本</text>
     </view>
@@ -36,7 +36,7 @@
     </view>
   </view>
 
-  <view class="setting-card setting-card--secondary" bindtap="onGoToDataManagement">
+  <view class="setting-card setting-card--secondary" hover-class="tap-card--active" bindtap="onGoToDataManagement">
     <view class="setting-main">
       <text class="setting-title">数据管理</text>
     </view>
@@ -45,7 +45,7 @@
     </view>
   </view>
 
-  <view class="setting-card setting-card--secondary" bindtap="onGoToTheme">
+  <view class="setting-card setting-card--secondary" hover-class="tap-card--active" bindtap="onGoToTheme">
     <view class="setting-main">
       <text class="setting-title">外观主题</text>
     </view>

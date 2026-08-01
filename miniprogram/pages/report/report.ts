@@ -3,6 +3,7 @@ import { reportService } from '../../services/reportService'
 import { noviceTipService } from '../../services/noviceTipService'
 import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
+import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 Page({
   data: {
@@ -15,6 +16,7 @@ Page({
     hasSavedCurrentReport: false,
     showBaselineTip: noviceTipService.shouldShow('snapshot_baseline'),
     themePageStyle: themeService.getPageStyle(),
+    pageMotionClass: '',
   },
 
   onShow() {
@@ -34,6 +36,7 @@ Page({
         : false,
       generatedMessage: '',
       themePageStyle: themeService.getPageStyle(),
+      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
     })
   },
 

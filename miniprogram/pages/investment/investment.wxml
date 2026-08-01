@@ -6,11 +6,11 @@
   <view wx:if="{{showNoviceTip}}" class="novice-tip">
     <text class="novice-tip__label">初次使用提示</text>
     <text class="novice-tip__text">这里记录已经发生的投资决策与结果，不提供行情、标的推荐或收益预测。</text>
-    <text class="novice-tip__action" bindtap="onDismissNoviceTip">知道了</text>
+    <text class="novice-tip__action" hover-class="tap-text--active" bindtap="onDismissNoviceTip">知道了</text>
   </view>
 
   <view wx:if="{{selectedRecord}}" class="detail-section">
-    <text class="back-action" bindtap="onCloseDetail">‹ 返回记录列表</text>
+    <text class="back-action" hover-class="tap-text--active" bindtap="onCloseDetail">‹ 返回记录列表</text>
     <view class="detail-card">
       <view class="detail-heading">
         <text class="type-badge">{{selectedRecord.typeLabel}}</text>
@@ -112,7 +112,7 @@
 
     <view wx:if="{{records.length > 0}}" class="record-section">
       <view class="section-heading"><text class="section-title">我的投资记录</text><text class="record-count">{{records.length}} 条</text></view>
-      <view wx:for="{{records}}" wx:key="id" class="record-card" data-id="{{item.id}}" bindtap="onViewRecord">
+      <view wx:for="{{records}}" wx:key="id" class="record-card" hover-class="tap-card--active" data-id="{{item.id}}" bindtap="onViewRecord">
         <view class="record-card__top">
           <view><text class="type-badge">{{item.typeLabel}}</text><text class="status-inline">{{item.statusLabel}}</text></view>
           <text class="record-date">{{item.startDate}}</text>

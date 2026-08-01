@@ -6,7 +6,7 @@
   <view wx:if="{{isGuidedLivingCostStep}}" class="guide-focus-card">
     <view class="guide-focus-card__top">
       <text class="guide-focus-card__step">STEP 3 / 4</text>
-      <text class="guide-focus-card__exit" bindtap="onExitGuide">暂时退出引导</text>
+      <text class="guide-focus-card__exit" hover-class="tap-text--active" bindtap="onExitGuide">暂时退出引导</text>
     </view>
     <text class="guide-focus-card__title">填写每月生活成本</text>
     <text class="guide-focus-card__text">先完成基础生活成本。保存后会自动进入人生收藏，分析内容稍后再看也不迟。</text>

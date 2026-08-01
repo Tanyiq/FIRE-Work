@@ -36,7 +36,7 @@
     <view wx:elif="{{report.hasWealthData}}" class="section-empty">本年度只有一份财富快照，已建立年度基线。</view>
     <view wx:else class="section-empty">
       <text>本年度还没有财富快照。</text>
-      <text class="empty-action" bindtap="onGoToWealth">去更新资产 →</text>
+      <text class="empty-action" hover-class="tap-text--active" bindtap="onGoToWealth">去更新资产 →</text>
     </view>
   </view>
 
@@ -75,7 +75,7 @@
     </view>
     <view wx:else class="section-empty">
       <text>本年度还没有可回顾的人生消费。</text>
-      <text class="empty-action" bindtap="onGoToMuseum">去人生博物馆记录 →</text>
+      <text class="empty-action" hover-class="tap-text--active" bindtap="onGoToMuseum">去人生博物馆记录 →</text>
     </view>
   </view>
 
@@ -89,7 +89,7 @@
     </view>
     <view wx:else class="investment-empty">
       <text>还没有可摘录的年度投资复盘。</text>
-      <text class="investment-action" bindtap="onGoToInvestment">去记录投资复盘 →</text>
+      <text class="investment-action" hover-class="tap-text--active" bindtap="onGoToInvestment">去记录投资复盘 →</text>
     </view>
   </view>
 

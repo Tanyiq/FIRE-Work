@@ -10,6 +10,7 @@ import { snapshotService } from '../../services/snapshotService'
 import { themeService } from '../../services/themeService'
 import { formatAmount, formatProgress } from '../../utils/format'
 import { CancelGrowthAnimation, playGrowthAnimation } from '../../utils/growthAnimation'
+import { getNextPageMotionClass } from '../../utils/pageMotion'
 
 let cancelHeroAnimation: CancelGrowthAnimation | null = null
 
@@ -33,6 +34,7 @@ Page({
     animatedRemainingProgressText: formatProgress(1),
     animatedProgressPercent: 0,
     themePageStyle: themeService.getPageStyle(),
+    pageMotionClass: '',
   },
 
   onShow() {
@@ -83,6 +85,7 @@ Page({
       animatedRemainingProgressText: formatProgress(1),
       animatedProgressPercent: 0,
       themePageStyle: themeService.getPageStyle(),
+      pageMotionClass: getNextPageMotionClass(this.data.pageMotionClass),
     }, () => {
       if (!dashboard) return
       cancelHeroAnimation = playGrowthAnimation({

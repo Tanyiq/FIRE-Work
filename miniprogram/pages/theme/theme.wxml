@@ -12,7 +12,7 @@
   <view class="theme-card">
     <text class="section-title">推荐主题</text>
     <view class="preset-grid">
-      <view wx:for="{{presets}}" wx:key="id" class="preset-item {{selectedColor === item.color ? 'preset-item--selected' : ''}}" data-color="{{item.color}}" bindtap="onSelectPreset">
+      <view wx:for="{{presets}}" wx:key="id" class="preset-item {{selectedColor === item.color ? 'preset-item--selected' : ''}}" hover-class="tap-card--active" data-color="{{item.color}}" bindtap="onSelectPreset">
         <view class="preset-swatch" style="background: {{item.color}};"></view>
         <text class="preset-name">{{item.name}}</text>
         <text class="preset-color">{{item.color}}</text>
