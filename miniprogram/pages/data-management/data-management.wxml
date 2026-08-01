@@ -78,8 +78,21 @@
   <view class="action-card danger-card">
     <text class="action-title danger-title">清空数据</text>
     <text class="action-description">永久删除当前设备上的全部财富与人生档案。此操作不能撤销。</text>
-    <button class="clear-button" loading="{{isClearing}}" disabled="{{isExporting || isRestoring || isClearing || isClearWaiting}}" bindtap="onClearData">{{clearButtonText}}</button>
+    <button class="clear-button" loading="{{isClearing}}" disabled="{{isExporting || isRestoring || isClearing}}" bindtap="onClearData">清空全部数据</button>
   </view>
 
   <text class="local-note">所有操作均在本机完成，不会上传到云端。</text>
+</view>
+
+<view wx:if="{{showClearModal}}" class="clear-modal" catchtouchmove="onPreventTouchMove">
+  <view class="clear-modal__backdrop"></view>
+  <view class="clear-modal__dialog">
+    <text class="clear-modal__title">清空全部数据</text>
+    <text class="clear-modal__text">目标、资产、快照、报告、人生收藏、生活成本和投资复盘都会被永久删除。</text>
+    <text class="clear-modal__warning">此操作不能撤销，建议先导出备份。</text>
+    <view class="clear-modal__actions">
+      <button class="clear-modal__cancel" disabled="{{isClearing}}" bindtap="onCancelClear">取消</button>
+      <button class="clear-modal__confirm" loading="{{isClearing}}" disabled="{{!canConfirmClear || isClearing}}" bindtap="onConfirmClear">{{clearConfirmText}}</button>
+    </view>
+  </view>
 </view>

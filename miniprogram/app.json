@@ -28,23 +28,33 @@
     "list": [
       {
         "pagePath": "pages/freedom/freedom",
-        "text": "自由"
+        "text": "自由",
+        "iconPath": "assets/tabbar/freedom-default.png",
+        "selectedIconPath": "assets/tabbar/freedom-selected.png"
       },
       {
         "pagePath": "pages/wealth/wealth",
-        "text": "财富"
+        "text": "财富",
+        "iconPath": "assets/tabbar/wealth-default.png",
+        "selectedIconPath": "assets/tabbar/wealth-selected.png"
       },
       {
         "pagePath": "pages/museum/museum",
-        "text": "博物馆"
+        "text": "博物馆",
+        "iconPath": "assets/tabbar/museum-default.png",
+        "selectedIconPath": "assets/tabbar/museum-selected.png"
       },
       {
         "pagePath": "pages/report/report",
-        "text": "报告"
+        "text": "报告",
+        "iconPath": "assets/tabbar/report-default.png",
+        "selectedIconPath": "assets/tabbar/report-selected.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile-default.png",
+        "selectedIconPath": "assets/tabbar/profile-selected.png"
       }
     ]
   },

@@ -17,7 +17,9 @@ Page({
     isRestoring: false,
     isClearing: false,
     isClearWaiting: false,
-    clearButtonText: '清空全部数据',
+    showClearModal: false,
+    canConfirmClear: false,
+    clearConfirmText: '请等待 2 秒',
     integrity: dataIntegrityService.getSummary() as DataIntegritySummary,
     themePageStyle: themeService.getPageStyle(),
   },
@@ -106,62 +108,60 @@ Page({
       this.data.isClearing ||
       this.data.isClearWaiting
     ) return
-    wx.showModal({
-      title: '清空全部数据',
-      content: '目标、资产、快照、报告、人生收藏、生活成本和投资复盘都会被删除，且无法恢复。建议先导出备份。',
-      confirmText: '继续',
-      confirmColor: '#a64b3c',
-      success: (result) => {
-        if (!result.confirm) return
-        this.startClearCountdown()
-      },
+    this.setData({
+      showClearModal: true,
+      canConfirmClear: false,
     })
+    this.startClearCountdown()
   },
 
   startClearCountdown() {
     let remainingSeconds = 2
     this.setData({
       isClearWaiting: true,
-      clearButtonText: `请等待 ${remainingSeconds} 秒`,
+      clearConfirmText: `请等待 ${remainingSeconds} 秒`,
     })
     clearCountdownTimer = setInterval(() => {
       remainingSeconds -= 1
       if (remainingSeconds > 0) {
-        this.setData({ clearButtonText: `请等待 ${remainingSeconds} 秒` })
+        this.setData({ clearConfirmText: `请等待 ${remainingSeconds} 秒` })
         return
       }
       if (clearCountdownTimer !== null) clearInterval(clearCountdownTimer)
       clearCountdownTimer = null
       this.setData({
         isClearWaiting: false,
-        clearButtonText: '清空全部数据',
+        canConfirmClear: true,
+        clearConfirmText: '确认清空',
       })
-      this.showFinalClearConfirmation()
     }, 1000)
   },
 
-  showFinalClearConfirmation() {
-    wx.showModal({
-      title: '最后确认',
-      content: '等待已结束。确定永久清空当前设备上的全部 FIRE Work 数据吗？',
-      confirmText: '确认清空',
-      confirmColor: '#a64b3c',
-      success: (result) => {
-        if (!result.confirm) return
-        this.setData({ isClearing: true })
-        const success = backupService.clearAllData()
-        this.setData({ isClearing: false })
-        if (!success) {
-          wx.showModal({ title: '清空失败', content: '请稍后重试。', showCancel: false })
-          return
-        }
-        wx.showModal({
-          title: '数据已清空',
-          content: '小程序将返回首次使用页面。',
-          showCancel: false,
-          success: () => wx.reLaunch({ url: '/pages/freedom/freedom' }),
-        })
-      },
+  onCancelClear() {
+    if (this.data.isClearing) return
+    if (clearCountdownTimer !== null) clearInterval(clearCountdownTimer)
+    clearCountdownTimer = null
+    this.setData({
+      showClearModal: false,
+      isClearWaiting: false,
+      canConfirmClear: false,
+      clearConfirmText: '请等待 2 秒',
     })
   },
+
+  onConfirmClear() {
+    if (!this.data.canConfirmClear || this.data.isClearing) return
+    this.setData({ isClearing: true })
+    const success = backupService.clearAllData()
+    if (!success) {
+      this.setData({ isClearing: false })
+      wx.showModal({ title: '清空失败', content: '请稍后重试。', showCancel: false })
+      return
+    }
+    this.setData({ showClearModal: false, isClearing: false })
+    wx.showToast({ title: '数据已清空', icon: 'success' })
+    setTimeout(() => wx.reLaunch({ url: '/pages/freedom/freedom' }), 500)
+  },
+
+  onPreventTouchMove() {},
 })
