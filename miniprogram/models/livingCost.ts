@@ -6,11 +6,12 @@ export interface LivingCostCategories {
 }
 
 export interface LivingCostInput extends LivingCostCategories {
-  comfortableMonthlyCost: number
+  comfortableExtraCost: number
 }
 
 export interface LivingCostProfile extends LivingCostInput {
   essentialMonthlyCost: number
+  comfortableMonthlyCost: number
   updatedAt: number
 }
 
@@ -20,5 +21,6 @@ export interface LivingCostSummary extends LivingCostProfile {
   transportText: string
   otherText: string
   essentialMonthlyCostText: string
+  comfortableExtraCostText: string
   comfortableMonthlyCostText: string
 }

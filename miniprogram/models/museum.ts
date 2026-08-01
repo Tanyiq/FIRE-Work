@@ -15,6 +15,7 @@ export interface MuseumCollection {
   status: MuseumCollectionStatus
   retiredDate: string | null
   story: string
+  photoPath: string | null
   createdAt: number
   updatedAt: number
 }
@@ -27,6 +28,7 @@ export interface MuseumCollectionInput {
   status: MuseumCollectionStatus
   retiredDate?: string | null
   story?: string
+  photoPath?: string | null
 }
 
 export interface MuseumTypeOption {

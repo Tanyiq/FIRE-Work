@@ -30,7 +30,7 @@ const calculateEssentialMonthlyCost = (input: LivingCostCategories): number =>
 
 const normalizeProfile = (
   categories: LivingCostCategories,
-  comfortableMonthlyCost: number,
+  comfortableExtraCost: number,
   updatedAt: number,
 ): LivingCostProfile | null => {
   const essentialMonthlyCost = calculateEssentialMonthlyCost(categories)
@@ -40,7 +40,8 @@ const normalizeProfile = (
   return {
     ...categories,
     essentialMonthlyCost,
-    comfortableMonthlyCost: Math.max(essentialMonthlyCost, comfortableMonthlyCost),
+    comfortableExtraCost: Math.max(0, comfortableExtraCost),
+    comfortableMonthlyCost: essentialMonthlyCost + Math.max(0, comfortableExtraCost),
     updatedAt,
   }
 }
@@ -63,11 +64,13 @@ const migrateStoredProfile = (value: unknown): LivingCostProfile | null => {
     other: value.other,
   }
   const essentialMonthlyCost = calculateEssentialMonthlyCost(categories)
-  const comfortableMonthlyCost = isValidCost(record.comfortableMonthlyCost)
-    ? record.comfortableMonthlyCost
-    : essentialMonthlyCost
+  const comfortableExtraCost = isValidCost(record.comfortableExtraCost)
+    ? record.comfortableExtraCost
+    : isValidCost(record.comfortableMonthlyCost)
+      ? Math.max(0, record.comfortableMonthlyCost - essentialMonthlyCost)
+      : 0
   const updatedAt = typeof record.updatedAt === 'number' ? record.updatedAt : Date.now()
-  const profile = normalizeProfile(categories, comfortableMonthlyCost, updatedAt)
+  const profile = normalizeProfile(categories, comfortableExtraCost, updatedAt)
   if (!profile) {
     return null
   }
@@ -75,6 +78,7 @@ const migrateStoredProfile = (value: unknown): LivingCostProfile | null => {
   const alreadyCurrent =
     isValidCost(record.essentialMonthlyCost) &&
     record.essentialMonthlyCost === profile.essentialMonthlyCost &&
+    record.comfortableExtraCost === profile.comfortableExtraCost &&
     record.comfortableMonthlyCost === profile.comfortableMonthlyCost
   return alreadyCurrent ? profile : saveMigratedProfile(profile)
 }
@@ -88,7 +92,7 @@ const migrateLegacyExpense = (): LivingCostProfile | null => {
   }
   const profile = normalizeProfile(
     { rent: 0, food: 0, transport: 0, other: legacyExpense },
-    legacyExpense,
+    0,
     Date.now(),
   )
   return profile ? saveMigratedProfile(profile) : null
@@ -107,6 +111,7 @@ const toSummary = (profile: LivingCostProfile): LivingCostSummary => ({
   otherText: formatAmount(profile.other),
   essentialMonthlyCostText: formatAmount(profile.essentialMonthlyCost),
   comfortableMonthlyCostText: formatAmount(profile.comfortableMonthlyCost),
+  comfortableExtraCostText: formatAmount(profile.comfortableExtraCost),
 })
 
 export const livingCostService = {
@@ -122,22 +127,20 @@ export const livingCostService = {
   saveProfile(input: LivingCostInput): LivingCostProfile | null {
     if (
       !hasValidCategories(input) ||
-      !isValidCost(input.comfortableMonthlyCost)
+      !isValidCost(input.comfortableExtraCost)
     ) {
       return null
     }
 
     const essentialMonthlyCost = calculateEssentialMonthlyCost(input)
-    if (
-      essentialMonthlyCost <= 0 ||
-      input.comfortableMonthlyCost < essentialMonthlyCost
-    ) {
+    if (essentialMonthlyCost <= 0) {
       return null
     }
 
     const profile: LivingCostProfile = {
       ...input,
       essentialMonthlyCost,
+      comfortableMonthlyCost: essentialMonthlyCost + input.comfortableExtraCost,
       updatedAt: Date.now(),
     }
     return storageService.set(storageService.keys.livingCostProfile, profile)

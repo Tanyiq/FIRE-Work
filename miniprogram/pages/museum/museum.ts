@@ -19,12 +19,20 @@ Page({
     startDate: museumService.getToday(),
     retiredDate: museumService.getToday(),
     storyInput: '',
+    photoPathInput: '',
+    isChoosingPhoto: false,
     validationMessage: '',
     themePageStyle: themeService.getPageStyle(),
   },
 
   onShow() {
     this.refreshCollections()
+  },
+
+  onUnload() {
+    if (this.data.showAddForm && this.data.photoPathInput) {
+      wx.removeSavedFile({ filePath: this.data.photoPathInput })
+    }
   },
 
   refreshCollections() {
@@ -35,11 +43,60 @@ Page({
   },
 
   onToggleAddForm() {
+    if (this.data.showAddForm && this.data.photoPathInput) {
+      wx.removeSavedFile({ filePath: this.data.photoPathInput })
+    }
     this.setData({
       showAddForm: !this.data.showAddForm,
       selectedCollection: null,
+      photoPathInput: '',
       validationMessage: '',
     })
+  },
+
+  onChoosePhoto() {
+    if (this.data.isChoosingPhoto) return
+    this.setData({ isChoosingPhoto: true, validationMessage: '' })
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      sizeType: ['compressed'],
+      success: (result) => {
+        const photo = result.tempFiles[0]
+        if (!photo || photo.size > 5 * 1024 * 1024) {
+          this.setData({
+            isChoosingPhoto: false,
+            validationMessage: '请选择小于 5MB 的照片',
+          })
+          return
+        }
+        wx.saveFile({
+          tempFilePath: photo.tempFilePath,
+          success: (saveResult) => {
+            const previousPath = this.data.photoPathInput
+            this.setData({
+              photoPathInput: saveResult.savedFilePath,
+              isChoosingPhoto: false,
+            })
+            if (previousPath) wx.removeSavedFile({ filePath: previousPath })
+          },
+          fail: () => {
+            this.setData({
+              isChoosingPhoto: false,
+              validationMessage: '照片保存失败，请检查本地存储空间',
+            })
+          },
+        })
+      },
+      fail: () => this.setData({ isChoosingPhoto: false }),
+    })
+  },
+
+  onRemovePhoto() {
+    const photoPath = this.data.photoPathInput
+    if (photoPath) wx.removeSavedFile({ filePath: photoPath })
+    this.setData({ photoPathInput: '' })
   },
 
   onTypeChange(event: WechatMiniprogram.CustomEvent<{ value: number }>) {
@@ -105,6 +162,7 @@ Page({
       status,
       retiredDate: status === 'retired' ? this.data.retiredDate : null,
       story: this.data.storyInput,
+      photoPath: this.data.photoPathInput || null,
     })
     if (!collection) {
       this.setData({ validationMessage: '保存失败，请检查日期后重试' })
@@ -122,6 +180,8 @@ Page({
       startDate: museumService.getToday(),
       retiredDate: museumService.getToday(),
       storyInput: '',
+      photoPathInput: '',
+      isChoosingPhoto: false,
       validationMessage: '',
     })
     this.refreshCollections()

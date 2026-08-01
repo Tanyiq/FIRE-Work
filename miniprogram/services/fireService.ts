@@ -14,13 +14,13 @@ const SCENARIOS: ReadonlyArray<FireScenarioDefinition> = [
     id: 'balanced',
     name: '平衡自由',
     description: '定存、红利资产与稳健投资组合。',
-    expectedRate: 0.03,
+    expectedRate: 0.05,
   },
   {
     id: 'investing',
     name: '投资自由',
     description: '长期投资组合，接受一定波动。',
-    expectedRate: 0.04,
+    expectedRate: 0.08,
   },
 ]
 

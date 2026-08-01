@@ -125,6 +125,7 @@ const isCollection = (value: unknown): value is MuseumCollection => {
     isNonNegativeNumber(value.amount) && DATE_PATTERN.test(String(value.startDate)) &&
     COLLECTION_STATUSES.includes(value.status as MuseumCollectionStatus) && hasValidRetiredDate &&
     typeof value.story === 'string' &&
+    (value.photoPath === undefined || value.photoPath === null || typeof value.photoPath === 'string') &&
     isTimestamp(value.createdAt) && isTimestamp(value.updatedAt)
   )
 }
@@ -139,8 +140,16 @@ const isLivingCost = (value: unknown): value is LivingCostProfile => {
     Number.isFinite(categoryTotal) && categoryTotal > 0 &&
     isNonNegativeNumber(value.essentialMonthlyCost) &&
     Math.abs(value.essentialMonthlyCost - categoryTotal) < 0.01 &&
+    (value.comfortableExtraCost === undefined ||
+      isNonNegativeNumber(value.comfortableExtraCost)) &&
     isNonNegativeNumber(value.comfortableMonthlyCost) &&
     value.comfortableMonthlyCost >= value.essentialMonthlyCost &&
+    (value.comfortableExtraCost === undefined ||
+      Math.abs(
+        value.comfortableMonthlyCost -
+        value.essentialMonthlyCost -
+        value.comfortableExtraCost,
+      ) < 0.01) &&
     isTimestamp(value.updatedAt)
   )
 }

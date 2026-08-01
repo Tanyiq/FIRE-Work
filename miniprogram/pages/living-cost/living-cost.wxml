@@ -57,11 +57,11 @@
   </view>
   <view class="comfortable-card">
     <view>
-      <text class="cost-label">舒适生活总额</text>
-      <text class="cost-hint">留空时默认等于基础生活成本</text>
+      <text class="cost-label">舒适生活额外成本</text>
+      <text class="cost-hint">娱乐、旅行和兴趣等每月额外预算，留空按 0 元计算</text>
     </view>
     <view class="input-wrap comfortable-input">
-      <input class="cost-input" type="digit" value="{{form.comfortableMonthlyCost}}" placeholder="0" data-field="comfortableMonthlyCost" bindinput="onAmountInput" />
+      <input class="cost-input" type="digit" value="{{form.comfortableExtraCost}}" placeholder="0" data-field="comfortableExtraCost" bindinput="onAmountInput" />
       <text class="unit">元/月</text>
     </view>
   </view>
@@ -79,7 +79,7 @@
 
   <view wx:if="{{fireScenarios.length > 0}}" class="analysis-card">
     <text class="analysis-title">自由成本分析</text>
-    <text class="analysis-note">以下方案均按基础生活成本计算，只代表不同实现方式。</text>
+    <text class="analysis-note">以下方案均按基础生活成本计算，只代表不同实现方式。平衡方案参考 5%，投资方案参考 8%。</text>
     <view wx:for="{{fireScenarios}}" wx:key="id" class="scenario-row">
       <view class="scenario-main">
         <view class="scenario-heading">

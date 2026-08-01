@@ -7,6 +7,7 @@
   <view wx:if="{{selectedCollection}}" class="detail-section">
     <text class="back-action" bindtap="onCloseDetail">‹ 返回收藏列表</text>
     <view class="detail-card">
+      <image wx:if="{{selectedCollection.photoPath}}" class="detail-photo" src="{{selectedCollection.photoPath}}" mode="aspectFill"></image>
       <view class="detail-heading">
         <text class="type-badge">{{selectedCollection.typeLabel}}</text>
         <text class="status-badge status-badge--{{selectedCollection.status}}">
@@ -100,6 +101,13 @@
       <text class="field-label">故事</text>
       <textarea class="story-field" value="{{storyInput}}" maxlength="500" placeholder="它为什么值得被记住？" bindinput="onStoryInput"></textarea>
 
+      <text class="field-label">照片（可选）</text>
+      <view wx:if="{{photoPathInput}}" class="photo-preview">
+        <image class="photo-preview__image" src="{{photoPathInput}}" mode="aspectFill"></image>
+        <text class="photo-remove" bindtap="onRemovePhoto">移除照片</text>
+      </view>
+      <button wx:else class="photo-button" loading="{{isChoosingPhoto}}" disabled="{{isChoosingPhoto}}" bindtap="onChoosePhoto">从相册或相机添加照片</button>
+
       <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
       <button class="save-button" bindtap="onAddCollection">保存收藏</button>
     </view>
@@ -123,6 +131,7 @@
         data-id="{{item.id}}"
         bindtap="onViewCollection"
       >
+        <image wx:if="{{item.photoPath}}" class="collection-photo" src="{{item.photoPath}}" mode="aspectFill"></image>
         <view class="collection-card__top">
           <text class="type-badge">{{item.typeLabel}}</text>
           <text class="collection-date">{{item.startDate}}</text>

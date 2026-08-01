@@ -15,7 +15,7 @@ const emptyForm = (): Record<CostField, string> => ({
   food: '',
   transport: '',
   other: '',
-  comfortableMonthlyCost: '',
+  comfortableExtraCost: '',
 })
 
 const parseAmount = (value: string): number => {
@@ -42,7 +42,9 @@ Page({
           food: profile.food ? String(profile.food) : '',
           transport: profile.transport ? String(profile.transport) : '',
           other: profile.other ? String(profile.other) : '',
-          comfortableMonthlyCost: String(profile.comfortableMonthlyCost),
+          comfortableExtraCost: profile.comfortableExtraCost
+            ? String(profile.comfortableExtraCost)
+            : '',
         },
       })
       this.refreshPreview()
@@ -79,9 +81,10 @@ Page({
     const essentialMonthlyCost = livingCostService.calculateEssentialMonthlyCost(
       this.getCategories(),
     )
-    const comfortableMonthlyCost = this.data.form.comfortableMonthlyCost.trim()
-      ? parseAmount(this.data.form.comfortableMonthlyCost)
-      : essentialMonthlyCost
+    const comfortableExtraCost = this.data.form.comfortableExtraCost.trim()
+      ? parseAmount(this.data.form.comfortableExtraCost)
+      : 0
+    const comfortableMonthlyCost = essentialMonthlyCost + comfortableExtraCost
     this.setData({
       essentialMonthlyCostText: formatAmount(essentialMonthlyCost),
       comfortableMonthlyCostText: formatAmount(comfortableMonthlyCost),
@@ -91,12 +94,11 @@ Page({
 
   getInput(): LivingCostInput {
     const categories = this.getCategories()
-    const essentialMonthlyCost = livingCostService.calculateEssentialMonthlyCost(categories)
     return {
       ...categories,
-      comfortableMonthlyCost: this.data.form.comfortableMonthlyCost.trim()
-        ? parseAmount(this.data.form.comfortableMonthlyCost)
-        : essentialMonthlyCost,
+      comfortableExtraCost: this.data.form.comfortableExtraCost.trim()
+        ? parseAmount(this.data.form.comfortableExtraCost)
+        : 0,
     }
   },
 
@@ -116,10 +118,6 @@ Page({
     const essentialMonthlyCost = livingCostService.calculateEssentialMonthlyCost(input)
     if (essentialMonthlyCost <= 0) {
       this.setData({ validationMessage: '每月基础生活成本需要大于 0' })
-      return
-    }
-    if (input.comfortableMonthlyCost < essentialMonthlyCost) {
-      this.setData({ validationMessage: '舒适生活成本不能低于基础生活成本' })
       return
     }
     if (!livingCostService.saveProfile(input)) {

@@ -137,6 +137,53 @@
   border-radius: 24rpx;
   background: #ffffff;
   box-shadow: 0 10rpx 32rpx rgba(42, 57, 48, 0.05);
+  overflow: hidden;
+}
+
+.collection-photo {
+  display: block;
+  width: calc(100% + 64rpx);
+  height: 300rpx;
+  margin: -32rpx -32rpx 28rpx;
+}
+
+.detail-photo {
+  display: block;
+  width: calc(100% + 68rpx);
+  height: 390rpx;
+  margin: -34rpx -34rpx 30rpx;
+  border-radius: 26rpx 26rpx 0 0;
+}
+
+.photo-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20rpx;
+}
+
+.photo-preview__image {
+  display: block;
+  width: 100%;
+  height: 340rpx;
+}
+
+.photo-remove {
+  position: absolute;
+  right: 18rpx;
+  bottom: 18rpx;
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  color: #ffffff;
+  background: rgba(31, 42, 36, 0.72);
+  font-size: 22rpx;
+}
+
+.photo-button {
+  border: 2rpx dashed var(--color-brand);
+  border-radius: 18rpx;
+  color: var(--color-brand);
+  background: var(--color-brand-surface);
+  font-size: 26rpx;
 }
 
 .type-badge,

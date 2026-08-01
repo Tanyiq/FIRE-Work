@@ -101,6 +101,9 @@ const isCollection = (value: unknown): value is MuseumCollection => {
     typeof collection.startDate === 'string' &&
     (collection.retiredDate === null || typeof collection.retiredDate === 'string') &&
     typeof collection.story === 'string' &&
+    (collection.photoPath === undefined ||
+      collection.photoPath === null ||
+      typeof collection.photoPath === 'string') &&
     typeof collection.createdAt === 'number' &&
     typeof collection.updatedAt === 'number' &&
     isValidInput(collection)
@@ -188,7 +191,10 @@ export const museumService = {
 
     return storedCollections
       .filter(isCollection)
-      .map((collection) => ({ ...collection }))
+      .map((collection) => ({
+        ...collection,
+        photoPath: collection.photoPath || null,
+      }))
       .sort((a, b) => b.createdAt - a.createdAt)
   },
 
@@ -211,6 +217,7 @@ export const museumService = {
       status: input.status,
       retiredDate: input.status === 'retired' ? input.retiredDate || null : null,
       story: (input.story || '').trim(),
+      photoPath: input.photoPath || null,
       createdAt: now,
       updatedAt: now,
     }
@@ -220,8 +227,13 @@ export const museumService = {
 
   deleteCollection(id: string): boolean {
     const collections = this.getCollectionList()
+    const collection = collections.find((item) => item.id === id)
     const nextCollections = collections.filter((collection) => collection.id !== id)
-    return nextCollections.length !== collections.length && saveCollectionList(nextCollections)
+    const deleted = nextCollections.length !== collections.length && saveCollectionList(nextCollections)
+    if (deleted && collection && collection.photoPath) {
+      wx.removeSavedFile({ filePath: collection.photoPath })
+    }
+    return deleted
   },
 
   updateCollection(
@@ -243,6 +255,8 @@ export const museumService = {
       status: updates.status !== undefined ? updates.status : current.status,
       retiredDate: updates.retiredDate === undefined ? current.retiredDate : updates.retiredDate,
       story: updates.story !== undefined ? updates.story : current.story,
+      photoPath:
+        updates.photoPath === undefined ? current.photoPath : updates.photoPath,
     }
     if (!isValidInput(nextInput)) {
       return null
@@ -255,6 +269,7 @@ export const museumService = {
       name: nextInput.name.trim(),
       retiredDate: nextInput.status === 'retired' ? nextInput.retiredDate || null : null,
       story: (nextInput.story || '').trim(),
+      photoPath: nextInput.photoPath || null,
       updatedAt: Date.now(),
     }
     collections[index] = updatedCollection
