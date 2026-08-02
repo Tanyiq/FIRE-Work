@@ -3,7 +3,7 @@ import { storageService } from './storageService'
 
 const DEFAULT_COLOR = '#536A8A'
 const HEX_PATTERN = /^#[0-9A-F]{6}$/
-const MIN_WHITE_TEXT_CONTRAST = 1.5
+const MIN_WHITE_TEXT_CONTRAST = 4.5
 
 const PRESETS: ReadonlyArray<ThemePreset> = [
   { id: 'dusk-blue', name: '暮蓝', color: '#536A8A' },
@@ -96,7 +96,7 @@ export const themeService = {
       return { success: false, message: '请输入 6 位十六进制颜色，例如 #536A8A', profile: null }
     }
     if (!hasReadableWhiteText(primaryColor)) {
-      return { success: false, message: '这个颜色太接近白色，请选择稍深一点的颜色', profile: null }
+      return { success: false, message: '这个颜色下白色文字不够清晰，请选择更深的颜色', profile: null }
     }
     const profile: ThemeProfile = { primaryColor, updatedAt: Date.now() }
     if (!storageService.set(storageService.keys.themeProfile, profile)) {
