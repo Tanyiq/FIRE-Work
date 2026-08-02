@@ -3,6 +3,7 @@ import { storageService } from './storageService'
 
 const DEFAULT_COLOR = '#536A8A'
 const HEX_PATTERN = /^#[0-9A-F]{6}$/
+const MIN_WHITE_TEXT_CONTRAST = 1.5
 
 const PRESETS: ReadonlyArray<ThemePreset> = [
   { id: 'dusk-blue', name: '暮蓝', color: '#536A8A' },
@@ -41,7 +42,7 @@ const hasReadableWhiteText = (color: string): boolean => {
       : Math.pow((normalized + 0.055) / 1.055, 2.4)
   })
   const luminance = channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722
-  return 1.05 / (luminance + 0.05) >= 4.5
+  return 1.05 / (luminance + 0.05) >= MIN_WHITE_TEXT_CONTRAST
 }
 
 const isThemeProfile = (value: unknown): value is ThemeProfile => {
@@ -95,7 +96,7 @@ export const themeService = {
       return { success: false, message: '请输入 6 位十六进制颜色，例如 #536A8A', profile: null }
     }
     if (!hasReadableWhiteText(primaryColor)) {
-      return { success: false, message: '这个颜色太亮，无法看清按钮文字，请选择更深的颜色', profile: null }
+      return { success: false, message: '这个颜色太接近白色，请选择稍深一点的颜色', profile: null }
     }
     const profile: ThemeProfile = { primaryColor, updatedAt: Date.now() }
     if (!storageService.set(storageService.keys.themeProfile, profile)) {

@@ -1,6 +1,6 @@
 .preview-card {
-  margin-top: 40rpx;
-  padding: 38rpx 34rpx;
+  margin-top: 28rpx;
+  padding: 30rpx;
   border-radius: var(--radius-lg);
   color: #ffffff;
   box-shadow: 0 18rpx 44rpx rgba(40, 46, 58, 0.18);
@@ -9,7 +9,7 @@
 .preview-label,
 .preview-title,
 .section-title,
-.section-description,
+.custom-label,
 .preset-name,
 .preset-color,
 .validation-message {
@@ -22,15 +22,15 @@
 }
 
 .preview-title {
-  margin-top: 12rpx;
-  font-size: 34rpx;
+  margin-top: 8rpx;
+  font-size: 31rpx;
   font-weight: 700;
   line-height: 1.45;
 }
 
 .preview-progress {
-  height: 12rpx;
-  margin-top: 30rpx;
+  height: 10rpx;
+  margin-top: 20rpx;
   overflow: hidden;
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.2);
@@ -55,26 +55,37 @@
   font-weight: 650;
 }
 
-.section-description {
-  margin-top: 10rpx;
-  color: #727c76;
-  font-size: 22rpx;
-  line-height: 1.55;
+.preview-custom-panel {
+  margin-top: 24rpx;
+  padding: 22rpx;
+  border-radius: 18rpx;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.custom-label {
+  color: #56615b;
+  font-size: 23rpx;
+  font-weight: 600;
 }
 
 .preset-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16rpx;
-  margin-top: 24rpx;
+  justify-content: space-between;
+  row-gap: 14rpx;
+  margin-top: 20rpx;
 }
 
 .preset-item {
-  width: calc(50% - 8rpx);
-  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  box-sizing: border-box;
+  width: 48.5%;
+  min-height: 84rpx;
+  padding: 14rpx 16rpx;
   border: 2rpx solid #eceeea;
   border-radius: 18rpx;
-  box-sizing: border-box;
 }
 
 .preset-item--selected {
@@ -84,21 +95,24 @@
 
 .preset-swatch,
 .input-swatch {
-  width: 50rpx;
-  height: 50rpx;
+  width: 42rpx;
+  height: 42rpx;
   border: 4rpx solid #ffffff;
   border-radius: 50%;
   box-shadow: 0 0 0 1rpx rgba(36, 48, 41, 0.13);
 }
 
+.preset-copy {
+  min-width: 0;
+}
+
 .preset-name {
-  margin-top: 14rpx;
-  font-size: 25rpx;
+  font-size: 23rpx;
   font-weight: 650;
 }
 
 .preset-color {
-  margin-top: 5rpx;
+  margin-top: 3rpx;
   color: #89908c;
   font-size: 19rpx;
 }
@@ -107,21 +121,22 @@
   display: flex;
   align-items: center;
   gap: 18rpx;
-  margin-top: 24rpx;
-  padding: 18rpx 22rpx;
+  margin-top: 12rpx;
+  padding: 14rpx 18rpx;
   border: 2rpx solid #e3e5e1;
   border-radius: 18rpx;
 }
 
 .input-swatch {
   flex-shrink: 0;
-  width: 44rpx;
-  height: 44rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .color-input {
   flex: 1;
   min-width: 0;
+  color: #29332e;
   font-size: 29rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
@@ -134,10 +149,10 @@
 }
 
 .save-button {
-  margin-top: 26rpx;
+  margin-top: 18rpx;
   border-radius: var(--radius-pill);
-  color: #ffffff;
-  background: var(--color-brand);
+  background: #ffffff;
+  box-shadow: 0 0 0 2rpx currentColor inset;
   font-size: 28rpx;
   font-weight: 650;
 }

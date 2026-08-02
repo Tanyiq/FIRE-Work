@@ -7,6 +7,16 @@
     <text class="preview-label">主题预览</text>
     <text class="preview-title">长期成长，也可以有自己的颜色</text>
     <view class="preview-progress"><view class="preview-progress__fill"></view></view>
+
+    <view class="preview-custom-panel">
+      <text class="custom-label">自定义 HEX</text>
+      <view class="color-input-row">
+        <view class="input-swatch" style="background: {{previewColor}};"></view>
+        <input class="color-input" value="{{customColor}}" maxlength="7" cursor-spacing="16" placeholder="#FFB6C1" bindinput="onCustomColorInput" />
+      </view>
+      <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
+      <button class="save-button" style="color: {{previewColor}};" bindtap="onSaveTheme">应用这个主题</button>
+    </view>
   </view>
 
   <view class="theme-card">
@@ -14,20 +24,11 @@
     <view class="preset-grid">
       <view wx:for="{{presets}}" wx:key="id" class="preset-item {{selectedColor === item.color ? 'preset-item--selected' : ''}}" hover-class="tap-card--active" data-color="{{item.color}}" bindtap="onSelectPreset">
         <view class="preset-swatch" style="background: {{item.color}};"></view>
-        <text class="preset-name">{{item.name}}</text>
-        <text class="preset-color">{{item.color}}</text>
+        <view class="preset-copy">
+          <text class="preset-name">{{item.name}}</text>
+          <text class="preset-color">{{item.color}}</text>
+        </view>
       </view>
     </view>
-  </view>
-
-  <view class="theme-card">
-    <text class="section-title">自定义颜色</text>
-    <text class="section-description">输入 6 位 HEX 颜色。为了保证按钮文字清晰，过亮颜色不会保存。</text>
-    <view class="color-input-row">
-      <view class="input-swatch" style="background: {{previewColor}};"></view>
-      <input class="color-input" value="{{customColor}}" maxlength="7" placeholder="#536A8A" bindinput="onCustomColorInput" />
-    </view>
-    <text wx:if="{{validationMessage}}" class="validation-message">{{validationMessage}}</text>
-    <button class="save-button" bindtap="onSaveTheme">应用这个主题</button>
   </view>
 </view>

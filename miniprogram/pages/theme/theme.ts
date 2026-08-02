@@ -39,9 +39,11 @@ Page({
   onCustomColorInput(event: WechatMiniprogram.CustomEvent<{ value: string }>) {
     const customColor = event.detail.value
     const normalized = normalizePreviewColor(customColor)
+    const isValidColor = /^#[0-9A-F]{6}$/.test(normalized)
     this.setData({
       customColor,
-      previewColor: /^#[0-9A-F]{6}$/.test(normalized) ? normalized : this.data.previewColor,
+      selectedColor: isValidColor ? normalized : this.data.selectedColor,
+      previewColor: isValidColor ? normalized : this.data.previewColor,
       validationMessage: '',
     })
   },
