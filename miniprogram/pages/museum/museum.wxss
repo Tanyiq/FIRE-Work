@@ -263,7 +263,9 @@
 
 .type-badge,
 .status-badge {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   flex-shrink: 0;
   height: 48rpx;
@@ -272,9 +274,8 @@
   color: var(--color-brand);
   background: var(--color-brand-soft);
   font-size: 23rpx;
-  line-height: 48rpx;
+  line-height: 1;
   text-align: center;
-  vertical-align: middle;
   white-space: nowrap;
 }
 

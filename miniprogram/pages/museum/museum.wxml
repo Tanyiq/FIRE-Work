@@ -17,10 +17,8 @@
     <view class="detail-card">
       <image wx:if="{{selectedCollection.photoPath}}" class="detail-photo" src="{{selectedCollection.photoPath}}" mode="aspectFill"></image>
       <view class="detail-heading">
-        <text class="type-badge">{{selectedCollection.typeLabel}}</text>
-        <text class="status-badge status-badge--{{selectedCollection.status}}">
-          {{selectedCollection.statusLabel}}
-        </text>
+        <view class="type-badge">{{selectedCollection.typeLabel}}</view>
+        <view class="status-badge status-badge--{{selectedCollection.status}}">{{selectedCollection.statusLabel}}</view>
       </view>
       <text class="detail-title">{{selectedCollection.name}}</text>
       <text class="detail-story">

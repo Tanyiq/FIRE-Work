@@ -5,7 +5,7 @@ export interface DataProtectionRule {
 }
 
 export interface DataIntegritySummary {
-  version: 'beta1.0'
+  version: 'v1.1'
   snapshotCount: number
   reportCount: number
   rules: DataProtectionRule[]
