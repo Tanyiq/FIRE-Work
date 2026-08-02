@@ -4,6 +4,7 @@ import {
   MuseumCollectionStatus,
   MuseumCollectionType,
   MuseumCollectionView,
+  LegacyMuseumCollectionType,
   MuseumStatusOption,
   MuseumTypeOption,
 } from '../models/museum'
@@ -16,8 +17,6 @@ const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const TYPE_OPTIONS: ReadonlyArray<MuseumTypeOption> = [
   { value: 'physical', label: '实物' },
   { value: 'experience', label: '经历' },
-  { value: 'life_event', label: '人生事件' },
-  { value: 'income_event', label: '收益事件' },
 ]
 
 const STATUS_LABELS: Record<
@@ -26,8 +25,10 @@ const STATUS_LABELS: Record<
 > = {
   physical: { active: '使用中', retired: '已退役' },
   experience: { active: '体验中', retired: '已结束' },
-  life_event: { active: '持续影响', retired: '已结束' },
-  income_event: { active: '持续收益', retired: '已结束' },
+}
+
+type StoredMuseumCollection = Omit<MuseumCollection, 'type'> & {
+  type: MuseumCollectionType | LegacyMuseumCollectionType
 }
 
 const padNumber = (value: number): string => String(value).padStart(2, '0')
@@ -56,11 +57,16 @@ const parseDate = (value: string): number | null => {
   return timestamp
 }
 
+const normalizeCollectionType = (value: unknown): MuseumCollectionType | null => {
+  if (value === 'physical') return 'physical'
+  if (value === 'experience' || value === 'life_event' || value === 'income_event') {
+    return 'experience'
+  }
+  return null
+}
+
 const isCollectionType = (value: unknown): value is MuseumCollectionType =>
-  value === 'physical' ||
-  value === 'experience' ||
-  value === 'life_event' ||
-  value === 'income_event'
+  value === 'physical' || value === 'experience'
 
 const isCollectionStatus = (value: unknown): value is MuseumCollectionStatus =>
   value === 'active' || value === 'retired'
@@ -93,12 +99,13 @@ const isValidInput = (input: MuseumCollectionInput): boolean => {
   return true
 }
 
-const isCollection = (value: unknown): value is MuseumCollection => {
+const isStoredCollection = (value: unknown): value is StoredMuseumCollection => {
   if (!value || typeof value !== 'object') {
     return false
   }
 
-  const collection = value as MuseumCollection
+  const collection = value as StoredMuseumCollection
+  const normalizedType = normalizeCollectionType(collection.type)
   return (
     typeof collection.id === 'string' &&
     typeof collection.name === 'string' &&
@@ -111,7 +118,8 @@ const isCollection = (value: unknown): value is MuseumCollection => {
       typeof collection.photoPath === 'string') &&
     typeof collection.createdAt === 'number' &&
     typeof collection.updatedAt === 'number' &&
-    isValidInput(collection)
+    normalizedType !== null &&
+    isValidInput({ ...collection, type: normalizedType })
   )
 }
 
@@ -157,10 +165,6 @@ const calculateDailyCost = (
   collection: MuseumCollection,
   referenceDate: string = getToday(),
 ): number | null => {
-  if (collection.type === 'income_event') {
-    return null
-  }
-
   const usageDays = calculateUsageDays(collection, referenceDate)
   if (usageDays === 0) {
     return null
@@ -199,13 +203,18 @@ export const museumService = {
       return []
     }
 
-    return storedCollections
-      .filter(isCollection)
-      .map((collection) => ({
+    const stored = storedCollections.filter(isStoredCollection)
+    const collections = stored
+      .map((collection): MuseumCollection => ({
         ...collection,
+        type: normalizeCollectionType(collection.type) as MuseumCollectionType,
         photoPath: collection.photoPath || null,
       }))
       .sort((a, b) => b.createdAt - a.createdAt)
+    if (stored.some((collection) => collection.type !== 'physical' && collection.type !== 'experience')) {
+      saveCollectionList(collections)
+    }
+    return collections
   },
 
   getCollectionViews(): MuseumCollectionView[] {

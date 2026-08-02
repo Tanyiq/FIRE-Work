@@ -14,10 +14,6 @@
         <text class="archive-number">{{archiveStats.assetCount}}</text>
         <text class="archive-label">项资产</text>
       </view>
-      <view class="archive-item archive-item--center">
-        <text class="archive-number">{{archiveStats.snapshotCount}}</text>
-        <text class="archive-label">次财富变化</text>
-      </view>
       <view class="archive-item archive-item--right">
         <text class="archive-number">{{archiveStats.museumCount}}</text>
         <text class="archive-label">件人生收藏</text>

@@ -1,8 +1,6 @@
-export type MuseumCollectionType =
-  | 'physical'
-  | 'experience'
-  | 'life_event'
-  | 'income_event'
+export type MuseumCollectionType = 'physical' | 'experience'
+
+export type LegacyMuseumCollectionType = 'life_event' | 'income_event'
 
 export type MuseumCollectionStatus = 'active' | 'retired'
 

@@ -154,17 +154,54 @@
   margin-top: 48rpx;
 }
 
+.museum-tabs {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 22rpx;
+  padding: 8rpx;
+  border-radius: 18rpx;
+  background: #eceeea;
+}
+
+.museum-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 1;
+  height: 72rpx;
+  border-radius: 13rpx;
+  color: #68716c;
+  font-size: 26rpx;
+  line-height: 1;
+  text-align: center;
+}
+
+.museum-tab--selected {
+  color: var(--color-brand);
+  background: #ffffff;
+  box-shadow: 0 4rpx 14rpx rgba(42, 57, 48, 0.08);
+  font-weight: 600;
+}
+
+.category-empty {
+  margin-top: 22rpx;
+  padding: 52rpx 24rpx;
+  border-radius: 20rpx;
+  color: #858d88;
+  background: #ffffff;
+  font-size: 25rpx;
+  text-align: center;
+}
+
 .section-heading,
-.collection-card__top,
-.collection-footer,
 .detail-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.collection-count,
-.collection-date {
+.collection-count {
   color: #7a817d;
   font-size: 25rpx;
 }
@@ -226,17 +263,18 @@
 
 .type-badge,
 .status-badge {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   box-sizing: border-box;
   flex-shrink: 0;
-  min-height: 48rpx;
-  padding: 8rpx 16rpx;
+  height: 48rpx;
+  padding: 0 16rpx;
   border-radius: 999rpx;
   color: var(--color-brand);
   background: var(--color-brand-soft);
   font-size: 23rpx;
-  line-height: 1.2;
+  line-height: 48rpx;
+  text-align: center;
+  vertical-align: middle;
   white-space: nowrap;
 }
 
@@ -248,11 +286,10 @@
 }
 
 .collection-name {
-  margin-top: 24rpx;
+  margin-top: 0;
   font-size: 34rpx;
 }
 
-.collection-story,
 .detail-story {
   display: -webkit-box;
   overflow: hidden;
@@ -261,18 +298,42 @@
   -webkit-box-orient: vertical;
 }
 
-.collection-story {
-  margin-top: 12rpx;
-  font-size: 26rpx;
-  -webkit-line-clamp: 2;
-}
-
-.collection-footer {
+.collection-summary {
+  display: flex;
   margin-top: 26rpx;
   padding-top: 22rpx;
   border-top: 1rpx solid #eceeea;
-  color: #5f6a64;
-  font-size: 25rpx;
+}
+
+.collection-summary__item {
+  flex: 1;
+  min-width: 0;
+}
+
+.collection-summary__item--center {
+  text-align: center;
+}
+
+.collection-summary__item--right {
+  text-align: right;
+}
+
+.collection-summary__label,
+.collection-summary__value {
+  display: block;
+}
+
+.collection-summary__label {
+  color: #8a918d;
+  font-size: 20rpx;
+}
+
+.collection-summary__value {
+  margin-top: 8rpx;
+  color: #4f5b54;
+  font-size: 23rpx;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .detail-section {

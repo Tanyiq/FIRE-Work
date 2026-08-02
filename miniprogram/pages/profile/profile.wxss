@@ -60,10 +60,6 @@
   flex: 1;
 }
 
-.archive-item--center {
-  text-align: center;
-}
-
 .archive-item--right {
   text-align: right;
 }

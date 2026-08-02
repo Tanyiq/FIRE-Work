@@ -12,8 +12,6 @@ import { snapshotService } from './snapshotService'
 const LIFE_ICONS: Record<MuseumCollectionType, string> = {
   physical: '📦',
   experience: '✈️',
-  life_event: '✦',
-  income_event: '↗',
 }
 
 const getYearRange = (year: number): { start: number; end: number } => ({
@@ -42,9 +40,8 @@ const getLargestLifeSpending = (
   collections: MuseumCollection[],
   year: number,
 ): AnnualLifeHighlight | null => {
-  const spendingCollections = collections.filter((item) => item.type !== 'income_event')
-  if (spendingCollections.length === 0) return null
-  const largest = spendingCollections.reduce((current, item) =>
+  if (collections.length === 0) return null
+  const largest = collections.reduce((current, item) =>
     item.amount > current.amount ? item : current,
   )
   return {

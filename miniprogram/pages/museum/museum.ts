@@ -5,10 +5,10 @@ import { themeService } from '../../services/themeService'
 
 const initialCollections = museumService.getCollectionViews()
 const initialMuseumGuide = onboardingFlowService.getStep() === 'museum'
+const initialMuseumType: MuseumCollectionType = 'physical'
 
 const getStatusFieldLabel = (type: MuseumCollectionType): string => {
   if (type === 'physical') return '使用状态'
-  if (type === 'income_event') return '收益状态'
   return '当前状态'
 }
 
@@ -37,6 +37,12 @@ const createFormData = () => ({
 Page({
   data: {
     collections: initialCollections,
+    visibleCollections: initialCollections.filter(
+      (collection) => collection.type === initialMuseumType,
+    ),
+    selectedMuseumType: initialMuseumType as MuseumCollectionType,
+    physicalCount: initialCollections.filter((collection) => collection.type === 'physical').length,
+    experienceCount: initialCollections.filter((collection) => collection.type === 'experience').length,
     selectedCollection: null as MuseumCollectionView | null,
     showAddForm: initialMuseumGuide && initialCollections.length === 0,
     typeOptions: museumService.getTypeOptions(),
@@ -65,9 +71,26 @@ Page({
     const isGuidedMuseumStep = onboardingFlowService.getStep() === 'museum'
     this.setData({
       collections,
+      visibleCollections: collections.filter(
+        (collection) => collection.type === this.data.selectedMuseumType,
+      ),
+      physicalCount: collections.filter((collection) => collection.type === 'physical').length,
+      experienceCount: collections.filter((collection) => collection.type === 'experience').length,
       isGuidedMuseumStep,
       showAddForm: isGuidedMuseumStep && collections.length === 0 ? true : this.data.showAddForm,
       themePageStyle: themeService.getPageStyle(),
+    })
+  },
+
+  onMuseumTypeSelect(
+    event: WechatMiniprogram.BaseEvent<{}, { type: MuseumCollectionType }>,
+  ) {
+    const selectedMuseumType = event.currentTarget.dataset.type
+    this.setData({
+      selectedMuseumType,
+      visibleCollections: this.data.collections.filter(
+        (collection) => collection.type === selectedMuseumType,
+      ),
     })
   },
 
@@ -220,6 +243,7 @@ Page({
     this.setData({
       ...createFormData(),
       showAddForm: false,
+      selectedMuseumType: type,
     })
     this.refreshCollections()
     if (this.data.isGuidedMuseumStep) {

@@ -9,7 +9,7 @@
       <text class="guide-focus-card__exit" hover-class="tap-text--active" bindtap="onExitGuide">暂时退出引导</text>
     </view>
     <text class="guide-focus-card__title">收藏第一段人生经历</text>
-    <text class="guide-focus-card__text">记录一件物品、一次经历或一个重要事件。保存后，你的财富档案就建立完成了。</text>
+    <text class="guide-focus-card__text">记录一件实物或一次经历。保存后，你的财富档案就建立完成了。</text>
   </view>
 
   <view wx:if="{{selectedCollection && !isGuidedMuseumStep}}" class="detail-section">
@@ -29,7 +29,7 @@
 
       <view class="detail-grid">
         <view class="detail-metric">
-          <text class="metric-label">{{selectedCollection.type === 'income_event' ? '收益金额' : '花费金额'}}</text>
+          <text class="metric-label">花费金额</text>
           <text class="metric-value">{{selectedCollection.amountText}}</text>
         </view>
         <view class="detail-metric">
@@ -41,10 +41,6 @@
             {{selectedCollection.status === 'retired' ? '最终每日成本' : '当前每日成本'}}
           </text>
           <text class="daily-cost">{{selectedCollection.dailyCostText}} / 天</text>
-        </view>
-        <view wx:else class="detail-metric detail-metric--wide">
-          <text class="metric-label">价值记录</text>
-          <text class="metric-value">收益事件不计算每日成本</text>
         </view>
       </view>
 
@@ -73,12 +69,30 @@
         <text class="section-title">我的收藏</text>
         <text class="collection-count">{{collections.length}} 件</text>
       </view>
-      <view wx:for="{{collections}}" wx:key="id" class="collection-card" hover-class="tap-card--active" data-id="{{item.id}}" bindtap="onViewCollection">
+      <view class="museum-tabs">
+        <view class="museum-tab {{selectedMuseumType === 'physical' ? 'museum-tab--selected' : ''}}" hover-class="tap-text--active" data-type="physical" bindtap="onMuseumTypeSelect">实物 {{physicalCount}}</view>
+        <view class="museum-tab {{selectedMuseumType === 'experience' ? 'museum-tab--selected' : ''}}" hover-class="tap-text--active" data-type="experience" bindtap="onMuseumTypeSelect">经历 {{experienceCount}}</view>
+      </view>
+      <view wx:if="{{visibleCollections.length === 0}}" class="category-empty">
+        {{selectedMuseumType === 'physical' ? '还没有实物收藏' : '还没有经历收藏'}}
+      </view>
+      <view wx:for="{{visibleCollections}}" wx:key="id" class="collection-card" hover-class="tap-card--active" data-id="{{item.id}}" bindtap="onViewCollection">
         <image wx:if="{{item.photoPath}}" class="collection-photo" src="{{item.photoPath}}" mode="aspectFill"></image>
-        <view class="collection-card__top"><text class="type-badge">{{item.typeLabel}}</text><text class="collection-date">{{item.startDate}}</text></view>
         <text class="collection-name">{{item.name}}</text>
-        <text class="collection-story">{{item.story || '这件收藏还没有写下故事。'}}</text>
-        <view class="collection-footer"><text>{{item.usageDays}} 天</text><text wx:if="{{item.dailyCost !== null}}">{{item.dailyCostText}} / 天</text><text wx:else>收益 {{item.amountText}}</text></view>
+        <view class="collection-summary">
+          <view class="collection-summary__item">
+            <text class="collection-summary__label">开始时间</text>
+            <text class="collection-summary__value">{{item.startDate}}</text>
+          </view>
+          <view class="collection-summary__item collection-summary__item--center">
+            <text class="collection-summary__label">累计天数</text>
+            <text class="collection-summary__value">{{item.usageDays}} 天</text>
+          </view>
+          <view class="collection-summary__item collection-summary__item--right">
+            <text class="collection-summary__label">平均每天</text>
+            <text class="collection-summary__value">{{item.dailyCostText}} / 天</text>
+          </view>
+        </view>
       </view>
     </view>
 
@@ -96,7 +110,7 @@
       <text class="field-label">名称</text>
       <input class="text-field" value="{{nameInput}}" placeholder="例如：第一台相机" bindinput="onNameInput" />
 
-      <text class="field-label">{{selectedTypeIndex === 3 ? '收益金额' : '花费金额'}}（元）</text>
+      <text class="field-label">花费金额（元）</text>
       <input class="text-field" type="digit" value="{{amountInput}}" placeholder="例如 8000" bindinput="onAmountInput" />
 
       <text class="field-label">开始 / 发生日期</text>

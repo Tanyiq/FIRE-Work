@@ -177,10 +177,6 @@ Page({
     })
   },
 
-  onGoToWealth() {
-    wx.switchTab({ url: '/pages/wealth/wealth' })
-  },
-
   onGoToLivingCost() {
     wx.navigateTo({ url: '/pages/living-cost/living-cost' })
   },

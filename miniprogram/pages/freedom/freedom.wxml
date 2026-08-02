@@ -80,10 +80,7 @@
       <text class="fire-reference-action">查看分析 →</text>
     </view>
 
-    <view class="action-row">
-      <button class="primary-button action-button" bindtap="onGoToWealth">管理资产</button>
-      <button class="secondary-button action-button" bindtap="onEditConfiguration">调整目标</button>
-    </view>
+    <button class="secondary-button goal-action-button" bindtap="onEditConfiguration">调整目标</button>
   </block>
 
   <block wx:else>

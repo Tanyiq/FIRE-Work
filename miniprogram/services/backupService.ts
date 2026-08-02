@@ -16,6 +16,7 @@ import {
   MuseumCollection,
   MuseumCollectionStatus,
   MuseumCollectionType,
+  LegacyMuseumCollectionType,
 } from '../models/museum'
 import { WealthChangeSource, WealthReport } from '../models/report'
 import { AssetSnapshot } from '../models/snapshot'
@@ -37,10 +38,13 @@ const MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/
 const ASSET_TYPES: ReadonlyArray<AssetType> = [
   'cash', 'deposit', 'fund', 'dividend', 'stock', 'gold', 'other',
 ]
-const COLLECTION_TYPES: ReadonlyArray<MuseumCollectionType> = [
+const COLLECTION_TYPES: ReadonlyArray<MuseumCollectionType | LegacyMuseumCollectionType> = [
   'physical', 'experience', 'life_event', 'income_event',
 ]
 const COLLECTION_STATUSES: ReadonlyArray<MuseumCollectionStatus> = ['active', 'retired']
+type BackupMuseumCollection = Omit<MuseumCollection, 'type'> & {
+  type: MuseumCollectionType | LegacyMuseumCollectionType
+}
 const CHANGE_SOURCES: ReadonlyArray<WealthChangeSource> = [
   'salary_saving', 'investment_return', 'income_increase', 'large_expense', 'other',
 ]
@@ -113,14 +117,14 @@ const isReport = (value: unknown): value is WealthReport => {
   )
 }
 
-const isCollection = (value: unknown): value is MuseumCollection => {
+const isCollection = (value: unknown): value is BackupMuseumCollection => {
   if (!isObject(value)) return false
   const hasValidRetiredDate = value.status === 'retired'
     ? typeof value.retiredDate === 'string' && DATE_PATTERN.test(value.retiredDate)
     : value.retiredDate === null
   return (
     typeof value.id === 'string' &&
-    COLLECTION_TYPES.includes(value.type as MuseumCollectionType) &&
+    COLLECTION_TYPES.includes(value.type as MuseumCollectionType | LegacyMuseumCollectionType) &&
     typeof value.name === 'string' && value.name.trim().length > 0 &&
     isNonNegativeNumber(value.amount) && DATE_PATTERN.test(String(value.startDate)) &&
     COLLECTION_STATUSES.includes(value.status as MuseumCollectionStatus) && hasValidRetiredDate &&
@@ -212,7 +216,10 @@ const parseBackup = (json: string): WealthBackup | null => {
     assets: value.assets as Asset[],
     snapshots: value.snapshots as AssetSnapshot[],
     reports: value.reports as WealthReport[],
-    museum: value.museum as MuseumCollection[],
+    museum: (value.museum as BackupMuseumCollection[]).map((collection) => ({
+      ...collection,
+      type: collection.type === 'physical' ? 'physical' : 'experience',
+    })),
     livingCost: value.livingCost as LivingCostProfile | null,
     investments: investments as InvestmentRecord[],
     theme: theme as ThemeProfile | undefined,

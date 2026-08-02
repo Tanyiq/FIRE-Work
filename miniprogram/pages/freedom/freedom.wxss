@@ -251,23 +251,12 @@
   text-align: right;
 }
 
-.action-row {
-  display: flex;
-  gap: 18rpx;
+.goal-action-button {
+  width: 100%;
   margin-top: 26rpx;
-}
-
-.action-button {
-  flex: 1;
-  margin: 0;
-  width: 0;
   min-height: 88rpx;
   padding: 0 20rpx;
   line-height: 88rpx;
-}
-
-.primary-button.action-button {
-  margin-top: 0;
 }
 
 .edit-goal-actions {
