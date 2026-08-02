@@ -3,7 +3,7 @@ import { themeService } from './services/themeService'
 
 App<IAppOption>({
   globalData: {
-    version: '1.1.0',
+    version: '1.1.1',
   },
   onLaunch() {
     themeService.applyNativeTheme()

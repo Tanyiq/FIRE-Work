@@ -23,7 +23,7 @@ const RULES: ReadonlyArray<DataProtectionRule> = [
 export const dataIntegrityService = {
   getSummary(): DataIntegritySummary {
     return {
-      version: 'v1.1',
+      version: 'v1.1.1',
       snapshotCount: snapshotService.getSnapshotList().length,
       reportCount: reportService.getReportList().length,
       rules: RULES.map((rule) => ({ ...rule })),
